@@ -2,11 +2,11 @@
 
 ```bash
 /maw11-jdn
-├─-	/app
-│ 	├──- /config
-│ 	│ 	└──- config.php				# Configuration file (databse, etc.)
+├──	/app
+│ 	├── /config
+│ 	│ 	└── config.php				# Configuration file (databse, etc.)
 │ 	├── /controllers
-│ 	│ 	└── HomeController.php 		# Controller example
+│ 	│ 	└── HomeController.php		# Controller example
 │ 	├── /models
 │ 	│ 	└── User.php 				# Model example
 │ 	├── /views
