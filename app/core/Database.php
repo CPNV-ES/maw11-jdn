@@ -5,6 +5,13 @@
  */
 class Database
 {
+
+	/**
+	 * Instance of the database
+	 * @var Database $instance
+	 */
+	private static $instance = null;
+
 	/**
 	 * PDO property for the database
 	 * @var Database::pdo $pdo
@@ -13,7 +20,7 @@ class Database
 
 	/**
 	 * Constructor of the Database class
-	 * @param mixed $config
+	 * @param mixed $config - config of the database
 	 */
 	public function __construct($config)
 	{
@@ -22,15 +29,37 @@ class Database
 			$this->pdo = new PDO($dsn);
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
-			die("Erreur de connexion à la base de données : " . $e->getMessage());
+			die("Connection error to the database : " . $e->getMessage());
 		}
 	}
 
 	/**
-	 * Query function to make database queries
-	 * @param mixed $sql
-	 * @param mixed $params
-	 * @return bool|PDOStatement
+	 * Method to get the instance of the database
+	 * @param mixed $config - config of the database
+	 * @return Database|null - instance of the database
+	 */
+	public static function getInstance($config)
+	{
+		if (self::$instance === null) {
+			self::$instance = new self($config);
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Method to get the pdo connection
+	 * @return PDO - pdo connection
+	 */
+	public function getConnection()
+	{
+		return $this->pdo;
+	}
+
+	/**
+	 * Query method to make database queries
+	 * @param mixed $sql - sql query
+	 * @param mixed $params - parameters of the query
+	 * @return bool|PDOStatement - statement of the query
 	 */
 	public function query($sql, $params = [])
 	{
@@ -40,10 +69,10 @@ class Database
 	}
 
 	/**
-	 * Fetch function to fetch specific data from database
-	 * @param mixed $sql
-	 * @param mixed $params
-	 * @return mixed
+	 * Fetch method to fetch specific data from database
+	 * @param mixed $sql - sql query
+	 * @param mixed $params - parameter of the query
+	 * @return mixed - statement of the query
 	 */
 	public function fetch($sql, $params = [])
 	{
@@ -52,10 +81,10 @@ class Database
 	}
 
 	/**
-	 * Fetch function to fetch all data from database
-	 * @param mixed $sql
-	 * @param mixed $params
-	 * @return array
+	 * Fetch method to fetch all data from database
+	 * @param mixed $sql - sql query
+	 * @param mixed $params - parameter of the query
+	 * @return array - statement of the query
 	 */
 	public function fetchAll($sql, $params = [])
 	{
