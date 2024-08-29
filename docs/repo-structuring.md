@@ -19,6 +19,8 @@
 │ 		├── Model.php 				# Basic class for models
 │		├── Database.php 			# Basic class for the database
 │ 		└── Router.php 				# Route management file
+├── /db
+│   └── database.sqlite				# Database file SQLite
 ├── /public
 │ 	├── /css
 │ 	│ 	└── style.css 				# CSS file
