@@ -57,38 +57,38 @@ class Database
 
 	/**
 	 * Query method to make database queries
-	 * @param mixed $sql - sql query
+	 * @param mixed $query - sql query
 	 * @param mixed $params - parameters of the query
 	 * @return bool|PDOStatement - statement of the query
 	 */
-	public function query($sql, $params = [])
+	public function query($query, $params = [])
 	{
-		$stmt = $this->pdo->prepare($sql);
+		$stmt = $this->pdo->prepare($query);
 		$stmt->execute($params);
 		return $stmt;
 	}
 
 	/**
 	 * Fetch method to fetch specific data from database
-	 * @param mixed $sql - sql query
+	 * @param mixed $query - sql query
 	 * @param mixed $params - parameter of the query
 	 * @return mixed - statement of the query
 	 */
-	public function fetch($sql, $params = [])
+	public function fetch($query, $params = [])
 	{
-		$stmt = $this->query($sql, $params);
+		$stmt = $this->query($query, $params);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
 	 * Fetch method to fetch all data from database
-	 * @param mixed $sql - sql query
+	 * @param mixed $query - sql query
 	 * @param mixed $params - parameter of the query
 	 * @return array - statement of the query
 	 */
-	public function fetchAll($sql, $params = [])
+	public function fetchAll($query, $params = [])
 	{
-		$stmt = $this->query($sql, $params);
+		$stmt = $this->query($query, $params);
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
