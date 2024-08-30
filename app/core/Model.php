@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Summary of Model
+ * Class for the default Model
  */
 class Model
 {
