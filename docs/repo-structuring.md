@@ -3,8 +3,6 @@
 ```bash
 /maw11-jdn
 ├──	/app
-│ 	├── /config
-│ 	│ 	└── config.php				# Configuration file (databse, etc.)
 │ 	├── /controllers
 │ 	│ 	└── HomeController.php		# Controller example
 │ 	├── /models
@@ -19,6 +17,8 @@
 │ 		├── Model.php 				# Basic class for models
 │		├── Database.php 			# Basic class for the database
 │ 		└── Router.php 				# Route management file
+├── /config
+│ 	└── config.php                  # Configuration file (databse, etc.)
 ├── /db
 │   └── database.sqlite				# Database file SQLite
 ├── /public
@@ -37,7 +37,7 @@
 ### Folder creation
 
 ```bash
-mkdir app app/config app/controllers app/models app/views app/views/layouts app/views/home app/core public public/css public/images logs docs
+mkdir app app/controllers app/models app/views app/views/layouts app/views/home app/core public public/css public/images logs docs config
 ```
 
 ### File creation
@@ -45,7 +45,7 @@ mkdir app app/config app/controllers app/models app/views app/views/layouts app/
 For folders that don't have a file at the start, we generate the `.gitkeep` file to keep track of them.
 
 ```bash
-touch app/config/config.php app/controllers/.gitkeep app/models/.gitkeep app/views/home/.gitkeep app/views/layouts/.gitkeep app/core/Database.php app/core/Router.php app/core/Controller.php app/core/Model.php public/css/style.css public/images/.gitkeep public/index.php logs/.gitkeep
+touch config/config.php app/controllers/.gitkeep app/models/.gitkeep app/views/home/.gitkeep app/views/layouts/.gitkeep app/core/Database.php app/core/Router.php app/core/Controller.php app/core/Model.php public/css/style.css public/images/.gitkeep public/index.php logs/.gitkeep
 ```
 
 ## Explanation of structure
@@ -54,7 +54,6 @@ touch app/config/config.php app/controllers/.gitkeep app/models/.gitkeep app/vie
 
 1.  **/app** : Contains the heart of the application.
 
-    -   **/config** : Configuration files, such as database connection parameters.
     -   **/controllers** : Controllers manage application logic.
     -   **/models** : Models represent business logic and interact with the database.
     -   **/views** : Views are responsible for displaying data to users. Sub-folders can correspond to different pages or sections of the site.
@@ -67,6 +66,8 @@ touch app/config/config.php app/controllers/.gitkeep app/models/.gitkeep app/vie
 3.  **/docs** : Contains all the documentation of the project.
 
 4.  **/logs** : Contains all the log files for recording errors and debug information.
+
+5.  **/config** : Configuration files, such as database connection parameters.
 
 ### Example of organization :
 

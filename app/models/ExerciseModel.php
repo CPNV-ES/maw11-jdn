@@ -1,6 +1,9 @@
 <?php
 require_once '../core/Model.php';
 
+/**
+ * ExerciseModel class
+ */
 class ExerciseModel extends Model
 {
     /**
