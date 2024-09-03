@@ -46,39 +46,52 @@ class Database
     }
 
     /**
-     * Query method to make database queries
+     * Query method to make simple database queries
      * @param mixed $query - sql query
-     * @param mixed $params - parameters of the query
      * @return bool|PDOStatement - statement of the query
      */
-    public function query($query, $params = [])
+    public function querySimpleExecute($query)
     {
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-        return $stmt;
+        $req = $this->pdo->query($query);
+
+        return $req;
+    }
+
+    /**
+     * Query method to make database queries with binds
+     * @param mixed $query - sql query
+     * @param mixed $binds - binds of the query
+     * @return bool|PDOStatement - statement of the query
+     */
+    public function queryPrepareExecute($query, $binds = [])
+    {
+        $req = $this->pdo->prepare($query);
+
+        foreach ($binds as $key => $element) {
+            $req->bindValue($key, $element['value'], $element['type']);
+        }
+
+        $req->execute($binds);
+        return $req;
     }
 
     /**
      * Fetch method to fetch specific data from database
      * @param mixed $query - sql query
-     * @param mixed $params - parameter of the query
      * @return mixed - statement of the query
      */
-    public function fetch($query, $params = [])
+    public function fetch($query)
     {
-        $stmt = $this->query($query, $params);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
      * Fetch method to fetch all data from database
      * @param mixed $query - sql query
-     * @param mixed $params - parameter of the query
      * @return array - statement of the query
      */
-    public function fetchAll($query, $params = [])
+    public function fetchAll($query)
     {
-        $stmt = $this->query($query, $params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }

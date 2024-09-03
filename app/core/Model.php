@@ -26,35 +26,43 @@ class Model
     }
 
     /**
-     * Query method to make database queries
+     * Query method to make simple database queries
      * @param mixed $query - sql query
-     * @param mixed $params - parameters of the query
      * @return bool|PDOStatement - statement of the query
      */
-    protected function query($sql, $params = [])
+    public function querySimpleExecute($query)
     {
-        return $this->db->query($sql, $params);
+        return $this->db->querySimpleExecute($query);
+    }
+
+    /**
+     * Query method to make database queries with binds
+     * @param mixed $query - sql query
+     * @param mixed $binds - binds of the query
+     * @return bool|PDOStatement - statement of the query
+     */
+    public function queryPrepareExecute($query, $binds = [])
+    {
+        return $this->db->queryPrepareExecute($query, $binds);
     }
 
     /**
      * Fetch method to fetch specific data from database
      * @param mixed $query - sql query
-     * @param mixed $params - parameter of the query
      * @return mixed - statement of the query
      */
-    protected function fetch($sql, $params = [])
+    protected function fetch($sql)
     {
-        return $this->db->fetch($sql, $params);
+        return $this->db->fetch($sql);
     }
 
     /**
      * Fetch method to fetch all data from database
      * @param mixed $query - sql query
-     * @param mixed $params - parameter of the query
      * @return array - statement of the query
      */
-    protected function fetchAll($sql, $params = [])
+    protected function fetchAll($sql)
     {
-        return $this->db->fetchAll($sql, $params);
+        return $this->db->fetchAll($sql);
     }
 }
