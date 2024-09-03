@@ -23,7 +23,7 @@ class Database
      */
     public function __construct($config)
     {
-        $dsn = "{$config['driver']}:{$config['database']}";
+        $dsn = "{$config['db']['driver']}:{$config['db']['database']}";
         try {
             $this->pdo = new PDO($dsn);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
