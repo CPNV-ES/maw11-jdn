@@ -50,8 +50,8 @@ class ExerciseModel extends Model
 
         $binds = [
             'id' => ['value' => $id, 'type' => PDO::PARAM_INT],
-            'title' => ['value' => $id, 'type' => PDO::PARAM_STR],
-            'description' => ['value' => $id, 'type' => PDO::PARAM_STR],
+            'title' => ['value' => $title, 'type' => PDO::PARAM_STR],
+            'description' => ['value' => $description, 'type' => PDO::PARAM_STR],
         ];
 
         $this->queryPrepareExecute($query, $binds);
