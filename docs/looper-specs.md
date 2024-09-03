@@ -33,9 +33,9 @@ Contre-exemples: ORM, composants de framework comme Symfony.
 
 ### Echéances
 
-Rendu intérmédiaire le 31.10.2022
+Rendu intérmédiaire le 31.10.2024
 
-Rendu final le 21.12.2022
+Rendu final le 21.12.2024
 
 ### Rendu
 
