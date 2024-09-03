@@ -46,15 +46,6 @@ class Database
     }
 
     /**
-     * Method to get the pdo connection
-     * @return PDO - pdo connection
-     */
-    public function getConnection()
-    {
-        return $this->pdo;
-    }
-
-    /**
      * Query method to make database queries
      * @param mixed $query - sql query
      * @param mixed $params - parameters of the query
