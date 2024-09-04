@@ -12,15 +12,19 @@ List all dependencies and their version needed by the project as :
 
 -   DataBase Engine : SQLite `php8.2-sqlite3`
     -   Make sure to enable the `pdo_sqlite` extension in your `php.ini` file
--   IDE used : [Visual Studio Code (v1.92.2)](https://code.visualstudio.com/updates/v1_92)
--   Package manager : Composer
+-   IDE used :
+    -   [Visual Studio Code (v1.92.2)](https://code.visualstudio.com/updates/v1_92)
+-   Package manager :
+    -   [Composer v2.7.9](https://getcomposer.org/download/)
 -   Packages :
     -   [Xdebug (v3.3.2)](https://xdebug.org/docs/install)
+    -   [PHPUnit (v9.6.20)](https://docs.phpunit.de/en/11.3/installation.html#installing-phpunit-with-composer)
 -   OS supported :
     -   [Debian 11 (bullseye)](https://www.debian.org/releases/bullseye/debian-installer/index)
     -   [macOS (Sonoma 14.5)](https://www.iclarified.com/91544/where-to-download-macos-sonoma)
     -   [Windows (10.22H2)](https://www.microsoft.com/fr-fr/software-download/windows10%20)
--   Languages : [PHP (8.2.23)](https://www.php.net/downloads.php)
+-   Languages :
+    -   [PHP (8.2.23)](https://www.php.net/downloads.php)
 -   Extensions :
     -   [EditorConfig for VS Code (v0.16.4)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
     -   [Prettier - Code formatter (v11.0.0)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
@@ -28,13 +32,21 @@ List all dependencies and their version needed by the project as :
 ### Configuration
 
 How to set up the database?
+
 How do you set the sensitive data?
 
 ## Deployment
 
 ### On dev environment
 
+> Run the dev server on your machine :
+
+```bash
+php -S localhost:8000 -t public/
+```
+
 How to get dependencies and build?
+
 How to run the tests?
 
 ### On integration environment
@@ -45,7 +57,7 @@ How to deploy the application outside the dev environment.
 
 -   Tip: try the tree bash command
 
-```shell
+```bash
 ├── app
 │   ├── controllers
 │   ├── core
