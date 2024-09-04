@@ -10,7 +10,8 @@ This project is designed to .... and the main features are ...
 
 List all dependencies and their version needed by the project as :
 
--   DataBase Engine : Sqlite `php8.2-sqlite3`
+-   DataBase Engine : SQLite `php8.2-sqlite3`
+    -   Make sure to enable the `pdo_sqlite` extension in your `php.ini` file
 -   IDE used : [Visual Studio Code v1.92.2](https://code.visualstudio.com/updates/v1_92)
 -   Package manager : Composer
 -   OS supported :
@@ -19,7 +20,8 @@ List all dependencies and their version needed by the project as :
     -   [Windows 10.22H2](https://www.microsoft.com/fr-fr/software-download/windows10%20)
 -   Languages : [PHP 8.2.23](https://www.php.net/downloads.php)
 -   Extensions :
-    -   [EditorConfig for VS Code v0.16.4](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+    -   [EditorConfig for VS Code (v0.16.4)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+    -   [Prettier - Code formatter (v11.0.0)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ### Configuration
 
@@ -79,7 +81,7 @@ How to deploy the application outside the dev environment.
 -   They need to know:
     -   How to propose a new feature (issue, pull request)
     -   [How to commit](https://www.conventionalcommits.org/en/v1.0.0/)
-    -   [How to use your workflow](https://nvie.com/posts/a-successful-git-branching-model/)
+    -   [How to use your workflow - GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
 
 ## License
 
@@ -87,4 +89,6 @@ How to deploy the application outside the dev environment.
 
 ## Contact
 
--   How to get in contact with you? Discord, Trello, Issue?
+-   David : <david.dieperink@eduvaud.ch>, [GitHub](https://github.com/dieperid)
+-   Julien : <julien.schneider@eduvaud.ch>, [GitHub](https://github.com/T5uy0)
+-   Nathan : <nathan.chauveau@eduvaud.ch>, [GitHub](https://github.com/NathanChauveau)
