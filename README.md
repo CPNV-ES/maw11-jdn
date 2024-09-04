@@ -85,6 +85,8 @@ How to deploy the application outside the dev environment.
 │   │   └── style.css
 │   ├── images
 │   └── index.php
+├── composer.json
+├── composer.lock
 └── README.md
 ```
 
