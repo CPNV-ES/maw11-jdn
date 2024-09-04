@@ -12,13 +12,15 @@ List all dependencies and their version needed by the project as :
 
 -   DataBase Engine : SQLite `php8.2-sqlite3`
     -   Make sure to enable the `pdo_sqlite` extension in your `php.ini` file
--   IDE used : [Visual Studio Code v1.92.2](https://code.visualstudio.com/updates/v1_92)
+-   IDE used : [Visual Studio Code (v1.92.2)](https://code.visualstudio.com/updates/v1_92)
 -   Package manager : Composer
+-   Packages :
+    -   [Xdebug (v3.3.2)](https://xdebug.org/docs/install)
 -   OS supported :
     -   [Debian 11 (bullseye)](https://www.debian.org/releases/bullseye/debian-installer/index)
     -   [macOS (Sonoma 14.5)](https://www.iclarified.com/91544/where-to-download-macos-sonoma)
-    -   [Windows 10.22H2](https://www.microsoft.com/fr-fr/software-download/windows10%20)
--   Languages : [PHP 8.2.23](https://www.php.net/downloads.php)
+    -   [Windows (10.22H2)](https://www.microsoft.com/fr-fr/software-download/windows10%20)
+-   Languages : [PHP (8.2.23)](https://www.php.net/downloads.php)
 -   Extensions :
     -   [EditorConfig for VS Code (v0.16.4)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
     -   [Prettier - Code formatter (v11.0.0)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
@@ -80,6 +82,7 @@ How to deploy the application outside the dev environment.
 
 -   They need to know:
     -   How to propose a new feature (issue, pull request)
+    -   [How to write code](https://www.php-fig.org/psr/psr-12/)
     -   [How to commit](https://www.conventionalcommits.org/en/v1.0.0/)
     -   [How to use your workflow - GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
 
