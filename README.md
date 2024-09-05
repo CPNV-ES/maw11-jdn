@@ -10,7 +10,7 @@ This project is designed to .... and the main features are ...
 
 List all dependencies and their version needed by the project as :
 
--   DataBase Engine : SQLite `php8.2-sqlite3`
+-   DataBase Engine : SQLite `php8.3-sqlite3`
     -   Make sure to enable the `pdo_sqlite` extension in your `php.ini` file
 -   IDE used :
     -   [Visual Studio Code (v1.92.2)](https://code.visualstudio.com/updates/v1_92)
@@ -24,7 +24,7 @@ List all dependencies and their version needed by the project as :
     -   [macOS (Sonoma 14.5)](https://www.iclarified.com/91544/where-to-download-macos-sonoma)
     -   [Windows (10.22H2)](https://www.microsoft.com/fr-fr/software-download/windows10%20)
 -   Languages :
-    -   [PHP (8.2.23)](https://www.php.net/downloads.php)
+    -   [PHP (8.3.11)](https://www.php.net/downloads.php)
 -   Extensions :
     -   [EditorConfig for VS Code (v0.16.4)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
     -   [Prettier - Code formatter (v11.0.0)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
