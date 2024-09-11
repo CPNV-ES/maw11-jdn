@@ -41,13 +41,31 @@ How do you set the sensitive data?
 
 ### On dev environment
 
-> Run the dev server on your machine :
+> Clone the repository
+
+```bash
+git clone https://github.com/CPNV-ES/maw11-jdn.git
+```
+
+> Setup `main` branch and init Git Flow for the project
+
+```bash
+git switch main
+
+git flow init
+```
+
+> Install dependencies
+
+```bash
+composer install
+```
+
+> Run dev server
 
 ```bash
 php -S localhost:8000 -t public/
 ```
-
-How to get dependencies and build?
 
 How to run the tests?
 
@@ -56,8 +74,6 @@ How to run the tests?
 How to deploy the application outside the dev environment.
 
 ## Directory structure
-
--   Tip: try the tree bash command
 
 ```bash
 ├── app
