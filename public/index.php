@@ -1,6 +1,14 @@
 <?php
 
-require_once '../app/core/Model.php';
+session_start();
+
+define('BASE_DIR', dirname(__FILE__) . '/..');
+define('APP_DIR', BASE_DIR . '/app');
+define('MODEL_DIR', APP_DIR . '/models');
+define('VIEW_DIR', APP_DIR . '/views');
+define('CONTROLLER_DIR', APP_DIR . '/controllers');
+
+require_once APP_DIR . '/core/Model.php';
 
 try {
     $model = new Model();
