@@ -30,7 +30,22 @@ try {
 
 <body>
     <!-- Le message de connexion sera affiché ici -->
-    <p>Test</p>
+    <a href="/exercises">Manage Exercise</a>
 </body>
 
 </html>
+
+<?php
+require '../app/controllers/ExerciseController.php';
+
+$request_uri = $_SERVER['REQUEST_URI'];
+
+if ($request_uri == '/exercises') {
+    (new ExerciseController())->manage();
+} else {
+    // Route not found
+    header("HTTP/1.0 404 Not Found");
+    echo "Page not found";
+}
+
+?>
