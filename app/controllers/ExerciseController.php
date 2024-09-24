@@ -1,11 +1,11 @@
 <?php
 
-require_once '../core/Controller.php';
+require_once APP_DIR . '/core/Controller.php';
 
 class ExerciseController extends Controller
 {
     public function manage()
     {
-        require_once '../views/home/manage-exercise.php';
+        require_once VIEW_DIR . '/home/manage-exercise.php';
     }
 }

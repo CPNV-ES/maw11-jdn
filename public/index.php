@@ -12,10 +12,22 @@ require_once APP_DIR . '/core/Model.php';
 
 try {
     $model = new Model();
-    echo "<p>Connection successfull !</p>";
 } catch (Exception $e) {
-    // Si la connexion échoue, afficher un message d'erreur
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
+}
+
+require CONTROLLER_DIR . '/ExerciseController.php';
+
+$request_uri = $_SERVER['REQUEST_URI'];
+
+if ($request_uri == '/') {
+} elseif ($request_uri == '/exercises') {
+    (new ExerciseController())->manage();
+    exit();
+} else {
+    // Route not found
+    header("HTTP/1.0 404 Not Found");
+    echo "Page not found";
 }
 ?>
 
@@ -34,18 +46,3 @@ try {
 </body>
 
 </html>
-
-<?php
-require '../app/controllers/ExerciseController.php';
-
-$request_uri = $_SERVER['REQUEST_URI'];
-
-if ($request_uri == '/exercises') {
-    (new ExerciseController())->manage();
-} else {
-    // Route not found
-    header("HTTP/1.0 404 Not Found");
-    echo "Page not found";
-}
-
-?>
