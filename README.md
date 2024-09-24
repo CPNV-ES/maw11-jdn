@@ -19,6 +19,7 @@ List all dependencies and their version needed by the project as :
 -   Packages :
     -   [Xdebug (v3.3.2)](https://xdebug.org/docs/install)
     -   [PHPUnit (v9.6.20)](https://docs.phpunit.de/en/11.3/installation.html#installing-phpunit-with-composer)
+    -   [Zend Engine (4.3.11)]
 -   OS supported :
     -   [Debian 11 (bullseye)](https://www.debian.org/releases/bullseye/debian-installer/index)
     -   [macOS (Sonoma 14.5)](https://www.iclarified.com/91544/where-to-download-macos-sonoma)
@@ -28,6 +29,7 @@ List all dependencies and their version needed by the project as :
 -   Extensions :
     -   [EditorConfig for VS Code (v0.16.4)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
     -   [Prettier - Code formatter (v11.0.0)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+    -   [PHP Tools for VSCode (v1.51.15986)](https://www.devsense.com/en/features#vscode)
 
 ### Configuration
 
@@ -39,13 +41,31 @@ How do you set the sensitive data?
 
 ### On dev environment
 
-> Run the dev server on your machine :
+> Clone the repository
+
+```bash
+git clone https://github.com/CPNV-ES/maw11-jdn.git
+```
+
+> Setup `main` branch and init Git Flow for the project
+
+```bash
+git switch main
+
+git flow init
+```
+
+> Install dependencies
+
+```bash
+composer install
+```
+
+> Run dev server
 
 ```bash
 php -S localhost:8000 -t public/
 ```
-
-How to get dependencies and build?
 
 How to run the tests?
 
@@ -54,8 +74,6 @@ How to run the tests?
 How to deploy the application outside the dev environment.
 
 ## Directory structure
-
--   Tip: try the tree bash command
 
 ```bash
 ├── app
