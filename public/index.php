@@ -17,18 +17,6 @@ try {
 }
 
 require CONTROLLER_DIR . '/ExerciseController.php';
-
-$request_uri = $_SERVER['REQUEST_URI'];
-
-if ($request_uri == '/') {
-} elseif ($request_uri == '/exercises') {
-    (new ExerciseController())->manage();
-    exit();
-} else {
-    // Route not found
-    header("HTTP/1.0 404 Not Found");
-    echo "Page not found";
-}
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +25,24 @@ if ($request_uri == '/') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Home</title>
 </head>
 
 <body>
-    <!-- Le message de connexion sera affiché ici -->
+    <?php
+    $request_uri = $_SERVER['REQUEST_URI'];
+
+    if ($request_uri == '/') {
+    } elseif ($request_uri == '/exercises') {
+        (new ExerciseController())->manage();
+        exit();
+    } else {
+        // Route not found
+        header("HTTP/1.0 404 Not Found");
+        echo "Page not found";
+    }
+    ?>
     <a href="/exercises">Manage Exercise</a>
 </body>
 
