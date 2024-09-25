@@ -12,11 +12,21 @@ require_once APP_DIR . '/core/Model.php';
 
 try {
     $model = new Model();
-    echo "<p>Connection successfull !</p>";
+    // echo "<p>Connection successfull !</p>";
 } catch (Exception $e) {
     // Si la connexion échoue, afficher un message d'erreur
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
 }
+
+require_once '../app/controllers/homeController.php';
+
+$request_uri = $_SERVER['REQUEST_URI'];
+if ($request_uri == "/exercises/new") {
+    //header('Location: http://localhost:8000/app/views/home/create-exercise.php ');
+    $controller = new HomeController();
+    $controller->createExercice();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +41,9 @@ try {
 <body>
     <!-- Le message de connexion sera affiché ici -->
     <p>Test</p>
+    <a href="/exercises/new">
+        create exercise
+    </a>
 </body>
 
 </html>
