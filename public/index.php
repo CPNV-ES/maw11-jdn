@@ -12,7 +12,6 @@ require_once APP_DIR . '/core/Model.php';
 
 try {
     $model = new Model();
-    echo "<p>Connection successfull !</p>";
 } catch (Exception $e) {
     // Si la connexion échoue, afficher un message d'erreur
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
