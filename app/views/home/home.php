@@ -1,26 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExerciceLooper</title>
+    <title>ExerciseLooper</title>
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="S7smEufdYxw9Ol5psCW4anMFDFHYPmZ/Y7to5tkRkDMlQLrzBxaHoFnjXw5XvePnLW1URrH1qucokYIhv1a1Sw==" />
+
+    <link rel="stylesheet" href="../../../public/css/style.css" />
 </head>
 
 <body>
-    <header>
-        <img src="" alt="">
-        <h1>
-            Exercice<br>Loopers
-        </h1>
+    <header class="dashboard">
+        <section class="container">
+            <p><img src="" /></p>
+            <h1>Exercise<br>Looper</h1>
+        </section>
     </header>
 
-    <main>
-        <div class="boutton-container">
-            <a href="">TAKE AN EXERCISE</a>
-            <a href="">CREATE AN EXERCISE</a>
-            <a href="">MANAGE AN EXERCISE</a>
-        </div>
+    <main class="container dashboard">
+        <section class="row">
+            <div class="column">
+                <a class="button answering column" href="/exercises/answering">Take an exercise</a>
+            </div>
+            <div class="column">
+                <a class="button managing column" href="/exercises/new">Create an exercise</a>
+            </div>
+            <div class="column">
+                <a class="button results column" href="/exercises">Manage an exercise</a>
+            </div>
+        </section>
     </main>
 </body>
 
