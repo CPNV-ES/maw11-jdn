@@ -17,6 +17,7 @@ try {
 }
 
 require CONTROLLER_DIR . '/ExerciseController.php';
+require CONTROLLER_DIR . '/HomeController.php';
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +36,7 @@ require CONTROLLER_DIR . '/ExerciseController.php';
     $request_uri = $_SERVER['REQUEST_URI'];
 
     if ($request_uri == '/') {
+        (new HomeController())->show();
     } elseif ($request_uri == '/exercises') {
         (new ExerciseController())->renderer($request_uri);
         exit();
@@ -44,7 +46,6 @@ require CONTROLLER_DIR . '/ExerciseController.php';
         echo "Page not found";
     }
     ?>
-    <a href="/exercises">Manage Exercise</a>
 </body>
 
 </html>
