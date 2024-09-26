@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/take-exercice.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/take-exercise.css">
 </head>
 
 <?php
@@ -34,7 +35,7 @@ $records = [
     <header>
         <section>
             <a href="/">
-                <img src="images/logo.png">
+                <img src="../images/logo.png">
             </a>
         </section>
     </header>
