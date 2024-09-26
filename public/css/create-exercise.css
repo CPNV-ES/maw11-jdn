@@ -1,41 +1,36 @@
-.exercise-label 
-{
+.exercise-label {
     margin: auto;
     margin-left: 2rem;
 }
-.managing 
-{
+
+.managing {
     background-color: #e0a458;
     border-color: #e0a458;
 }
-.container
-{
+
+.container {
     margin: auto;
-    max-width: 112.0rem;
-    padding: 0 2.0rem;
+    max-width: 112rem;
+    padding: 0 2rem;
     position: relative;
-    width: 100%;   
+    width: 100%;
 }
-main.container
-{
+
+main.container {
     margin-top: 5rem;
 }
-html
-{
+
+html {
     box-sizing: border-box;
     font-size: 62.5%;
 }
-div.field, div.actions
-{
-    margin-bottom: 10px;
-}
-header.heading section 
-{
+
+header.heading section {
     display: flex;
     height: 5rem;
 }
-header.heading 
-{
+
+header.heading {
     height: 5rem;
     color: white;
     display: block;
@@ -47,54 +42,71 @@ header.heading
     width: 100%;
     z-index: 1;
 }
-header.heading .exercise-label
-{
+header.heading .exercise-label {
     margin: auto;
     margin-left: 2rem;
 }
-input[type='submit']
-{
+
+input[type="submit"] {
     background-color: #9b4fca;
     border: 0.1rem solid #9b4fca;
-    border-radius: .4rem;
+    border-radius: 0.4rem;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     font-size: 1.1rem;
     font-weight: 700;
     height: 3.8rem;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     line-height: 3.8rem;
-    padding: 0 3.0rem;
+    padding: 0 3rem;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
 }
-input[type='text']
-{
+
+input[type="text"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     background-color: transparent;
     border: 0.1rem solid #d1d1d1;
-    border-radius: .4rem;
+    border-radius: 0.4rem;
     box-shadow: none;
     box-sizing: inherit;
-
-    padding: .6rem 1.0rem;
+    padding: 0.6rem 1rem;
     width: 100%;
 }
-div.field, div.actions 
-{
+
+div.field,
+div.actions {
     margin-bottom: 1opx;
 }
-h1 
-{
+
+h1 {
     font-size: 4.6rem;
     line-height: 1.2;
     font-weight: 300;
-    letter-spacing: -.1rem;
-    margin-bottom: 2.0rem;
+    letter-spacing: -0.1rem;
+    margin-bottom: 2rem;
     margin-top: 0;
+}
+
+form {
+    margin-bottom: 2.5rem;
+}
+
+input {
+    margin-bottom: 1.7rem;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+}
+
+label {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }

@@ -1,51 +1,23 @@
-html
-{
-    
-    line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
-}
-body 
-{
+body {
     color: #606c76;
-    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-size: 1.6em;
     font-weight: 300;
-    letter-spacing: .01em;
+    letter-spacing: 0.01em;
     list-style: 1.6;
     margin: 0;
     box-sizing: block;
 }
-main
-{
+main {
     display: block;
 }
-img 
-{
+img {
     max-width: 100%;
     border-style: none;
     height: 100%;
 }
-form 
-{
-    margin-bottom: 2.5rem;
-}
-input
-{
-    margin-bottom: 1.7rem;
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-}
-label
-{
-    display: block;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: .5rem;
-}
-h1
-{
+
+h1 {
     font-size: 2em;
     margin: 0.67em 0;
 }
-
