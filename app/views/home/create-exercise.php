@@ -12,7 +12,7 @@
     <header class="heading managing">
         <section class="container">
             <a href="/">
-                <img src="/images/logoLooper.png" />
+                <img class="header-img" src="/images/logoLooper.png" />
             </a>
             <span class="exercise-label">New exercise</span>
         </section>
@@ -30,8 +30,9 @@
                     name="exercises[title]"
                     id="exercise_title" />
             </div>
-            <div class="actions">
+            <div>
                 <input
+                    class="button"
                     type="submit"
                     name="commit"
                     value="Create Exercise"

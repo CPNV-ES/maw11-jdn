@@ -1,3 +1,7 @@
+header {
+    background-color: #419d78;
+}
+
 .row {
     display: flex;
     padding: 0;

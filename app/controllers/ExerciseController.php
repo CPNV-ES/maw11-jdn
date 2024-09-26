@@ -11,7 +11,7 @@ class ExerciseController extends Controller
                 require_once VIEW_DIR . '/home/manage-exercise.php';
                 exit();
             case '/exercises/new':
-                require_once VIEW_DIR . '/home/manage-exercise.php';
+                require_once VIEW_DIR . '/home/create-exercise.php';
                 exit();
             case '/exercises/answering':
                 require_once VIEW_DIR . '/home/manage-exercise.php';
