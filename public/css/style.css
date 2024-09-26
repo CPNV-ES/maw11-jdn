@@ -81,7 +81,7 @@ img
     border-style: none;
     height: 100%;
 }
-input[type='submit'],input[type='button'],input[type='reset']
+input[type='submit']
 {
     background-color: #9b4fca;
     border: 0.1rem solid #9b4fca;
@@ -114,11 +114,11 @@ input[type='text']
     padding: .6rem 1.0rem;
     width: 100%;
 }
-form,blockquote,dl,figure,ol,p,pre,table,ul 
+form 
 {
     margin-bottom: 2.5rem;
 }
-input, fieldset, select, textarea
+input
 {
     margin-bottom: 1.7rem;
     font-family: inherit;
@@ -130,7 +130,7 @@ div.field, div.actions
 {
     margin-bottom: 1opx;
 }
-label, legend
+label
 {
     display: block;
     font-size: 1.6rem;
@@ -142,7 +142,7 @@ h1
     font-size: 4.6rem;
     line-height: 1.2;
 }
-h1,h2,h3,h4,h5,h6 
+h1
 {
     font-weight: 300;
     letter-spacing: -.1rem;
