@@ -1,4 +1,12 @@
-body {
+html
+{
+    box-sizing: border-box;
+    font-size: 62.5%;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+}
+body 
+{
     color: #606c76;
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 1.6em;
@@ -8,10 +16,12 @@ body {
     margin: 0;
     box-sizing: block;
 }
-div.field, div.actions{
+div.field, div.actions
+{
     margin-bottom: 10px;
 }
-.container{
+.container
+{
     margin: auto;
     max-width: 112.0rem;
     padding: 0 2.0rem;
@@ -19,11 +29,13 @@ div.field, div.actions{
     width: 100%;
     
 }
-header.heading section {
+header.heading section 
+{
     display: flex;
     height: 5rem;
 }
-header.heading {
+header.heading 
+{
     height: 5rem;
     color: white;
     display: block;
@@ -35,28 +47,42 @@ header.heading {
     width: 100%;
     z-index: 1;
 }
-section{
-    display: block;
-    unicode-bidi: isolate;
-}
-main.container{
-    margin-top: 5rem;
-}
-.exercise-label {
+header.heading .exercise-label
+{
     margin: auto;
     margin-left: 2rem;
 }
-.managing {
+section
+{
+    display: block;
+    unicode-bidi: isolate;
+}
+main.container
+{
+    margin-top: 5rem;
+}
+main
+{
+    display: block;
+}
+.exercise-label 
+{
+    margin: auto;
+    margin-left: 2rem;
+}
+.managing 
+{
     background-color: #e0a458;
     background-color: #e0a458 ;
 }
-img {
+img 
+{
     max-width: 100%;
     border-style: none;
-    overflow: clip;
-    overflow-clip-margin: content-box;
+    height: 100%;
 }
-input[type='submit']{
+input[type='submit'],input[type='button'],input[type='reset']
+{
     background-color: #9b4fca;
     border: 0.1rem solid #9b4fca;
     border-radius: .4rem;
@@ -74,7 +100,8 @@ input[type='submit']{
     text-transform: uppercase;
     white-space: nowrap;
 }
-input[type='text']{
+input[type='text']
+{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -83,14 +110,43 @@ input[type='text']{
     border-radius: .4rem;
     box-shadow: none;
     box-sizing: inherit;
-    height: 3.8rem;
+
     padding: .6rem 1.0rem;
     width: 100%;
 }
-form {
+form,blockquote,dl,figure,ol,p,pre,table,ul 
+{
     margin-bottom: 2.5rem;
 }
-input{
-    margin-bottom: 1.5rem;
+input, fieldset, select, textarea
+{
+    margin-bottom: 1.7rem;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+}
+
+div.field, div.actions 
+{
+    margin-bottom: 1opx;
+}
+label, legend
+{
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+h1 
+{
+    font-size: 4.6rem;
+    line-height: 1.2;
+}
+h1,h2,h3,h4,h5,h6 
+{
+    font-weight: 300;
+    letter-spacing: -.1rem;
+    margin-bottom: 2.0rem;
+    margin-top: 0;
 }
 
