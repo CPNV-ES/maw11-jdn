@@ -10,6 +10,16 @@ class ExerciseController extends Controller
             case '/exercises':
                 require_once VIEW_DIR . '/home/manage-exercise.php';
                 exit();
+            case '/exercises/new':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+            case '/exercises/answering':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+            default:
+                header("HTTP/1.0 404 Not Found");
+                echo "Page not found";
+                exit();
         }
     }
 }
