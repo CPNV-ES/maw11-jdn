@@ -35,15 +35,17 @@ require CONTROLLER_DIR . '/HomeController.php';
     <?php
     $request_uri = $_SERVER['REQUEST_URI'];
 
-    if ($request_uri == '/') {
-        (new HomeController())->show();
-    } elseif ($request_uri == '/exercises') {
-        (new ExerciseController())->renderer($request_uri);
-        exit();
-    } else {
-        // Route not found
-        header("HTTP/1.0 404 Not Found");
-        echo "Page not found";
+    switch ($request_uri) {
+        case '/':
+            (new HomeController())->show();
+            exit();
+        case '/exercises':
+            (new ExerciseController())->renderer($request_uri);
+            exit();
+        default:
+            header("HTTP/1.0 404 Not Found");
+            echo "Page not found";
+            exit();
     }
     ?>
 </body>
