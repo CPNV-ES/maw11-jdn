@@ -1,0 +1,35 @@
+.row {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    text-decoration: none;
+}
+
+.button {
+    border-radius: 0.4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 1rem;
+}
+
+.button:hover {
+    background-color: #606c76;
+}
+
+.answering {
+    background-color: #9b4dca;
+}
+
+.managing {
+    background-color: #e0a458;
+}
+
+.results {
+    background-color: #419d78;
+}

@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="S7smEufdYxw9Ol5psCW4anMFDFHYPmZ/Y7to5tkRkDMlQLrzBxaHoFnjXw5XvePnLW1URrH1qucokYIhv1a1Sw==" />
 
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/home-style.css" />
 </head>
 
 <body>
@@ -21,15 +22,15 @@
     <main class="container-dashboard">
         <section class="row">
             <div class="column">
-                <a class="button answering column" href="/exercises/answering">Take an exercise</a>
+                <a class="button answering" href="">Take an exercise</a>
             </div>
 
             <div class="column">
-                <a class="button managing column" href="/exercises/new">Create an exercise</a>
+                <a class="button managing" href="">Create an exercise</a>
             </div>
 
             <div class="column">
-                <a class="button results column" href="/exercises">Manage an exercise</a>
+                <a class="button results" href="">Manage an exercise</a>
             </div>
         </section>
     </main>
