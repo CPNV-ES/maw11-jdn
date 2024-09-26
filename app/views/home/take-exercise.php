@@ -43,12 +43,18 @@ $records = [
         <title>ExerciseLooper</title>
         <ul class="ansering-list">
             <!--TODO : foreach record -->
-            <li class="row">
-                <div class="column card">
-                    <div class="title"><!-- title --> hello</div>
-                    <a class="button" href="/exercises/*id*/fulfillments/new">Take it</a>
-                </div>
-            </li>
+            <?php
+            foreach ($records as $record) {
+            ?>
+                <li class="row">
+                    <div class="column card">
+                        <div class="title"><?= $record['title'] ?> </div>
+                        <a class="button" href="/exercises/*id*/fulfillments/new">Take it</a>
+                    </div>
+                </li>
+            <?php
+            }
+            ?>
         </ul>
     </main>
 </body>
