@@ -18,7 +18,7 @@ try {
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
 }
 
-require_once '../app/controllers/homeController.php';
+require_once '../app/controllers/ExerciseController.php';
 
 $request_uri = $_SERVER['REQUEST_URI'];
 if ($request_uri == "/exercises/new") {
