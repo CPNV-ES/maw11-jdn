@@ -1,24 +1,40 @@
 body {
+    margin: 0;
     color: #606c76;
     font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-size: 1.6em;
     font-weight: 300;
     letter-spacing: 0.01em;
-    list-style: 1.6;
-    margin: 0;
-    box-sizing: block;
 }
 
-main {
+header {
+    display: flex;
+    justify-content: center;
+    background-color: #9b4dca;
+    letter-spacing: 1.1rem;
+}
+
+.heading {
+    height: 5rem;
+    color: white;
     display: block;
-}
-
-h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
+    max-width: 100%;
+    width: 100%;
 }
 
 header.heading section {
     display: flex;
     height: 5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 70%;
+    padding: 0 2rem;
+    position: relative;
+    width: 100%;
 }

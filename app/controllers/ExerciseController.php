@@ -1,10 +1,25 @@
 <?php
 
-class HomeController
+require_once APP_DIR . '/core/Controller.php';
+
+class ExerciseController extends Controller
 {
-    public function createExercice()
+    public function renderer($request_uri)
     {
-        include '../app/views/home/create-exercise.php';
-        exit();
+        switch ($request_uri) {
+            case '/exercises':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+            case '/exercises/new':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+            case '/exercises/answering':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+            default:
+                header("HTTP/1.0 404 Not Found");
+                echo "Page not found";
+                exit();
+        }
     }
 }

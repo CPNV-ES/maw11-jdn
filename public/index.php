@@ -12,20 +12,12 @@ require_once APP_DIR . '/core/Model.php';
 
 try {
     $model = new Model();
-    // echo "<p>Connection successfull !</p>";
 } catch (Exception $e) {
-    // Si la connexion échoue, afficher un message d'erreur
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
 }
 
-require_once '../app/controllers/ExerciseController.php';
-
-$request_uri = $_SERVER['REQUEST_URI'];
-if ($request_uri == "/exercises/new") {
-    //header('Location: http://localhost:8000/app/views/home/create-exercise.php ');
-    $controller = new HomeController();
-    $controller->createExercice();
-}
+require CONTROLLER_DIR . '/ExerciseController.php';
+require CONTROLLER_DIR . '/HomeController.php';
 
 ?>
 
@@ -35,15 +27,31 @@ if ($request_uri == "/exercises/new") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>ExerciseLooper</title>
 </head>
 
 <body>
-    <!-- Le message de connexion sera affiché ici -->
-    <p>Test</p>
-    <a href="/exercises/new">
-        create exercise
-    </a>
+    <?php
+    $request_uri = $_SERVER['REQUEST_URI'];
+
+    $exploded_uri = explode('/', $request_uri);
+    $base_uri = '/' . $exploded_uri[1];
+
+    switch ($base_uri) {
+        case '/':
+            (new HomeController())->show();
+            exit();
+        case '/exercises':
+            (new ExerciseController())->renderer($base_uri);
+            exit();
+        default:
+            header("HTTP/1.0 404 Not Found");
+            echo "Page not found";
+            exit();
+    }
+    ?>
 </body>
 
 </html>
