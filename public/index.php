@@ -36,7 +36,7 @@ require CONTROLLER_DIR . '/ExerciseController.php';
 
     if ($request_uri == '/') {
     } elseif ($request_uri == '/exercises') {
-        (new ExerciseController())->manage();
+        (new ExerciseController())->renderer($request_uri);
         exit();
     } else {
         // Route not found

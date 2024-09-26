@@ -4,8 +4,12 @@ require_once APP_DIR . '/core/Controller.php';
 
 class ExerciseController extends Controller
 {
-    public function manage()
+    public function renderer($request_uri)
     {
-        require_once VIEW_DIR . '/home/manage-exercise.php';
+        switch ($request_uri) {
+            case '/exercises':
+                require_once VIEW_DIR . '/home/manage-exercise.php';
+                exit();
+        }
     }
 }
