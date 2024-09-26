@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <meta charset="UTf-8" />
-<title>Exercises</title>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

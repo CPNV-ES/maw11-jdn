@@ -8,9 +8,11 @@ body {
     margin: 0;
     box-sizing: block;
 }
+
 main {
     display: block;
 }
+
 img {
     max-width: 100%;
     border-style: none;
@@ -20,4 +22,9 @@ img {
 h1 {
     font-size: 2em;
     margin: 0.67em 0;
+}
+
+header.heading section {
+    display: flex;
+    height: 5rem;
 }
