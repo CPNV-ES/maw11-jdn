@@ -18,6 +18,7 @@ try {
 
 require CONTROLLER_DIR . '/ExerciseController.php';
 require CONTROLLER_DIR . '/HomeController.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +44,7 @@ require CONTROLLER_DIR . '/HomeController.php';
             (new HomeController())->show();
             exit();
         case '/exercises':
-            (new ExerciseController())->renderer($base_uri);
+            (new ExerciseController())->renderer($request_uri);
             exit();
         default:
             header("HTTP/1.0 404 Not Found");

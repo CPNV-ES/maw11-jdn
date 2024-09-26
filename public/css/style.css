@@ -10,20 +10,18 @@ header {
     display: flex;
     justify-content: center;
     background-color: #9b4dca;
-    letter-spacing: 1.1rem;
+}
+
+.heading {
+    color: white;
+    display: block;
+    max-width: 100%;
+    width: 100%;
 }
 
 h1 {
     font-size: 2.5rem;
     line-height: 1.2;
-}
-
-.heading {
-    height: 5rem;
-    color: white;
-    display: block;
-    max-width: 100%;
-    width: 100%;
 }
 
 .container {
@@ -32,4 +30,27 @@ h1 {
     padding: 0 2rem;
     position: relative;
     width: 100%;
+}
+
+.button {
+    border-radius: 0.4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 1rem;
+}
+
+header.heading section {
+    display: flex;
+}
+
+.header-img {
+    max-width: 100%;
+    border-style: none;
+    height: 4rem;
 }

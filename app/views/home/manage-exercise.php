@@ -34,7 +34,7 @@ $records = [
     <header class="heading results">
         <div class="container">
             <a href="/">
-                <img src="images/looper-logo.png" alt="">
+                <img class="header-img" src="images/looper-logo.png" alt="">
             </a>
         </div>
     </header>
