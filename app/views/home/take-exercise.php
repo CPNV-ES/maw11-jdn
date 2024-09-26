@@ -33,7 +33,7 @@ $records = [
 
 <body>
     <header>
-        <section>
+        <section class="container">
             <a href="/">
                 <img src="../images/logo.png">
             </a>
