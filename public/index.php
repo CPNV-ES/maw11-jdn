@@ -13,10 +13,10 @@ require_once APP_DIR . '/core/Model.php';
 try {
     $model = new Model();
 } catch (Exception $e) {
-    // Si la connexion échoue, afficher un message d'erreur
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
 }
 
+require CONTROLLER_DIR . '/ExerciseController.php';
 require CONTROLLER_DIR . '/HomeController.php';
 ?>
 
@@ -26,6 +26,8 @@ require CONTROLLER_DIR . '/HomeController.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Home</title>
 </head>
 
@@ -35,6 +37,8 @@ require CONTROLLER_DIR . '/HomeController.php';
 
     if ($request_uri == '/') {
         (new HomeController())->show();
+    } elseif ($request_uri == '/exercises') {
+        (new ExerciseController())->renderer($request_uri);
         exit();
     } else {
         // Route not found
@@ -42,7 +46,6 @@ require CONTROLLER_DIR . '/HomeController.php';
         echo "Page not found";
     }
     ?>
-    <p>Index.php</p>
 </body>
 
 </html>
