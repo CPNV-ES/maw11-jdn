@@ -5,10 +5,11 @@ require_once APP_DIR . '/core/Controller.php';
 class ExerciseController extends Controller
 {
 
-    public function renderer($request_uri)
+    public function renderer($request_uri, $redirect_page)
     {
+        $uri = $request_uri . $redirect_page;
 
-        switch ($request_uri) {
+        switch ($uri) {
             case '/exercises':
                 require_once VIEW_DIR . '/home/manage-exercise.php';
                 exit();
