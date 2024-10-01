@@ -6,10 +6,6 @@ INSERT INTO status (name) VALUES ('edit');
 INSERT INTO status (name) VALUES ('answering');
 INSERT INTO status (name) VALUES ('closed');
 
-INSERT INTO fields (label, id_fields_type) VALUES ('Fields with Type 1', 1);
-INSERT INTO fields (label, id_fields_type) VALUES ('Fields with Type 2', 2);
-INSERT INTO fields (label, id_fields_type) VALUES ('Fields with Type 3', 3);
-
 INSERT INTO exercises (title, id_status) VALUES ('Exercise with Status 1', 1);
 INSERT INTO exercises (title, id_status) VALUES ('Exercise with Status 2', 2);
 INSERT INTO exercises (title, id_status) VALUES ('Exercise with Status 3', 3);
