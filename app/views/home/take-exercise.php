@@ -41,7 +41,7 @@ $records = [
     </header>
     <main class="container">
         <title>ExerciseLooper</title>
-        <ul class="ansering-list">
+        <ul class="answering-list">
             <!--TODO : foreach record -->
             <?php
             foreach ($records as $record) {
