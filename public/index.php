@@ -37,11 +37,6 @@ require CONTROLLER_DIR . '/HomeController.php';
 
     $exploded_uri = explode('/', $request_uri);
     $base_uri = '/' . $exploded_uri[1];
-    if ($exploded_uri[2] !== null) {
-        $redirect = '/' . $exploded_uri[2];
-    } else {
-        $redirect = '';
-    }
 
 
     switch ($base_uri) {
@@ -49,7 +44,7 @@ require CONTROLLER_DIR . '/HomeController.php';
             (new HomeController())->show();
             exit();
         case '/exercises':
-            (new ExerciseController())->renderer($base_uri, $redirect);
+            (new ExerciseController())->renderer($request_uri);
             exit();
         default:
             header("HTTP/1.0 404 Not Found");
