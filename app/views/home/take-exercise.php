@@ -49,7 +49,7 @@ $records = [
                 <li class="row">
                     <div class="column card">
                         <div class="title"><?= $record['title'] ?> </div>
-                        <a class="button" href="/exercises/*id*/fulfillments/new">Take it</a>
+                        <a class="button" href="/exercises/<?= $record['id'] ?>/fulfillments/new">Take it</a>
                     </div>
                 </li>
             <?php
