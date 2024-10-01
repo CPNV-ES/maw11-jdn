@@ -44,14 +44,12 @@ class ExerciseModel extends Model
      * @param mixed $description - description of exercise
      * @return void
      */
-    public function createExercise($id, $title, $description)
+    public function createExercise($title)
     {
-        $query = "INSERT INTO exercise (id, title, description) VALUES (NULL,:title,:description)";
+        $query = "INSERT INTO exercise (title) VALUES (:title)";
 
         $binds = [
-            'id' => ['value' => $id, 'type' => PDO::PARAM_INT],
             'title' => ['value' => $title, 'type' => PDO::PARAM_STR],
-            'description' => ['value' => $description, 'type' => PDO::PARAM_STR],
         ];
 
         $this->queryPrepareExecute($query, $binds);

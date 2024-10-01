@@ -13,6 +13,12 @@ class ExerciseController extends Controller
             case '/exercises/new':
                 require_once VIEW_DIR . '/home/create-exercise.php';
                 exit();
+            case '/exercises/fields':
+                require_once VIEW_DIR . '/home/field-exercice.php';
+                exit();
+            case '/exercises/new-fields':
+                require_once VIEW_DIR . '/home/field-exercice.php';
+                exit();
             case '/exercises/answering':
                 require_once VIEW_DIR . '/home/manage-exercise.php';
                 exit();

@@ -22,12 +22,12 @@
         <title>ExerciseLooper</title>
 
         <h1>New Exercise</h1>
-        <form action="/exercises" method="post" accept-charset="UTF-8">
+        <form action="/exercises/new-fields" method="post" accept-charset="UTF-8">
             <div class="field">
                 <label for="exercise_title">Title</label>
                 <input
                     type="text"
-                    name="exercises[title]"
+                    name="exercises_title"
                     id="exercise_title" />
             </div>
             <div>
