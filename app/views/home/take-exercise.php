@@ -40,7 +40,6 @@ $records = [
         </section>
     </header>
     <main class="container">
-        <title>ExerciseLooper</title>
         <ul class="answering-list">
             <!--TODO : foreach record -->
             <?php
