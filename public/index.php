@@ -39,6 +39,7 @@ require CONTROLLER_DIR . '/HomeController.php';
     $exploded_uri = explode('/', $request_uri);
     $base_uri = '/' . $exploded_uri[1];
 
+
     switch ($base_uri) {
         case '/':
             (new HomeController())->show();
