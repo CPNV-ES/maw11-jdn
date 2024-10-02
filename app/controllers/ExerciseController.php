@@ -17,6 +17,7 @@ class ExerciseController extends Controller
                 require_once VIEW_DIR . '/home/field-exercice.php';
                 exit();
             case '/exercises/new-fields':
+                
                 require_once VIEW_DIR . '/home/field-exercice.php';
                 exit();
             case '/exercises/answering':
@@ -28,4 +29,6 @@ class ExerciseController extends Controller
                 exit();
         }
     }
+
+
 }
