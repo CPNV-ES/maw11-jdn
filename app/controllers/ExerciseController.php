@@ -4,6 +4,7 @@ require_once APP_DIR . '/core/Controller.php';
 
 class ExerciseController extends Controller
 {
+
     public function renderer($request_uri)
     {
         switch ($request_uri) {
@@ -21,7 +22,7 @@ class ExerciseController extends Controller
                 require_once VIEW_DIR . '/home/field-exercice.php';
                 exit();
             case '/exercises/answering':
-                require_once VIEW_DIR . '/home/manage-exercise.php';
+                require_once VIEW_DIR . '/home/take-exercise.php';
                 exit();
             default:
                 header("HTTP/1.0 404 Not Found");
