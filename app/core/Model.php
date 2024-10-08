@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Database.php';
+require_once APP_DIR . '/core/Database.php';
 
 /**
  * Class for the default Model

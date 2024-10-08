@@ -1,7 +1,8 @@
 <?php
 
+require_once APP_DIR . '/core/Database.php';
+
 use PHPUnit\Framework\TestCase;
-use App\Core\Database;
 
 class DatabaseText extends TestCase
 {
