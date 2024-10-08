@@ -28,7 +28,7 @@ class Database
             $this->pdo = new PDO($dsn);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Connection error to the database : " . $e->getMessage());
+            throw new PDOException("Connection error to the database : " . $e->getMessage());
         }
     }
 
