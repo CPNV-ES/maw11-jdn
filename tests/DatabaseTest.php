@@ -30,6 +30,66 @@ class DatabaseTest extends TestCase
         $instanceProperty->setValue(null);
     }
 
+    /**
+     * Initializes the database and creates the necessary tables.
+     * Optionally inserts predefined data if $insertData is true.
+     * 
+     * @param bool $insertData If true, inserts predefined data into the exercises table.
+     */
+    private function initializeDatabase(bool $insertData = false)
+    {
+        $database = new Database($this->config);
+
+        // Create the 'status' table if it doesn't exist.
+        $database->querySimpleExecute("
+            CREATE TABLE IF NOT EXISTS status (
+                id_status INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL
+            );
+        ");
+
+        // Create the 'exercises' table if it doesn't exist.
+        $database->querySimpleExecute("
+            CREATE TABLE IF NOT EXISTS exercises (
+                id_exercises INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                id_status INTEGER,
+                FOREIGN KEY (id_status) REFERENCES status(id_status)
+            );
+        ");
+
+        // Insert predefined data if $insertData is true.
+        if ($insertData) {
+            // Insert data into the 'status' table.
+            $database->querySimpleExecute("
+                INSERT INTO status (name) VALUES 
+                ('edit'),
+                ('answering'),
+                ('closed');
+            ");
+
+            // Insert data into the 'exercises' table, referencing the 'status' table.
+            $database->querySimpleExecute("
+                INSERT INTO exercises (title, id_status) VALUES 
+                ('Exercise with Status 1', 1),
+                ('Exercise with Status 2', 2);
+            ");
+        }
+    }
+
+    /**
+     * Drops the tables from the database to ensure a clean state for each test.
+     */
+    private function dropTables($database)
+    {
+        $database->querySimpleExecute("DROP TABLE IF EXISTS exercises;");
+        $database->querySimpleExecute("DROP TABLE IF EXISTS status;");
+    }
+
+    // ===========================
+    // SECTION: Database Connection Tests
+    // ===========================
+
     public function testDatabaseConnectionSuccess()
     {
         // Given: A valid configuration for the database
@@ -65,6 +125,10 @@ class DatabaseTest extends TestCase
         $this->fail('Expected PDOException was not thrown.');
     }
 
+    // ===========================
+    // SECTION: getInstance Tests
+    // ===========================
+
     public function testGetInstanceCreatesNewInstanceWhenNoneExists()
     {
         // Given: Load the database configuration.
@@ -90,5 +154,50 @@ class DatabaseTest extends TestCase
 
         // Then: Verify that both instances are the same.
         $this->assertSame($firstInstance, $secondInstance, "getInstance should return the same instance if one already exists.");
+    }
+
+    // ===========================
+    // SECTION: querySimpleExecute Tests
+    // ===========================
+
+    public function testQuerySimpleExecuteReturnsEmptyResultWhenTableIsEmpty()
+    {
+        $database = new Database($this->config);
+
+        $this->dropTables($database);
+
+        // Given: The 'exercises' table is empty
+        $this->initializeDatabase(false);
+
+        // When: The querySimpleExecute method is called with a SELECT query.
+        $query = 'SELECT * FROM exercises;';
+        $statement = $database->querySimpleExecute($query);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Then: The result should be an empty array.
+        $this->assertEmpty($results, "The query should return an empty result set when the exercises table is empty.");
+    }
+
+    public function testQuerySimpleExecuteReturnsDataWhenTableIsNotEmpty()
+    {
+        $database = new Database($this->config);
+
+        $this->dropTables($database);
+
+        // Given: The 'exercises' table is populated with data
+        $this->initializeDatabase(true);
+
+        // When: The querySimpleExecute method is called with a SELECT query.
+        $query = 'SELECT * FROM exercises;';
+        $statement = $database->querySimpleExecute($query);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Then: The result should match the predefined data.
+        $expected = [
+            ['id_exercises' => '1', 'title' => 'Exercise with Status 1', 'id_status' => '1'],
+            ['id_exercises' => '2', 'title' => 'Exercise with Status 2', 'id_status' => '2']
+        ];
+
+        $this->assertEquals($expected, $results, "The query should return all the data from the exercises table.");
     }
 }
