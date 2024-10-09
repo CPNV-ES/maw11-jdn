@@ -10,6 +10,8 @@ class DatabaseTest extends TestCase
 {
     protected $config;
 
+    protected $database;
+
     protected function setUp(): void
     {
         // Set up the configuration array
@@ -19,6 +21,8 @@ class DatabaseTest extends TestCase
                 'database' => __DIR__ . '/db/database_test.sqlite',
             ],
         ];
+
+        $this->database = new Database($this->config);
     }
 
     protected function tearDown(): void
@@ -38,8 +42,6 @@ class DatabaseTest extends TestCase
      */
     private function initializeDatabase(bool $insertData = false)
     {
-        $database = new Database($this->config);
-
         $sqlFilePath = __DIR__ . '/db/create_database_test.sql';
         $file = file_get_contents($sqlFilePath);
 
@@ -50,14 +52,14 @@ class DatabaseTest extends TestCase
         foreach ($sqlCommands as $command) {
             $command = trim($command);
             if (!empty($command)) {
-                $database->querySimpleExecute($command);
+                $this->database->querySimpleExecute($command);
             }
         }
 
         // Insert predefined data if $insertData is true.
         if ($insertData) {
             // Insert data into the 'status' table.
-            $database->querySimpleExecute("
+            $this->database->querySimpleExecute("
                 INSERT INTO status (name) VALUES 
                 ('edit'),
                 ('answering'),
@@ -65,7 +67,7 @@ class DatabaseTest extends TestCase
             ");
 
             // Insert data into the 'exercises' table, referencing the 'status' table.
-            $database->querySimpleExecute("
+            $this->database->querySimpleExecute("
                 INSERT INTO exercises (title, id_status) VALUES 
                 ('Exercise with Status 1', 1),
                 ('Exercise with Status 2', 2);
@@ -76,10 +78,10 @@ class DatabaseTest extends TestCase
     /**
      * Drops the tables from the database to ensure a clean state for each test.
      */
-    private function dropTables($database)
+    private function dropTables()
     {
-        $database->querySimpleExecute("DROP TABLE IF EXISTS exercises;");
-        $database->querySimpleExecute("DROP TABLE IF EXISTS status;");
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS exercises;");
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS status;");
     }
 
     // ===========================
@@ -158,16 +160,14 @@ class DatabaseTest extends TestCase
 
     public function testQuerySimpleExecuteReturnsEmptyResultWhenTableIsEmpty()
     {
-        $database = new Database($this->config);
-
-        $this->dropTables($database);
+        $this->dropTables();
 
         // Given: The 'exercises' table is empty
         $this->initializeDatabase(false);
 
         // When: The querySimpleExecute method is called with a SELECT query.
         $query = 'SELECT * FROM exercises;';
-        $statement = $database->querySimpleExecute($query);
+        $statement = $this->database->querySimpleExecute($query);
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         // Then: The result should be an empty array.
@@ -176,16 +176,14 @@ class DatabaseTest extends TestCase
 
     public function testQuerySimpleExecuteReturnsDataWhenTableIsNotEmpty()
     {
-        $database = new Database($this->config);
-
-        $this->dropTables($database);
+        $this->dropTables();
 
         // Given: The 'exercises' table is populated with data
         $this->initializeDatabase(true);
 
         // When: The querySimpleExecute method is called with a SELECT query.
         $query = 'SELECT * FROM exercises;';
-        $statement = $database->querySimpleExecute($query);
+        $statement = $this->database->querySimpleExecute($query);
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         // Then: The result should match the predefined data.
@@ -195,5 +193,64 @@ class DatabaseTest extends TestCase
         ];
 
         $this->assertEquals($expected, $results, "The query should return all the data from the exercises table.");
+    }
+
+    // ===========================
+    // SECTION: queryPrepareExecute Tests
+    // ===========================
+
+    public function testQueryPrepareExecuteReturnsSingleRecord()
+    {
+        // Given: The database is already initialized with data
+        $this->initializeDatabase(true);
+
+        // When: The queryPrepareExecute method is called with a parameterized query
+        $query = "SELECT * FROM exercises WHERE id_exercises = :id";
+
+        $binds = [
+            'id' => ['value' => 1, 'type' => PDO::PARAM_INT]
+        ];
+
+        $result = $this->database->queryPrepareExecute($query, $binds);
+
+        // Fetch the results
+        $record = $result->fetch(PDO::FETCH_ASSOC);
+
+        // Then: The method must return only the record corresponding to id_exercises = 1
+        $expected = [
+            'id_exercises' => 1,
+            'title' => 'Exercise with Status 1',
+            'id_status' => 1
+        ];
+
+        $this->assertEquals($expected, $record, "The record corresponding to id_exercises = 1 should be returned.");
+    }
+
+    public function testQueryPrepareExecuteReturnsSingleRecordWithStatusName()
+    {
+        // Given: The database is already initialized with data
+        $this->initializeDatabase(true);
+
+        // When: The queryPrepareExecute method is called with a parameterized query
+        $query = "SELECT status.name AS status_name
+            FROM exercises
+            JOIN status ON status.id_status = exercises.id_status 
+            WHERE id_exercises = :id
+        ";
+
+        $binds = [
+            'id' => ['value' => 1, 'type' => PDO::PARAM_INT]
+        ];
+
+        $result = $this->database->queryPrepareExecute($query, $binds);
+        $record = $result->fetch(PDO::FETCH_ASSOC);
+
+        // Then: The method must return the status name corresponding to id_exercises = 1
+        $expected = [
+            'status_name' => 'edit'
+        ];
+
+        // Assert that the result matches the expected output
+        $this->assertEquals($expected, $record, "The status name corresponding to id_exercises = 1 should be returned.");
     }
 }

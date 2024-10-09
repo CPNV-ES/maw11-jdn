@@ -71,7 +71,9 @@ class Database
             $req->bindValue($key, $element['value'], $element['type']);
         }
 
-        return $req->execute($binds);
+        $req->execute();
+
+        return $req;
     }
 
     /**
