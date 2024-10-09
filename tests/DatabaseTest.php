@@ -16,7 +16,7 @@ class DatabaseTest extends TestCase
         $this->config = [
             'db' => [
                 'driver' => 'sqlite',
-                'database' => __DIR__ . '/../db/database.sqlite',
+                'database' => __DIR__ . '/db/database_test.sqlite',
             ],
         ];
     }
@@ -40,23 +40,19 @@ class DatabaseTest extends TestCase
     {
         $database = new Database($this->config);
 
-        // Create the 'status' table if it doesn't exist.
-        $database->querySimpleExecute("
-            CREATE TABLE IF NOT EXISTS status (
-                id_status INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL
-            );
-        ");
+        $sqlFilePath = __DIR__ . '/db/create_database_test.sql';
+        $file = file_get_contents($sqlFilePath);
 
-        // Create the 'exercises' table if it doesn't exist.
-        $database->querySimpleExecute("
-            CREATE TABLE IF NOT EXISTS exercises (
-                id_exercises INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                id_status INTEGER,
-                FOREIGN KEY (id_status) REFERENCES status(id_status)
-            );
-        ");
+        // Split the SQL commands by semicolon
+        $sqlCommands = explode(';', $file);
+
+        // Execute each SQL command
+        foreach ($sqlCommands as $command) {
+            $command = trim($command);
+            if (!empty($command)) {
+                $database->querySimpleExecute($command);
+            }
+        }
 
         // Insert predefined data if $insertData is true.
         if ($insertData) {
@@ -132,7 +128,7 @@ class DatabaseTest extends TestCase
     public function testGetInstanceCreatesNewInstanceWhenNoneExists()
     {
         // Given: Load the database configuration.
-        $config = require __DIR__ . '../../config/config.php';
+        $config = $this->config;
 
         // When: Call the getInstance method with the configuration.
         $instance = Database::getInstance($config);
@@ -144,7 +140,7 @@ class DatabaseTest extends TestCase
     public function testGetInstanceReturnsExistingInstance()
     {
         // Given: Load the database configuration.
-        $config = require __DIR__ . '../../config/config.php';
+        $config = $this->config;
 
         // Create the first instance.
         $firstInstance = Database::getInstance($config);
