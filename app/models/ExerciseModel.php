@@ -1,5 +1,5 @@
 <?php
-require_once '../core/Model.php';
+require_once APP_DIR . '/core/Model.php';
 
 /**
  * ExerciseModel class
@@ -7,23 +7,30 @@ require_once '../core/Model.php';
 class ExerciseModel extends Model
 {
     /**
-     * Method to get all exercise
-     * @return array - array of exercises 
+     * Id of the exercise
+     * @var 
      */
-    public function getAllExercise()
-    {
-        $query = "SELECT * FROM exercises";
-
-        $req = $this->querySimpleExecute($query);
-
-        return $this->fetchAll($req);
-    }
+    public $id = null;
 
     /**
      * Method to get all exercise
      * @return array - array of exercises 
      */
-    public function getOneExercise($id)
+    public function getAll()
+    {
+        $query = "SELECT * FROM exercises";
+
+        $req = $this->db->querySimpleExecute($query);
+
+        return $this->db->fetchAll($req);
+    }
+
+    /**
+     * Method to get one exercise
+     * @param mixed $id
+     * @return mixed
+     */
+    public function getOne($id)
     {
         $query = "SELECT * FROM exercises where id = :id";
 
@@ -31,27 +38,37 @@ class ExerciseModel extends Model
             'idExercise' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->queryPrepareExecute($query, $binds);
-        $exercise = $this->fetch($req);
+        $req = $this->db->queryPrepareExecute($query, $binds);
+        $exercise = $this->db->fetch($req);
 
         return $exercise;
     }
 
     /**
-     * Method to create exercise
-     * @param mixed $id - id of exercise
-     * @param mixed $title - title of exercise
-     * @param mixed $description - description of exercise
-     * @return void
+     * Method to create an exercise
+     * @param mixed $title
+     * @return bool|string
      */
-    public function createExercise($title)
+    public function create($title)
     {
-        $query = "INSERT INTO exercise (title) VALUES (:title)";
+        $query = "INSERT INTO exercises (title, id_status) VALUES (:title,:id_status)";
 
         $binds = [
             'title' => ['value' => $title, 'type' => PDO::PARAM_STR],
+            'id_status' => ['value'=> 1, 'type'=> PDO::PARAM_INT]
         ];
 
-        $this->queryPrepareExecute($query, $binds);
+        $response = null;
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            $response = $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            return false;
+        }
+
+        $this->id = is_string($response) ? $response : null;
+
+        return $this->id ?? false;
     }
 }
