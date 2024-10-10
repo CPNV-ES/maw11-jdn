@@ -20,6 +20,9 @@ class ExerciseController extends Controller
             case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
                 require_once VIEW_DIR . '/home/result-exercise.php';
                 exit();
+            case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new.*/', $request_uri) ? true : false):
+                require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                exit();
             default:
                 header("HTTP/1.0 404 Not Found");
                 echo "Page not found";
