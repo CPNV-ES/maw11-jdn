@@ -34,13 +34,13 @@ CREATE TABLE anwseredExercises (
     date DATETIME NOT NULL,
     id_exercises INTEGER,
     FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises) 
-)
+);
 
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
     id_fields NOT NULL,
     id_answeredexercises NOT NULL,
-    FOREIGN KEY (id_fields) REFERENCES fields(id_fields),¨
+    FOREIGN KEY (id_fields) REFERENCES fields(id_fields),
     FOREIGN KEY (id_answeredexercises) REFERENCES answeredexercises( id_answeredexercises)
 )
