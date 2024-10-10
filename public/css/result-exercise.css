@@ -1,5 +1,5 @@
 th {
-     text-align:left;
+    text-align:left;
 }
 table{
     border-spacing: 0;
@@ -7,17 +7,12 @@ table{
 td, th {
     border-bottom: 0.1rem solid #e1e1e1;
     padding: 1rem 1rem;
-    text-align: left;
 }
 .XIcon{
-color: red;
+    color: red;
 }
 .VIcon{
     color: green;
-}
-header{
-    color: white;
-   
 }
 header.heading .exercise-label {
     margin: auto;
