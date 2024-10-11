@@ -32,10 +32,10 @@ class ExerciseModel extends Model
      */
     public function getOne($id)
     {
-        $query = "SELECT * FROM exercises where id = :id";
+        $query = "SELECT title FROM exercises where id_exercises = :id_exercises";
 
         $binds = [
-            'idExercise' => ['value' => $id, 'type' => PDO::PARAM_INT]
+            'id_exercises' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
