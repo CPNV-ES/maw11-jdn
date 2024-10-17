@@ -47,6 +47,7 @@ class ExerciseModel extends Model
     /**
      * Method to create an exercise
      * @param mixed $title
+     * Set id_status to 1 because the exercise is in editing
      * @return bool|string
      */
     public function create($title)
