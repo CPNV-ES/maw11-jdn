@@ -19,7 +19,7 @@ class ExerciseController extends Controller
             }
         } else {
             
-            if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri,$id)) {
+            if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
             }
 
