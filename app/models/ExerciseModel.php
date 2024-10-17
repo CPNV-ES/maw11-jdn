@@ -64,7 +64,7 @@ class ExerciseModel extends Model
             $this->db->queryPrepareExecute($query, $binds);
             $response = $this->db->lastInsertId();
         } catch (PDOException $e) {
-            return false;
+            return "Connection failed: " . $e->getMessage();
         }
 
         $this->id = is_string($response) ? $response : null;
