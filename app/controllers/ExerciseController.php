@@ -63,8 +63,9 @@ class ExerciseController extends Controller
     }
 
     public function getNameExerciseById($id) {
-        $exercise = new ExerciseModel();
-        $exerciseName = $exercise->getOne($id);
-        return $exerciseName;
+        $exerciseModel = new ExerciseModel();
+        $exercise = $exerciseModel->getOne($id);
+        
+        return $exercise['name'];
     }
 }
