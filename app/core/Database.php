@@ -28,7 +28,7 @@ class Database
             $this->pdo = new PDO($dsn);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Connection error to the database : " . $e->getMessage());
+            throw new PDOException("Connection error to the database : " . $e->getMessage());
         }
     }
 
@@ -71,7 +71,9 @@ class Database
             $req->bindValue($key, $element['value'], $element['type']);
         }
 
-        return $req->execute($binds);
+        $req->execute();
+
+        return $req;
     }
 
     /**
@@ -92,5 +94,13 @@ class Database
     public function fetchAll($query)
     {
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Method to return last id inserted in the database
+     * @return bool|string
+     */
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
     }
 }
