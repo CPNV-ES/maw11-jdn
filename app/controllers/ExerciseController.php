@@ -66,6 +66,6 @@ class ExerciseController extends Controller
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
         
-        return $exercise['name'];
+        return $exercise['title'];
     }
 }
