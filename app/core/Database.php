@@ -95,4 +95,12 @@ class Database
     {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Method to return last id inserted in the database
+     * @return bool|string
+     */
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
+    }
 }
