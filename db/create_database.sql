@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS exercises;
 DROP TABLE IF EXISTS fields;
 DROP TABLE IF EXISTS fields_type;
 DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS anwseredExercises;
 DROP TABLE IF EXISTS answers;
 
 CREATE TABLE fields_type (
@@ -31,18 +30,9 @@ CREATE TABLE fields (
     FOREIGN KEY (id_fields_type) REFERENCES fields_type(id_fields_type)
 );
 
-CREATE TABLE anwseredExercises (
-    id_anwseredExercises INTEGER PRIMARY KEY AUTOINCREMENT,
-    date DATETIME NOT NULL,
-    id_exercises INTEGER,
-    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises) 
-)
-
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
     id_fields NOT NULL,
-    id_answeredexercises NOT NULL,
-    FOREIGN KEY (id_fields) REFERENCES fields(id_fields),
-    FOREIGN KEY (id_answeredexercises) REFERENCES answeredexercises(id_answeredexercises)
-)
+    FOREIGN KEY (id_fields) REFERENCES fields(id_fields)
+);
