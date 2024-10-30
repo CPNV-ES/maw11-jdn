@@ -72,4 +72,18 @@ class ExerciseModel extends Model
 
         return $this->id ?? false;
     }
+
+    public function delete ($id) {
+
+        $query = "DELETE FROM exercises WHERE id = :id;";
+
+        $binds = ['id' => ['value' => $id, 'type' => PDO::PARAM_INT]];
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return $response = true;
+        } catch (PDOException $e) {
+            return "Connection failed: " . $e->getMessage();
+        }
+    }
 }

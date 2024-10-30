@@ -21,6 +21,9 @@ class ExerciseController extends Controller
             
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/",$request_uri,$id)) {
+                $this->deleteExercice($id);
+                $request_uri = '/exercises';
             }
 
             switch ($request_uri) {
@@ -60,6 +63,12 @@ class ExerciseController extends Controller
         }
         
         header('Location: /exercises/' . $exercise->id . '/fields');
+    }
+
+    public function deleteExercice ($id) {
+        $exercise = new ExerciseModel();
+        $response = $exercise->delete($id);
+        header('Location: /exercises');
     }
 
     public function getNameExerciseById($id) {
