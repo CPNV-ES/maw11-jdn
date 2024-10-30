@@ -10,7 +10,7 @@
 
 <?php
 
-$records = [
+$exercises = [
     [
         'id' => 1,
         'title' => 'Record 1 Title',
@@ -43,12 +43,12 @@ $records = [
         <ul class="answering-list">
             <!--TODO : foreach record -->
             <?php
-            foreach ($records as $record) {
+            foreach ($exercises as $exercise) {
             ?>
                 <li class="row">
                     <div class="column card">
-                        <div class="title"><?= $record['title'] ?> </div>
-                        <a class="button" href="/exercises/<?= $record['id'] ?>/fulfillments/new">Take it</a>
+                        <div class="title"><?= $exercise['title'] ?> </div>
+                        <a class="button" href="/exercises/<?= $exercise['id'] ?>/fulfillments/new">Take it</a>
                     </div>
                 </li>
             <?php

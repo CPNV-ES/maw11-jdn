@@ -2,6 +2,7 @@
 
 require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
+require_once MODEL_DIR . '/FieldModel.php';
 
 class ExerciseController extends Controller
 { 
@@ -34,6 +35,7 @@ class ExerciseController extends Controller
 
             switch ($request_uri) {
                 case '/exercises':
+                    $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/manage-exercise.php';
                     exit();
                 case '/exercises/new':
@@ -98,5 +100,19 @@ class ExerciseController extends Controller
         $exercise = $exerciseModel->getOne($id);
         
         return $exercise;
+    }
+
+    public function getAll() {
+        $exerciseModel = new ExerciseModel();
+        $exercise = $exerciseModel->getAll();
+        
+        return $exercise;
+    }
+
+    public function getFieldById ($exericeId) {
+        $fieldModel = new FieldModel();
+        $field = $fieldModel->getFieldById($exericeId);
+        
+        return $field;
     }
 }
