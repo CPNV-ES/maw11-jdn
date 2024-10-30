@@ -33,9 +33,11 @@ List all dependencies and their version needed by the project as :
 
 ### Configuration
 
-How to set up the database?
+#### Database
 
-How do you set the sensitive data?
+> To configure the database, you need to create a new database file named `database.sqlite` in the **db** directory.
+>
+> Once you've created the database, you'll need to run the SQL scripts located in the **db** directory. The `create_database.sql` script to create the database and the `insert_fake_data.sql` script to insert fake data into the database.
 
 ## Deployment
 
@@ -67,7 +69,11 @@ composer install
 php -S localhost:8000 -t public/
 ```
 
-How to run the tests?
+#### How to run the tests?
+
+```bash
+./vendor/bin/phpunit tests/*.php
+```
 
 ### On integration environment
 
@@ -92,7 +98,8 @@ How to deploy the application outside the dev environment.
 │   ├── config.example.php
 │   └── config.php
 ├── db
-│   └── database.sqlite
+│   ├── create_database.sql
+│   └── insert_fake_data.sql
 ├── docs
 │   ├── looper-features.md
 │   ├── looper-specs.md
@@ -103,6 +110,12 @@ How to deploy the application outside the dev environment.
 │   │   └── style.css
 │   ├── images
 │   └── index.php
+├── tests
+│   ├── db
+│   │   ├── create_database.sql
+│   │   ├── insert_fake_data.sql
+│   │   └── database_test.sqlite
+│   └── DatabaseTest.php
 ├── composer.json
 ├── composer.lock
 └── README.md
