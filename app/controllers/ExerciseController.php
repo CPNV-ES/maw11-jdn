@@ -40,7 +40,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/create-exercise.php';
                     exit();
                 case '/exercises/fields':
-                    $exerciseName = $this->getNameExerciseById($id[1]);
+                    $exercise = $this->getOne($id[1]);
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
@@ -93,10 +93,10 @@ class ExerciseController extends Controller
         header('Location: /exercises');
     }
 
-    public function getNameExerciseById($id) {
+    public function getOne($id) {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
         
-        return $exercise['title'];
+        return $exercise;
     }
 }
