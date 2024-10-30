@@ -34,6 +34,7 @@ $recordsQuestions = [
         'id_exercise' => 1,
         'id_field_type' => 1,
     ],
+
 ];
 ?>
 
@@ -49,8 +50,12 @@ $recordsQuestions = [
     <main class="container">
         <h1>Your take</h1>
 
-        <label>If you'd like to come back, simply submit it with blanks</label>
-        <form action="/exercises/<?= $id_exercise ?>/fulfillments" accept-charset="UTF-8" method="post">
+        <?php if ($_SESSION['state'] == 'edit') { ?>
+            <label>Bookmark this page, it's yours. You'll be able to come back later to finish.</label>
+        <?php } else { ?>
+            <label>If you'd like to come back, simply submit it with blanks</label>
+        <?php } ?>
+        <form action="/exercises/<?= $id_exercise ?>/fulfillments/edit" accept-charset="UTF-8" method="post">
             <?php foreach ($recordsQuestions as $record) { ?>
                 <h3><?= $record['label'] ?></h3>
                 <?php if ($record['id_field_type'] == 1) {

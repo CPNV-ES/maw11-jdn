@@ -21,6 +21,11 @@ class ExerciseController extends Controller
                 require_once VIEW_DIR . '/home/result-exercise.php';
                 exit();
             case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new.*/', $request_uri) ? true : false):
+                $_SESSION['state'] = 'new';
+                require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                exit();
+            case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri) ? true : false):
+                $_SESSION['state'] = 'edit';
                 require_once VIEW_DIR . '/home/fulfill-exercise.php';
                 exit();
             default:
