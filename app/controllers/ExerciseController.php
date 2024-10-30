@@ -22,7 +22,15 @@ class ExerciseController extends Controller
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
             } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/",$request_uri,$id)) {
-                $this->deleteExercice($id);
+                $this->deleteExercice($id[1]);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/answering$/",$request_uri,$id)) {
+                $newStatus = 2;
+                $this->updateExerciceStatus($id[1],$newStatus);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/closed$/",$request_uri,$id)) {
+                $newStatus = 3;
+                $this->updateExerciceStatus($id[1],$newStatus);
                 $request_uri = '/exercises';
             }
 
@@ -49,9 +57,7 @@ class ExerciseController extends Controller
                     exit();
             }
         }
-        
     }
-
     public function createExercise() {
         $title = $_POST['exercises_title'];
         $exercise = new ExerciseModel();
@@ -68,6 +74,24 @@ class ExerciseController extends Controller
     public function deleteExercice ($id) {
         $exercise = new ExerciseModel();
         $response = $exercise->delete($id);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
+    }
+
+    public function updateExerciceStatus ($id,$newStatus) {
+        $exercise = new ExerciseModel();
+        $response = $exercise->update($id,'id_status',$newStatus);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
         header('Location: /exercises');
     }
 

@@ -75,7 +75,7 @@ class ExerciseModel extends Model
 
     public function delete ($id) {
 
-        $query = "DELETE FROM exercises WHERE id = :id;";
+        $query = "DELETE FROM exercises WHERE id_exercises = :id;";
 
         $binds = ['id' => ['value' => $id, 'type' => PDO::PARAM_INT]];
 
@@ -84,6 +84,24 @@ class ExerciseModel extends Model
             return $response = true;
         } catch (PDOException $e) {
             return "Connection failed: " . $e->getMessage();
+        }
+    }
+    public function update($id, $field, $newValue) {
+        // Préparer la requête de mise à jour avec un champ dynamique
+        $query = "UPDATE exercises SET $field = :value WHERE id_exercises = :id;";
+    
+        // Associer les paramètres avec leurs types
+        $binds = [
+            'id' => ['value' => $id, 'type' => PDO::PARAM_INT],
+            'value' => ['value' => $newValue, 'type' => PDO::PARAM_STR] // Modifiable selon le type de donnée attendu
+        ];
+    
+        try {
+            // Exécution de la requête avec les paramètres
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            return "Update failed: " . $e->getMessage();
         }
     }
 }
