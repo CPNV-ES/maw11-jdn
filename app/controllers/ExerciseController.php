@@ -10,7 +10,7 @@ class ExerciseController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
             switch ($request_uri) {
                 case '/exercises':
-                    $this->createExercise();
+                    $this->create();
                     exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
@@ -21,6 +21,15 @@ class ExerciseController extends Controller
             
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/",$request_uri,$matches)) {
+                $this->delete($matches[1]);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/answering$/",$request_uri,$matches)) {
+                $this->update($matches[1],2);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/closed$/",$request_uri,$matches)) {
+                $this->update($matches[1],3);
+                $request_uri = '/exercises';
             }
 
             switch ($request_uri) {
@@ -46,10 +55,8 @@ class ExerciseController extends Controller
                     exit();
             }
         }
-        
     }
-
-    public function createExercise() {
+    public function create() {
         $title = $_POST['exercises_title'];
         $exercise = new ExerciseModel();
         $response = $exercise->create($title);
@@ -59,13 +66,37 @@ class ExerciseController extends Controller
             return;
         }
         
-        header('Location: /exercises/' . $exercise->id . '/fields');
+        header("Location: /exercises/$exercise->id/fields");
+    }
+
+    public function delete($id) {
+        $exercise = new ExerciseModel();
+        $response = $exercise->delete($id);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
+    }
+
+    public function update($id,$newStatus) {
+        $exercise = new ExerciseModel();
+        $response = $exercise->update($id,'id_status',$newStatus);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
     }
 
     public function getNameExerciseById($id) {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
         
-        return $exercise['name'];
+        return $exercise['title'];
     }
 }
