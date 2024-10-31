@@ -17,7 +17,7 @@ $recordsExercise = [
 ];
 
 foreach ($recordsExercise as $record) {
-    $nom_exercise = $record['title'];
+    $title = $record['title'];
     $id_exercise = $record['id'];
 }
 $recordsQuestions = [
@@ -39,33 +39,34 @@ $recordsQuestions = [
 ?>
 
 <body>
-    <header class="heading managing">
+    <header class="heading">
         <section class="container">
             <a href="/">
                 <img class="header-img" src="/images/logoLooper.png" />
             </a>
-            <span class="exercise-label">Exercise: <b><?php echo $nom_exercise ?> </b></span>
+            <span class="exercise-label">Exercise: <b><?= $title ?> </b></span>
         </section>
     </header>
     <main class="container">
         <h1>Your take</h1>
 
-        <?php if ($_SESSION['state'] == 'edit') { ?>
-            <label>Bookmark this page, it's yours. You'll be able to come back later to finish.</label>
-        <?php } else { ?>
-            <label>If you'd like to come back, simply submit it with blanks</label>
-        <?php } ?>
-        <form action="/exercises/<?= $id_exercise ?>/fulfillments/edit" accept-charset="UTF-8" method="post">
-            <?php foreach ($recordsQuestions as $record) { ?>
-                <h3><?= $record['label'] ?></h3>
-                <?php if ($record['id_field_type'] == 1) {
-                ?>
-                    <input type="text" name="<?= $record['label'] ?>" id="<?= $record['label'] ?>">
-                <?php  } else { ?>
-                    <textarea id="<?= $record['label'] ?>" name="<?= $record['label'] ?>" rows="4" cols="50">
-            </textarea>
-                <?php } ?>
-            <?php } ?>
+        <?php
+        $message = ($_SESSION['state'] == 'edit')
+            ? "Bookmark this page, it's yours. You'll be able to come back later to finish."
+            : "If you'd like to come back, simply submit it with blanks.";
+        ?>
+
+        <label><?= $message ?></label>
+
+        <form action="/exercises/<?= $id_exercise ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
+            <?php foreach ($recordsQuestions as $record): ?>
+                <h3><?= htmlspecialchars($record['label']) ?></h3>
+                <?php if ($record['id_field_type'] == 1): ?>
+                    <input type="text" name="<?= htmlspecialchars($record['label']) ?>" id="<?= htmlspecialchars($record['label']) ?>" />
+                <?php else: ?>
+                    <textarea id="<?= htmlspecialchars($record['label']) ?>" name="<?= htmlspecialchars($record['label']) ?>" rows="4" cols="50"></textarea>
+                <?php endif; ?>
+            <?php endforeach; ?>
             <input type="submit" class="action" name="commit" value="Save" data-disable-with="Save">
         </form>
     </main>
