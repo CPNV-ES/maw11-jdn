@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <meta charset="UTf-8" />
 
 <head>
@@ -27,7 +27,7 @@
                 <label for="exercise_title">Title</label>
                 <input
                     type="text"
-                    name="exercises[title]"
+                    name="exercises_title"
                     id="exercise_title" />
             </div>
             <div>
