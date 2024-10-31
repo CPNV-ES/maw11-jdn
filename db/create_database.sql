@@ -30,6 +30,7 @@ CREATE TABLE fields (
     FOREIGN KEY (id_fields_type) REFERENCES fields_type(id_fields_type)
 );
 
+
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
