@@ -22,16 +22,17 @@
         <ul class="answering-list">
             <!--TODO : foreach record -->
             <?php
-            foreach ($records as $record) {
+            foreach ($records as $record) :
             ?>
-                <li class="row">
-                    <div class="column card">
-                        <div class="title"><?= $record['title'] ?> </div>
-                        <a class="button" href="/exercises/<?= $record['id_exercises'] ?>/fulfillments/new">Take it</a>
-                    </div>
-                </li>
-            <?php
-            }
+                <?php if ($record['id_status'] == 2): ?>
+                    <li class="row">
+                        <div class="column card">
+                            <div class="title"><?= $record['title'] ?> </div>
+                            <a class="button" href="/exercises/<?= $record['id_exercises'] ?>/fulfillments/new">Take it</a>
+                        </div>
+                    </li>
+                <?php endif ?>
+            <?php endforeach;
             ?>
         </ul>
     </main>
