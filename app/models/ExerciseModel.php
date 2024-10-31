@@ -72,4 +72,35 @@ class ExerciseModel extends Model
 
         return $this->id ?? false;
     }
+
+    public function delete ($id) {
+
+        $query = "DELETE FROM exercises WHERE id_exercises = :id;";
+
+        $binds = ['id' => ['value' => $id, 'type' => PDO::PARAM_INT]];
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            return "Connection failed: " . $e->getMessage();
+        }
+    }
+
+    public function update($id, $field, $newValue) {
+        
+        $query = "UPDATE exercises SET $field = :value WHERE id_exercises = :id;";
+    
+        $binds = [
+            'id' => ['value' => $id, 'type' => PDO::PARAM_INT],
+            'value' => ['value' => $newValue, 'type' => PDO::PARAM_STR]
+        ];
+    
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            return "Update failed: " . $e->getMessage();
+        }
+    }
 }

@@ -62,7 +62,7 @@ $records = [
                                     <a title="Manage fields" href="/exercises/<?= $record['id'] ?>/fields">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id'] ?>">
+                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id']?>/delete">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -128,7 +128,7 @@ $records = [
                                     <a title="Show results" href="/exercises/<?= $record['id'] ?>/results">
                                         <i class="fa fa-chart-bar"></i>
                                     </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id'] ?>">
+                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id']?>/delete">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>

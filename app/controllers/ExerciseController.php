@@ -10,7 +10,11 @@ class ExerciseController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($request_uri) {
                 case '/exercises':
-                    $this->createExercise();
+                    $this->create();
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri) ? true : false):
+                    $_SESSION['state'] = 'edit';
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
@@ -21,6 +25,15 @@ class ExerciseController extends Controller
 
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/", $request_uri, $matches)) {
+                $this->delete($matches[1]);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/answering$/", $request_uri, $matches)) {
+                $this->update($matches[1], 2);
+                $request_uri = '/exercises';
+            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/closed$/", $request_uri, $matches)) {
+                $this->update($matches[1], 3);
+                $request_uri = '/exercises';
             }
 
             switch ($request_uri) {
@@ -31,7 +44,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/create-exercise.php';
                     exit();
                 case '/exercises/fields':
-                    $exerciseName = $this->getNameExerciseById($id[1]);
+                    $exerciseName = $this->getOne($id[1]);
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
@@ -41,6 +54,11 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
+                    $_SESSION['state'] = 'new';
+                    $exercise = $this->getOne($matches[1]);
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -49,7 +67,7 @@ class ExerciseController extends Controller
         }
     }
 
-    public function createExercise()
+    public function create()
     {
         $title = $_POST['exercises_title'];
         $exercise = new ExerciseModel();
@@ -60,15 +78,41 @@ class ExerciseController extends Controller
             return;
         }
 
-        header('Location: /exercises/' . $exercise->id . '/fields');
+        header("Location: /exercises/$exercise->id/fields");
     }
 
-    public function getNameExerciseById($id)
+    public function delete($id)
+    {
+        $exercise = new ExerciseModel();
+        $response = $exercise->delete($id);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
+    }
+
+    public function update($id, $newStatus)
+    {
+        $exercise = new ExerciseModel();
+        $response = $exercise->update($id, 'id_status', $newStatus);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
+    }
+
+    public function getOne($id)
     {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
 
-        return $exercise['name'];
+        return $exercise;
     }
 
     public function getExercises()
