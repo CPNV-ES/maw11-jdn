@@ -7,20 +7,9 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/fulfill-exercise.css" />
 </head>
+
 <?php
-$recordsExercise = [
-    [
-        'id' => 1,
-        'title' => 'Record 1 Title',
-
-    ],
-];
-
-foreach ($recordsExercise as $record) {
-    $title = $record['title'];
-    $id_exercise = $record['id'];
-}
-$recordsQuestions = [
+$exerciseFields = [
     [
         'id' => 1,
         'label' => 'Question1',
@@ -44,7 +33,7 @@ $recordsQuestions = [
             <a href="/">
                 <img class="header-img" src="/images/logoLooper.png" />
             </a>
-            <span class="exercise-label">Exercise: <b><?= $title ?> </b></span>
+            <span class="exercise-label">Exercise: <b><?= $exercise['title'] ?> </b></span>
         </section>
     </header>
     <main class="container">
@@ -58,13 +47,13 @@ $recordsQuestions = [
 
         <label><?= $message ?></label>
 
-        <form action="/exercises/<?= $id_exercise ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
-            <?php foreach ($recordsQuestions as $record): ?>
-                <h3><?= htmlspecialchars($record['label']) ?></h3>
-                <?php if ($record['id_field_type'] == 1): ?>
-                    <input type="text" name="<?= htmlspecialchars($record['label']) ?>" id="<?= htmlspecialchars($record['label']) ?>" />
+        <form action="/exercises/<?= $exercise['id_exercise'] ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
+            <?php foreach ($exerciseFields as $field): ?>
+                <h3><?= htmlspecialchars($field['label']) ?></h3>
+                <?php if ($field['id_field_type'] == 1): ?>
+                    <input type="text" name="<?= htmlspecialchars($field['label']) ?>" id="<?= htmlspecialchars($field['label']) ?>" />
                 <?php else: ?>
-                    <textarea id="<?= htmlspecialchars($record['label']) ?>" name="<?= htmlspecialchars($record['label']) ?>" rows="4" cols="50"></textarea>
+                    <textarea id="<?= htmlspecialchars($field['label']) ?>" name="<?= htmlspecialchars($field['label']) ?>" rows="4" cols="50"></textarea>
                 <?php endif; ?>
             <?php endforeach; ?>
             <input type="submit" class="action" name="commit" value="Save" data-disable-with="Save">

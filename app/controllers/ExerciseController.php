@@ -44,7 +44,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/create-exercise.php';
                     exit();
                 case '/exercises/fields':
-                    $exerciseName = $this->getNameExerciseById($id[1]);
+                    $exerciseName = $this->getOne($id[1]);
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
@@ -53,11 +53,11 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new.*/', $request_uri) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
+                    $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
-
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -105,11 +105,11 @@ class ExerciseController extends Controller
         header('Location: /exercises');
     }
 
-    public function getNameExerciseById($id)
+    public function getOne($id)
     {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
 
-        return $exercise['title'];
+        return $exercise;
     }
 }
