@@ -51,18 +51,18 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($records as $exercise) {
                         ?>
                             <!-- TODO : Retrieve records from database -->
                             <tr>
                                 <td>
-                                    <?= $record['title'] ?>
+                                    <?= $exercise['title'] ?>
                                 </td>
                                 <td>
-                                    <a title="Manage fields" href="/exercises/<?= $record['id'] ?>/fields">
+                                    <a title="Manage fields" href="/exercises/<?= $exercise['id'] ?>/fields">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id']?>/delete">
+                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id'] ?>/delete">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -84,15 +84,15 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($records as $exercise) {
                         ?>
                             <!-- TODO : Retrieve records from database -->
                             <tr>
                                 <td>
-                                    <?= $record['title'] ?>
+                                    <?= $exercise['title'] ?>
                                 </td>
                                 <td>
-                                    <a title="Show results" href="/exercises/<?= $record['id'] ?>/results">
+                                    <a title="Show results" href="/exercises/<?= $exercise['id'] ?>/results">
                                         <i class="fa fa-chart-bar"></i>
                                     </a>
                                     <a title="Close" rel="nofollow" data-method="put" href="/exercises/26?exercise%5Bstatus%5D=closed">
@@ -117,18 +117,18 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($records as $exercise) {
                         ?>
                             <!-- TODO : Retrieve records from database -->
                             <tr>
                                 <td>
-                                    <?= $record['title'] ?>
+                                    <?= $exercise['title'] ?>
                                 </td>
                                 <td>
-                                    <a title="Show results" href="/exercises/<?= $record['id'] ?>/results">
+                                    <a title="Show results" href="/exercises/<?= $exercise['id'] ?>/results">
                                         <i class="fa fa-chart-bar"></i>
                                     </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id']?>/delete">
+                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id'] ?>/delete">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>

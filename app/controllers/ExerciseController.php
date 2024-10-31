@@ -48,7 +48,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
-                    $records = $this->getExercises();
+                    $exercises = $this->getExercises();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
