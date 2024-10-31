@@ -4,10 +4,10 @@ require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 
 class ExerciseController extends Controller
-{
+{ 
     public function renderer($request_uri)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
             switch ($request_uri) {
                 case '/exercises':
                     $this->createExercise();
@@ -15,10 +15,10 @@ class ExerciseController extends Controller
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
-                    exit();
+                exit();
             }
         } else {
-
+            
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
             }
@@ -35,22 +35,21 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
-                    $records = $this->getExercises();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
-                    require_once VIEW_DIR . '/home/result-exercise.php';
-                    exit();
+                  require_once VIEW_DIR . '/home/result-exercise.php';
+                  exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
                     exit();
             }
         }
+        
     }
 
-    public function createExercise()
-    {
+    public function createExercise() {
         $title = $_POST['exercises_title'];
         $exercise = new ExerciseModel();
         $response = $exercise->create($title);
@@ -59,23 +58,14 @@ class ExerciseController extends Controller
             header('Location: /exercises/new');
             return;
         }
-
+        
         header('Location: /exercises/' . $exercise->id . '/fields');
     }
 
-    public function getNameExerciseById($id)
-    {
+    public function getNameExerciseById($id) {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
-
+        
         return $exercise['name'];
-    }
-
-    public function getExercises()
-    {
-        $exerciseModel = new ExerciseModel();
-        $exercises = $exerciseModel->getAll();
-
-        return $exercises;
     }
 }
