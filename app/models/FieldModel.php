@@ -6,7 +6,7 @@ require_once APP_DIR . '/core/Model.php';
  */
 class FieldModel extends Model
 {
-    public function getFieldById($exericeId) {
+    public function getAllFieldById($exericeId) {
         $query = "SELECT * FROM fields WHERE id_exercises = :id_exercises";
         
         $binds = [
@@ -14,8 +14,8 @@ class FieldModel extends Model
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
-        $field = $this->db->fetch($req);
+        $fields = $this->db->fetchAll($req);
 
-        return $field;
+        return $fields;
     }
 }

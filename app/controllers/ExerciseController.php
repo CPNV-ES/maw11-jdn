@@ -122,9 +122,9 @@ class ExerciseController extends Controller
         return $exercise;
     }
 
-    public function getFieldById ($exericeId) {
+    public static function getAllFieldById ($exericeId) {
         $fieldModel = new FieldModel();
-        $field = $fieldModel->getFieldById($exericeId);
+        $field = $fieldModel->getAllFieldById($exericeId);
         
         return $field;
     }

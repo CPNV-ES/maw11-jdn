@@ -43,9 +43,11 @@
                                     <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises']?>/delete">
                                         <i class="fa fa-trash"></i>
                                     </a>
+                                    <?php if (count(ExerciseController::getAllFieldById($exercise['id_exercises'])) >= 1) { ?>
                                     <a href="/exercises/<?= $exercise['id_exercises']?>/update/answering">
                                         <i class="fa fa-comment"></i>
                                     </a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php
