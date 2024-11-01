@@ -18,15 +18,13 @@
     </header>
     <main class="container">
         <ul class="answering-list">
-            <?php foreach ($exercises as $exercise) : ?>
-                <?php if ($exercise['id_status'] == 2): ?>
-                    <li class="row">
-                        <div class="column card">
-                            <div class="title"><?= $exercise['title'] ?> </div>
-                            <a class="button" href="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/new">Take it</a>
-                        </div>
-                    </li>
-                <?php endif ?>
+            <?php foreach ($exercises as $exercise) : if ($exercise['id_status'] != 2) continue; ?>
+                <li class="row">
+                    <div class="column card">
+                        <div class="title"><?= $exercise['title'] ?></div>
+                        <a class="button" href="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/new">Take it</a>
+                    </div>
+                </li>
             <?php endforeach; ?>
         </ul>
     </main>
