@@ -76,7 +76,7 @@ foreach ($recordsExercise as $exercise) {
             <a href="/">
                 <img class="header-img" src="/images/logo.png" />
             </a>
-            <span class="exercise-label">Exercise: <b><?php echo $nom_exercise ?> </b></span>
+            <span class="exercise-title">Exercise: <b><?php echo $nom_exercise ?> </b></span>
         </section>
     </header>
     <table class="container">

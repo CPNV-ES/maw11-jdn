@@ -14,7 +14,7 @@
             <a href="/">
                 <img class="header-img" src="/images/logo.png" />
             </a>
-            <span class="exercise-label">New exercise</span>
+            <span class="exercise-title">New exercise</span>
         </section>
     </header>
 

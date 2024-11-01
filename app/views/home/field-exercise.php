@@ -5,7 +5,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="" />
 </head>
 
 <body>
@@ -14,7 +13,7 @@
             <a href="/">
                 <img class="header-img" src="/images/logo.png" />
             </a>
-            <span class="exercise-label">Exercise:<?= $exercise['title']; ?></span>
+            <span class="exercise-title">Exercise: <?= $exercise['title']; ?></span>
         </section>
     </header>
 

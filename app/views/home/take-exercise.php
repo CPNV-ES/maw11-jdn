@@ -12,7 +12,7 @@
     <header>
         <section class="container">
             <a href="/">
-                <img src="../images/logo.png">
+                <img src="/images/logo.png">
             </a>
         </section>
     </header>

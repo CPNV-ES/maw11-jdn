@@ -1,20 +1,21 @@
 th {
-    text-align:left;
+    text-align: left;
 }
-table{
+
+table {
     border-spacing: 0;
 }
-td, th {
+
+td,
+th {
     border-bottom: 0.1rem solid #e1e1e1;
     padding: 1rem 1rem;
 }
-.XIcon{
+
+.XIcon {
     color: red;
 }
-.VIcon{
+
+.VIcon {
     color: green;
-}
-header.heading .exercise-label {
-    margin: auto;
-    margin-left: 2rem;
 }

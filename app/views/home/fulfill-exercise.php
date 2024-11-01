@@ -33,7 +33,7 @@ $exerciseFields = [
             <a href="/">
                 <img class="header-img" src="/images/logo.png" />
             </a>
-            <span class="exercise-label">Exercise: <b><?= $exercise['title'] ?> </b></span>
+            <span class="exercise-title">Exercise: <b><?= $exercise['title'] ?> </b></span>
         </section>
     </header>
     <main class="container">
