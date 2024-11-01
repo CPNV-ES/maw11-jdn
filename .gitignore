@@ -3,3 +3,4 @@
 /config/config.php
 /vendor/
 /db/database.sqlite
+.DS_Store
