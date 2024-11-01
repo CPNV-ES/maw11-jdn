@@ -10,7 +10,7 @@
 <body>
     <header>
         <section class="container">
-            <img src="images/looper-logo.png" alt="logo" />
+            <img src="images/logo.png" alt="logo" />
             <h1>Exercise<br>Looper</h1>
         </section>
     </header>
