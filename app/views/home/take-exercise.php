@@ -8,29 +8,6 @@
     <link rel="stylesheet" href="../css/take-exercise.css">
 </head>
 
-<?php
-
-$records = [
-    [
-        'id' => 1,
-        'title' => 'Record 1 Title',
-    ],
-    [
-        'id' => 2,
-        'title' => 'Record 2 Title',
-    ],
-    [
-        'id' => 3,
-        'title' => 'Record 3 Title',
-    ],
-    [
-        'id' => 4,
-        'title' => 'Record 4 Title',
-    ]
-];
-
-?>
-
 <body>
     <header>
         <section class="container">
@@ -41,19 +18,14 @@ $records = [
     </header>
     <main class="container">
         <ul class="answering-list">
-            <!--TODO : foreach record -->
-            <?php
-            foreach ($records as $record) {
-            ?>
+            <?php foreach ($exercises as $exercise) : if ($exercise['id_status'] != 2) continue; ?>
                 <li class="row">
                     <div class="column card">
-                        <div class="title"><?= $record['title'] ?> </div>
-                        <a class="button" href="/exercises/<?= $record['id'] ?>/fulfillments/new">Take it</a>
+                        <div class="title"><?= $exercise['title'] ?></div>
+                        <a class="button" href="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/new">Take it</a>
                     </div>
                 </li>
-            <?php
-            }
-            ?>
+            <?php endforeach; ?>
         </ul>
     </main>
 </body>

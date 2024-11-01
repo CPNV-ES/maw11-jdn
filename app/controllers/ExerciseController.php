@@ -51,6 +51,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
+                    $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
@@ -68,6 +69,7 @@ class ExerciseController extends Controller
             }
         }
     }
+
     public function create()
     {
         $title = $_POST['exercises_title'];
@@ -108,24 +110,28 @@ class ExerciseController extends Controller
         header('Location: /exercises');
     }
 
-    public function getOne($id) {
+    public function getOne($id)
+    {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getOne($id);
-        
+
         return $exercise;
     }
 
-    public function getAll() {
+
+    public function getAll()
+    {
         $exerciseModel = new ExerciseModel();
         $exercise = $exerciseModel->getAll();
-        
+
         return $exercise;
     }
 
-    public static function getAllFieldById ($exericeId) {
+    public static function getAllFieldById($exericeId)
+    {
         $fieldModel = new FieldModel();
         $field = $fieldModel->getFieldsFromExercise($exericeId);
-        
+
         return $field;
     }
 }
