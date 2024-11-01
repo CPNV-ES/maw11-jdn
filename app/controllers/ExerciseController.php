@@ -8,6 +8,8 @@ class ExerciseController extends Controller
 {
     public function renderer($request_uri)
     {
+        // TODO Refactor this code
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($request_uri) {
                 case '/exercises':
@@ -47,7 +49,6 @@ class ExerciseController extends Controller
                     exit();
                 case '/exercises/fields':
                     $exercise = $this->getOne($id[1]);
-
                     require_once VIEW_DIR . '/home/field-exercise.php';
                     exit();
                 case '/exercises/answering':
