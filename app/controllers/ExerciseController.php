@@ -124,7 +124,7 @@ class ExerciseController extends Controller
 
     public static function getAllFieldById ($exericeId) {
         $fieldModel = new FieldModel();
-        $field = $fieldModel->getAllFieldById($exericeId);
+        $field = $fieldModel->getFieldsFromExercise($exericeId);
         
         return $field;
     }

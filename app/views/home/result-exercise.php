@@ -64,8 +64,8 @@ $recordsExercise = [
     ],
 ];
 
-foreach ($recordsExercise as $exercise) {
-    $nom_exercise = $exercise['title'];
+foreach ($recordsExercise as $record) {
+    $nom_exercise = $record['title'];
 }
 
 ?>
@@ -109,13 +109,8 @@ foreach ($recordsExercise as $exercise) {
                                 <?php } ?>
                             <?php } ?>
                         </td>
-
-
-
-
                     <?php } ?>
                 </tr>
-
             <?php } ?>
         </tbody>
     </table>
