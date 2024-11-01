@@ -11,7 +11,7 @@
     <header class="heading results">
         <div class="container">
             <a href="/">
-                <img class="header-img" src="images/looper-logo.png" alt="">
+                <img class="header-img" src="images/logo.png" alt="">
             </a>
         </div>
     </header>
@@ -44,7 +44,7 @@
                                         </a>
                                         <?php
                                         //Check if the exercise contains one or more fields to enable the exercise to be passed in response mode.
-                                        if (count(ExerciseController::getAllFieldById($exercise['id_exercises'])) >= 1) { ?>
+                                        if (count(ExerciseController::getFields($exercise['id_exercises'])) >= 1) { ?>
                                             <a href="/exercises/<?= $exercise['id_exercises'] ?>/update/answering">
                                                 <i class="fa fa-comment"></i>
                                             </a>

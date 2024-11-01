@@ -12,7 +12,7 @@
     <header class="heading managing">
         <section class="container">
             <a href="/">
-                <img class="header-img" src="/images/logoLooper.png" />
+                <img class="header-img" src="/images/logo.png" />
             </a>
             <span class="exercise-label">New exercise</span>
         </section>
