@@ -14,7 +14,7 @@
             <a href="/">
                 <img class="header-img" src="/images/logoLooper.png" />
             </a>
-            <span class="exercise-label">Exercise:<?= $exerciseName; ?></span>
+            <span class="exercise-label">Exercise:<?= $exercise['title']; ?></span>
         </section>
     </header>
 

@@ -109,13 +109,8 @@ foreach ($recordsExercise as $exercise) {
                                 <?php } ?>
                             <?php } ?>
                         </td>
-
-
-
-
                     <?php } ?>
                 </tr>
-
             <?php } ?>
         </tbody>
     </table>
