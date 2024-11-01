@@ -1,0 +1,30 @@
+input {
+    height: 1.5rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border: 0.1rem solid #d1d1d1;
+    border-radius: 0.4rem;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    padding: 0.6rem 1rem;
+}
+
+input[type="submit"] {
+    border-radius: 0.4rem;
+    padding: 1rem 0;
+    color: #ffffff;
+    background-color: #9b4dca;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 10%;
+    height: auto;
+    text-align: center;
+    cursor: pointer;
+    letter-spacing: 0.1rem;
+}

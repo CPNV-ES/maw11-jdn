@@ -7,34 +7,11 @@
     <link rel="stylesheet" href="css/manage-exercice.css">
 </head>
 
-<?php
-
-$records = [
-    [
-        'id' => 1,
-        'title' => 'Record 1 Title',
-    ],
-    [
-        'id' => 2,
-        'title' => 'Record 2 Title',
-    ],
-    [
-        'id' => 3,
-        'title' => 'Record 3 Title',
-    ],
-    [
-        'id' => 4,
-        'title' => 'Record 4 Title',
-    ]
-];
-
-?>
-
 <body>
     <header class="heading results">
         <div class="container">
             <a href="/">
-                <img class="header-img" src="images/looper-logo.png" alt="">
+                <img class="header-img" src="images/logo.png" alt="">
             </a>
         </div>
     </header>
@@ -51,23 +28,31 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($exercises as $exercise) {
+                            if ($exercise['id_status'] == 1) {
                         ?>
-                            <!-- TODO : Retrieve records from database -->
-                            <tr>
-                                <td>
-                                    <?= $record['title'] ?>
-                                </td>
-                                <td>
-                                    <a title="Manage fields" href="/exercises/<?= $record['id'] ?>/fields">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id'] ?>">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <?= $exercise['title'] ?>
+                                    </td>
+                                    <td>
+                                        <a title="Manage fields" href="/exercises/<?= $exercise['id_exercises'] ?>/fields">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/delete">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <?php
+                                        //Check if the exercise contains one or more fields to enable the exercise to be passed in response mode.
+                                        if (count(ExerciseController::getFields($exercise['id_exercises'])) >= 1) { ?>
+                                            <a href="/exercises/<?= $exercise['id_exercises'] ?>/update/answering">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
                         <?php
+                            }
                         }
                         ?>
                     </tbody>
@@ -84,23 +69,24 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($exercises as $exercise) {
+                            if ($exercise['id_status'] == 2) {
                         ?>
-                            <!-- TODO : Retrieve records from database -->
-                            <tr>
-                                <td>
-                                    <?= $record['title'] ?>
-                                </td>
-                                <td>
-                                    <a title="Show results" href="/exercises/<?= $record['id'] ?>/results">
-                                        <i class="fa fa-chart-bar"></i>
-                                    </a>
-                                    <a title="Close" rel="nofollow" data-method="put" href="/exercises/26?exercise%5Bstatus%5D=closed">
-                                        <i class="fa fa-minus-circle"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <?= $exercise['title'] ?>
+                                    </td>
+                                    <td>
+                                        <a title="Show results" href="/exercises/<?= $exercise['id_exercises'] ?>/results">
+                                            <i class="fa fa-chart-bar"></i>
+                                        </a>
+                                        <a title="Close" rel="nofollow" data-method="put" href="/exercises/<?= $exercise['id_exercises'] ?>/update/closed">
+                                            <i class="fa fa-minus-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                         <?php
+                            }
                         }
                         ?>
                     </tbody>
@@ -117,23 +103,24 @@ $records = [
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($records as $record) {
+                        foreach ($exercises as $exercise) {
+                            if ($exercise['id_status'] == 3) {
                         ?>
-                            <!-- TODO : Retrieve records from database -->
-                            <tr>
-                                <td>
-                                    <?= $record['title'] ?>
-                                </td>
-                                <td>
-                                    <a title="Show results" href="/exercises/<?= $record['id'] ?>/results">
-                                        <i class="fa fa-chart-bar"></i>
-                                    </a>
-                                    <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $record['id'] ?>">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <?= $exercise['title'] ?>
+                                    </td>
+                                    <td>
+                                        <a title="Show results" href="/exercises/<?= $exercise['id_exercises'] ?>/results">
+                                            <i class="fa fa-chart-bar"></i>
+                                        </a>
+                                        <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/delete">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                         <?php
+                            }
                         }
                         ?>
                     </tbody>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- TODO : Create a header layout and include it in all view -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +12,7 @@
 <body>
     <header>
         <section class="container">
-            <img src="images/looper-logo.png" alt="logo" />
+            <img src="images/logo.png" alt="logo" />
             <h1>Exercise<br>Looper</h1>
         </section>
     </header>
