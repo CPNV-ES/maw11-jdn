@@ -29,8 +29,11 @@ class ExerciseController extends Controller
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
             } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/", $request_uri, $matches)) {
-                $this->delete($matches[1]);
-                $request_uri = '/exercises';
+                if (!$this->delete($matches[1])) {
+                    header("HTTP/1.0 404 Not Found");
+                } else {
+                    $request_uri = '/exercises';
+                }
             } elseif (preg_match("/^\/exercises\/(\d+)\/update\/answering$/", $request_uri, $matches)) {
                 $this->update($matches[1], 2);
                 $request_uri = '/exercises';
@@ -87,15 +90,18 @@ class ExerciseController extends Controller
 
     public function delete($id)
     {
-        $exercise = new ExerciseModel();
-        $response = $exercise->delete($id);
+        $exerciseModel = new ExerciseModel();
 
-        if (!$response) {
-            header('Location: /');
-            return;
+        $exercises = $exerciseModel->getAll();
+
+        foreach ($exercises as $exercise) {
+            if ($exercise['id_exercises'] == $id) {
+                $response = $exerciseModel->delete($id);
+                header('Location: /exercises');
+                return true;
+            }
         }
-
-        header('Location: /exercises');
+            return false;
     }
 
     public function update($id, $newStatus)
