@@ -15,8 +15,9 @@ class ExerciseController extends Controller
                 case '/exercises':
                     $this->create();
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
+                    $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:
