@@ -47,7 +47,7 @@ $exerciseFields = [
 
         <label><?= $message ?></label>
 
-        <form action="/exercises/<?= $exercise['id_exercise'] ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
+        <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
             <?php foreach ($exerciseFields as $field): ?>
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_field_type'] == 1): ?>

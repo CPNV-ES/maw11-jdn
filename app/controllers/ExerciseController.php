@@ -15,8 +15,9 @@ class ExerciseController extends Controller
                 case '/exercises':
                     $this->create();
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
+                    $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:
@@ -25,21 +26,24 @@ class ExerciseController extends Controller
                     exit();
             }
         } else {
-
             if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
                 $request_uri = '/exercises/fields';
-            } elseif (preg_match("/^\/exercises\/(\d+)\/delete$/", $request_uri, $matches)) {
-                if (!$this->delete($matches[1])) {
-                    header("HTTP/1.0 404 Not Found");
-                } else {
-                    $request_uri = '/exercises';
+            } elseif (
+                preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
+            ) {
+                $request_uri = '/exercises';
+
+                // TODO : retrieve dynamically status from database for setting new status
+
+                if ($matches[2] === 'delete') {
+                    if (!$this->delete($matches[1])) {
+                        header("HTTP/1.0 404 Not Found");
+                    }
+                } elseif ($matches[2] === 'update/answering') {
+                    $this->update($matches[1], 2);
+                } elseif ($matches[2] === 'update/closed') {
+                    $this->update($matches[1], 3);
                 }
-            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/answering$/", $request_uri, $matches)) {
-                $this->update($matches[1], 2);
-                $request_uri = '/exercises';
-            } elseif (preg_match("/^\/exercises\/(\d+)\/update\/closed$/", $request_uri, $matches)) {
-                $this->update($matches[1], 3);
-                $request_uri = '/exercises';
             }
 
             switch ($request_uri) {
@@ -101,7 +105,7 @@ class ExerciseController extends Controller
                 return true;
             }
         }
-            return false;
+        return false;
     }
 
     public function update($id, $newStatus)
