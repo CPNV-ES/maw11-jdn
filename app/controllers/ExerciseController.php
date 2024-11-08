@@ -3,6 +3,7 @@
 require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
+require_once MODEL_DIR . '/AnswerModel.php';
 
 class ExerciseController extends Controller
 {
@@ -62,7 +63,9 @@ class ExerciseController extends Controller
                     $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri,$matches) ? true : false):
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
@@ -144,5 +147,13 @@ class ExerciseController extends Controller
         $field = $fieldModel->getFieldsFromExercise($exerciseId);
 
         return $field;
+    }
+
+    public static function getAnswers($fieldsId)
+    {
+        $answerModel = new AnswerModel();
+        $answers = $answerModel->getAllAnswers($fieldsId);
+
+        return $answers;
     }
 }
