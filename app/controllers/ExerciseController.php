@@ -20,6 +20,13 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+                case preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id):
+                    $this->createfield($id[1]);
+                    $exercise = $this->getOne($id[1]);
+                    $fields = $this->getFields($id[1]);
+                    require_once VIEW_DIR . '/home/create-field.php';
+                    exit();
+
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -56,7 +63,8 @@ class ExerciseController extends Controller
                     exit();
                 case '/exercises/fields':
                     $exercise = $this->getOne($id[1]);
-                    require_once VIEW_DIR . '/home/field-exercise.php';
+                    $fields = $this->getFields($id[1]);
+                    require_once VIEW_DIR . '/home/create-field.php';
                     exit();
                 case '/exercises/answering':
                     $exercises = $this->getAll();
@@ -76,6 +84,16 @@ class ExerciseController extends Controller
                     exit();
             }
         }
+    }
+
+    public function createfield($exerciseId)
+    {
+        $label = $_POST['field_label'];
+        $type = $_POST['field_type'];
+        $field = new FieldModel();
+        $response = $field->create($label, $exerciseId, $type);
+
+        header("Location: /exercises/$exerciseId/fields");
     }
 
     public function create()
