@@ -33,12 +33,19 @@
                     <?php foreach ($fields as $field): ?>
                         <tr>
                             <td><?= $field['label'] ?></td>
-                            <td><?= $field['id_fields_type'] ?></td>
+                            <td><?php if ($field['id_fields_type'] == 0): ?>
+                                    <p>Single line text</p>
+                                <?php elseif ($field['id_fields_type'] == 1): ?>
+                                    <p>List of single lines</p>
+                                <?php else: ?>
+                                    <p>Multi-line text</p>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <a title="Edit" href="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>/edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/field/<?= $field['id_fields'] ?>">
+                                <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -56,20 +63,22 @@
             <div class="ListField">
 
                 <h1>New Field</h1>
-                <form action="/exercises/<?= $exercise['id_exercises'] ?>/field" method="post" accept-charset="UTF-8">
+                <form action="/exercises/<?= $exercise['id_exercises'] ?>/fields" method="post" accept-charset="UTF-8">
                     <div class="field">
                         <label for="field_label">Label</label>
                         <input
+                            required
                             type="text"
                             name="field_label"
                             id="field_label" />
                     </div>
                     <div class="field">
                         <label for="field_type">Value kind</label>
-                        <select name="field_type" id="field_type">
-                            <option value="Single line text">Single line text</option>
-                            <option value="Multi-line text">Multi-line text</option>
-                            <option value="List of single lines">List of single lines</option>
+                        <select name="field_type" id="field_type" required>
+                            <option value="0">Single line text</option>
+                            <option value="1">List of single lines</option>
+                            <option value="2">Multi-line text</option>
+
                         </select>
                     </div>
                     <div>

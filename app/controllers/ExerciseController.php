@@ -20,20 +20,29 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
-                case preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id):
-                    $this->createfield($id[1]);
-                    $exercise = $this->getOne($id[1]);
-                    $fields = $this->getFields($id[1]);
+                case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
+                    $this->createfield($matches[1]);
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/create-field.php';
                     exit();
-
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
                     exit();
             }
         } else {
-            if (preg_match("/^\/exercises\/(\d+)\/fields$/", $request_uri, $id)) {
+
+            if (preg_match('/^\/exercises\/(\d+)\/fields/', $request_uri, $matches)) {
+                //if dans if pour avoir de reset $matches
+                if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri)) {
+                    require_once VIEW_DIR . '/home/edit-field.php';
+                    exit();
+                } elseif (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/destroy/', $request_uri, $matches)) {
+                    $this->deleteField($matches[2]);
+                    require_once VIEW_DIR . '/home/create-field.php';
+                    exit();
+                }
                 $request_uri = '/exercises/fields';
             } elseif (
                 preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
@@ -62,8 +71,8 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/create-exercise.php';
                     exit();
                 case '/exercises/fields':
-                    $exercise = $this->getOne($id[1]);
-                    $fields = $this->getFields($id[1]);
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/create-field.php';
                     exit();
                 case '/exercises/answering':
@@ -162,5 +171,14 @@ class ExerciseController extends Controller
         $field = $fieldModel->getFieldsFromExercise($exerciseId);
 
         return $field;
+    }
+
+    public function deleteField($id)
+    {
+        $fieldModel = new FieldModel();
+
+        $fieldModel->getOneField($id);
+        $response = $fieldModel->delete($id);
+        return true;
     }
 }
