@@ -45,7 +45,7 @@
                                 <a title="Edit" href="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>/edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>">
+                                <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>/destroy">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -53,7 +53,7 @@
                     <?php endforeach; ?>
                 </table>
 
-                <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button" rel="nofollow" data-method="put" href="/exercises/<?= $exercise['id_exercises'] ?>"
+                <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button" rel="nofollow" data-method="put" href="/exercises/<?= $exercise['id_exercises'] ?>update/answering"
                     onclick="location.href=this.href+'?id_status=2'">
                     <i class="fa-solid fa-comment"></i>
                     Complete and be ready for answers

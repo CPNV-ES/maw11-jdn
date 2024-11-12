@@ -43,7 +43,7 @@ class FieldModel extends Model
     public function delete($fieldId)
     {
 
-        $query = "DELETE FROM exercises WHERE id_fields = :id_fields;";
+        $query = "DELETE FROM fields WHERE id_fields = :id_fields;";
 
         $binds = ['id_fields' => ['value' => $fieldId, 'type' => PDO::PARAM_INT]];
 

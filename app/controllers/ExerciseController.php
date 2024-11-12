@@ -34,14 +34,18 @@ class ExerciseController extends Controller
         } else {
 
             if (preg_match('/^\/exercises\/(\d+)\/fields/', $request_uri, $matches)) {
-                //if dans if pour avoir de reset $matches
-                if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri)) {
-                    require_once VIEW_DIR . '/home/edit-field.php';
-                    exit();
-                } elseif (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/destroy/', $request_uri, $matches)) {
-                    $this->deleteField($matches[2]);
-                    require_once VIEW_DIR . '/home/create-field.php';
-                    exit();
+                // TODO : find a way to avoid the resetting the first $matches 
+                if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)/', $request_uri)) {
+                    if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri)) {
+                        require_once VIEW_DIR . '/home/edit-field.php';
+                        exit();
+                    } elseif (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/destroy/', $request_uri, $matches)) {
+                        $this->deleteField($matches[2]);
+                        $exercise = $this->getOne($matches[1]);
+                        $fields = $this->getFields($matches[1]);
+                        require_once VIEW_DIR . '/home/create-field.php';
+                        exit();
+                    }
                 }
                 $request_uri = '/exercises/fields';
             } elseif (
