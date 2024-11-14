@@ -53,8 +53,7 @@
                     <?php endforeach; ?>
                 </table>
 
-                <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button" rel="nofollow" data-method="put" href="/exercises/<?= $exercise['id_exercises'] ?>update/answering"
-                    onclick="location.href=this.href+'?id_status=2'">
+                <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button" rel="nofollow" data-method="put" href="/exercises/<?= $exercise['id_exercises'] ?>/update/answering">
                     <i class="fa-solid fa-comment"></i>
                     Complete and be ready for answers
                 </a>
@@ -75,9 +74,9 @@
                     <div class="field">
                         <label for="field_type">Value kind</label>
                         <select name="field_type" id="field_type" required>
-                            <option value="0">Single line text</option>
-                            <option value="1">List of single lines</option>
-                            <option value="2">Multi-line text</option>
+                            <option value="1">Single line text</option>
+                            <option value="2">List of single lines</option>
+                            <option value="3">Multi-line text</option>
 
                         </select>
                     </div>
