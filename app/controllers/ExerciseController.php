@@ -16,6 +16,12 @@ class ExerciseController extends Controller
                     $this->create();
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
+
+                    if ($_SESSION['state'] == 'new') {
+                        //save
+                    } else {
+                        //new
+                    }
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);

@@ -32,9 +32,9 @@
             <?php foreach ($fields as $field): ?>
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_fields_type'] == 1): ?>
-                    <input type="text" name="<?= htmlspecialchars($field['label']) ?>" id="<?= htmlspecialchars($field['label']) ?>" />
+                    <input type="text" name="<?= htmlspecialchars($field['id_fields']) ?>" id="<?= htmlspecialchars($field['id_fields']) ?>" />
                 <?php else: ?>
-                    <textarea id="<?= htmlspecialchars($field['label']) ?>" name="<?= htmlspecialchars($field['label']) ?>" rows="4" cols="50"></textarea>
+                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="<?= htmlspecialchars($field['id_fields']) ?>" rows="4" cols="50"></textarea>
                 <?php endif; ?>
             <?php endforeach; ?>
             <input type="submit" class="action" name="commit" value="Save" data-disable-with="Save">
