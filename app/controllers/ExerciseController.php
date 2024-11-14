@@ -181,7 +181,7 @@ class ExerciseController extends Controller
     {
         $fieldModel = new FieldModel();
 
-        $fieldModel->getOneField($id);
+        $fieldModel->getOne($id);
         $response = $fieldModel->delete($id);
         return true;
     }

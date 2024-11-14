@@ -26,7 +26,7 @@ class FieldModel extends Model
         return $fields;
     }
 
-    public function getOneField($fieldId)
+    public function getOne($fieldId)
     {
         $query = "SELECT * FROM fields WHERE id_fields = :id_fields";
 
@@ -54,6 +54,7 @@ class FieldModel extends Model
             return "Connection failed: " . $e->getMessage();
         }
     }
+
     public function create($label, $exerciseId, $typeFieldID)
     {
         $query = "INSERT INTO fields (label, id_exercises,id_fields_type) VALUES (:label,:id_exercises,:id_fields_type)";
