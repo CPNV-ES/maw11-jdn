@@ -18,6 +18,7 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($exercise['id_exercises']);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:
@@ -68,6 +69,7 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
                     $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:

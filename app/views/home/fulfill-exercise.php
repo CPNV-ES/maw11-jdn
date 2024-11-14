@@ -8,25 +8,6 @@
     <link rel="stylesheet" href="/css/fulfill-exercise.css" />
 </head>
 
-<?php
-$exerciseFields = [
-    [
-        'id' => 1,
-        'label' => 'Question1',
-        'id_exercise' => 1,
-        'id_field_type' => 2,
-
-    ],
-    [
-        'id' => 2,
-        'label' => 'Question2',
-        'id_exercise' => 1,
-        'id_field_type' => 1,
-    ],
-
-];
-?>
-
 <body>
     <header class="heading">
         <section class="container">
@@ -48,9 +29,9 @@ $exerciseFields = [
         <label><?= $message ?></label>
 
         <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
-            <?php foreach ($exerciseFields as $field): ?>
+            <?php foreach ($fields as $field): ?>
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
-                <?php if ($field['id_field_type'] == 1): ?>
+                <?php if ($field['id_fields_type'] == 1): ?>
                     <input type="text" name="<?= htmlspecialchars($field['label']) ?>" id="<?= htmlspecialchars($field['label']) ?>" />
                 <?php else: ?>
                     <textarea id="<?= htmlspecialchars($field['label']) ?>" name="<?= htmlspecialchars($field['label']) ?>" rows="4" cols="50"></textarea>
