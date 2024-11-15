@@ -28,16 +28,21 @@
 
         <label><?= $message ?></label>
 
-        <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/edit" method="post" accept-charset="UTF-8">
+        <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8">
             <?php foreach ($fields as $field): ?>
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_fields_type'] == 1): ?>
-                    <input type="text" name="<?= htmlspecialchars($field['id_fields']) ?>" id="<?= htmlspecialchars($field['id_fields']) ?>" />
+                    <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
+                    <input type="text" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" id="<?= htmlspecialchars($field['id_fields']) ?>" value="<?= $field['value'] ?>" />
+
                 <?php else: ?>
-                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="<?= htmlspecialchars($field['id_fields']) ?>" rows="4" cols="50"></textarea>
+                    <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>" value="<?= $field['value'] ?>">
+                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"></textarea>
+
                 <?php endif; ?>
+
             <?php endforeach; ?>
-            <input type="submit" class="action" name="commit" value="Save" data-disable-with="Save">
+            <input type="submit" class="action" data-disable-with="Save">
         </form>
     </main>
 </body>

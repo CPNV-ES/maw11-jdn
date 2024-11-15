@@ -3,6 +3,7 @@
 require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
+require_once MODEL_DIR . '/AnswerModel.php';
 
 class ExerciseController extends Controller
 {
@@ -15,12 +16,16 @@ class ExerciseController extends Controller
                 case '/exercises':
                     $this->create();
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
 
                     if ($_SESSION['state'] == 'new') {
-                        //save
+                        foreach ($_POST as $answer) {
+                            $this->createAnswer($answer['0'], $answer['1']);
+                        }
                     } else {
-                        //new
+                        foreach ($_POST as $answer) {
+                            $this->updateAnswer($answer['0'], $answer['1']);
+                        }
                     }
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
@@ -76,6 +81,15 @@ class ExerciseController extends Controller
                     $_SESSION['state'] = 'new';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
+                    $_SESSION['state'] = 'edit';
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
+
+
+                    //get answer
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 default:
@@ -137,7 +151,6 @@ class ExerciseController extends Controller
         return $exercise;
     }
 
-
     public function getAll()
     {
         $exerciseModel = new ExerciseModel();
@@ -152,5 +165,21 @@ class ExerciseController extends Controller
         $field = $fieldModel->getFieldsFromExercise($exerciseId);
 
         return $field;
+    }
+
+    public static function createAnswer($idfield, $value)
+    {
+        $answer = new AnswerModel();
+        $answer->create($value, $idfield);
+
+        return $answer;
+    }
+
+    public static function updateAnswer($idfield, $value)
+    {
+        $answer = new AnswerModel();
+        $answer->update($value, $idfield);
+
+        return $answer;
     }
 }

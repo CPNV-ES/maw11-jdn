@@ -23,7 +23,7 @@ class AnswerModel extends Model
 
     public function update($value, $idfield)
     {
-        $query = "UPDATE answers SET $value = :value WHERE id_fields = :id_fields;";
+        $query = "UPDATE answers SET value = :value WHERE id_fields = :id_fields;";
 
         $binds = [
             'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
@@ -34,5 +34,13 @@ class AnswerModel extends Model
         $fields = $this->db->fetchAll($req);
 
         return $fields;
+    }
+
+    public function getAnswer()
+    {
+
+
+
+        return;
     }
 }
