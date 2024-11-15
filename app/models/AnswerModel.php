@@ -6,16 +6,12 @@ require_once APP_DIR . '/core/Model.php';
  */
 class AnswerModel extends Model
 {
-    public function getAllAnswers($fieldId) {
-        $query = "SELECT * FROM answers WHERE id_fields = :id_fields";
+    public function getAllAnswers() {
         
-        $binds = [
-            'id_fields' => ['value' => $fieldId, 'type' => PDO::PARAM_INT]
-        ];
+        $query = "SELECT * FROM answers";
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $answers = $this->db->fetchAll($req);
+        $req = $this->db->querySimpleExecute($query);
 
-        return $answers;
+        return $this->db->fetchAll($req);
     }
 }

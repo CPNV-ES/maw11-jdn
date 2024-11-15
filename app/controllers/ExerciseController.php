@@ -66,6 +66,11 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri,$matches) ? true : false):
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
+
+                    $filterAnswers = $this->getAnswerByFields($fields);
+
+                    var_dump($filterAnswers);
+
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
@@ -149,11 +154,27 @@ class ExerciseController extends Controller
         return $field;
     }
 
-    public static function getAnswers($fieldsId)
+    public function getAllAnswers()
     {
         $answerModel = new AnswerModel();
-        $answers = $answerModel->getAllAnswers($fieldsId);
+        $answers = $answerModel->getAllAnswers();
 
         return $answers;
     }
-}
+
+    public function getAnswerByFields ($fields) {
+        $answers = $this->getAllAnswers();
+
+        $groupedAnswers = [];
+
+        foreach ($fields as $field) {
+            foreach ($answers as $answer) {  
+                if ($field['id_fields'] === $answer['id_fields']) {
+                    $groupedAnswers[$answer['create_at']][$answer['id_fields']] = $answer['value'];
+                }
+            }
+        }
+
+        return $groupedAnswers;
+    }
+}    

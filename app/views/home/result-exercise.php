@@ -30,25 +30,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <?php foreach ($fields as $field) {
-                    $answers = ExerciseController::getAnswers($field['id_fields']);?>
-                    <td>
-                        
+            <?php foreach ($filterAnswers as $createAt => $fieldValues) : ?>
+                <tr>
+                    <!-- Affiche la date de création une seule fois -->
+                    <td><?= htmlspecialchars($createAt); ?></td>
                     
-                    <?php foreach ($answers as $answer) {?>
-                    
-
-                        <?= $answer['create_at'] ?>
-
-                    
-                    
-                <?php 
-                    }?>
-                    </td>
-                    <td>caca</td>
-                <?php }?>
-            </tr>
+                    <!-- Afficher les réponses pour chaque champ de l'exercice -->
+                    <?php foreach ($fields as $field) : ?>
+                        <td>
+                            <?= isset($fieldValues[$field['id_fields']])
+                                ? htmlspecialchars($fieldValues[$field['id_fields']])
+                                : 'caca'; ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </body>
