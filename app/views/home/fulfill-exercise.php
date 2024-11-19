@@ -29,6 +29,11 @@
         <label><?= $message ?></label>
 
         <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8">
+            <?php if ($_SESSION['state'] == "new"): ?>
+                <input type="hidden" name="created_at" value="<?= date("Y-m-d H:i:s e") ?>">
+            <?php else: ?>
+                <input type="hidden" name="updated_at" value="<?= date("Y-m-d H:i:s e") ?>">
+            <?php endif; ?>
             <?php foreach ($fields as $field): ?>
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_fields_type'] == 1): ?>

@@ -28,7 +28,6 @@ class ExerciseController extends Controller
                     foreach ($_POST as $answer) {
                         $this->createAnswer($answer['0'], $answer['1']);
                     }
-
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
