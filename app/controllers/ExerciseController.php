@@ -5,6 +5,8 @@ require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
 
+define('SINGLE_LINE_TYPE', 1);
+
 class ExerciseController extends Controller
 {
     public function renderer($request_uri)
@@ -67,7 +69,7 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
 
-                    $filterAnswers = $this->getAnswerByFields($fields);
+                    $filterAnswers = $this->getSymboleAnswerByFields($fields);
 
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
@@ -160,9 +162,15 @@ class ExerciseController extends Controller
         return $answers;
     }
 
-    public function getAnswerByFields ($fields) {
+    /**
+     * Method to get table of symbole by answer.
+     * @param mixed $fields
+     * @return array
+     */
+    public function getSymboleAnswerByFields ($fields) {
         $answers = $this->getAllAnswers();
 
+        //Count max fields column and max answer row.
         foreach ($fields as $field) {
             $i = 0;
             $maxAnswer = 0;
@@ -178,7 +186,7 @@ class ExerciseController extends Controller
         $maxField = count($fields);
 
         $groupedAnswers = [];
-
+        //Init table with maxField and maxAnswer with cross icon
         foreach ($fields as $field) {
             foreach ($answers as $answer) {
                 if ($field['id_fields'] === $answer['id_fields']) {
@@ -188,33 +196,30 @@ class ExerciseController extends Controller
                 }
             }
         }
-       
+        //Add a simple, double check if answer contain content.
+        //Else cross stay on table.
         foreach ($fields as $field) {
             foreach ($answers as $answer) {  
                 if ($field['id_fields'] === $answer['id_fields']) {
-
+                    
                     if ($answer['value'] != '') {
 
-                        if ($field['id_fields_type'] === 1) {
+                         if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
 
                             $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
-
                         } else {
-
+                            //Differentiate simple or double line answer.
                             if (preg_match("/.+\n.+/",$answer['value'])) {
 
                                 $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check-double VIcon';
-                            
                             } else {
                                 $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
                             }
-
                         }
                     }
                 }
             }
         }
-
         return $groupedAnswers;
     }
 }    
