@@ -69,8 +69,6 @@ class ExerciseController extends Controller
 
                     $filterAnswers = $this->getAnswerByFields($fields);
 
-                    var_dump($filterAnswers);
-
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
@@ -165,12 +163,54 @@ class ExerciseController extends Controller
     public function getAnswerByFields ($fields) {
         $answers = $this->getAllAnswers();
 
+        foreach ($fields as $field) {
+            $i = 0;
+            $maxAnswer = 0;
+
+            foreach ($answers as $answer) {
+                $i++;
+            }
+            if ($i > $maxAnswer) {
+                $maxAnswer = $i;
+            }
+        }
+
+        $maxField = count($fields);
+
         $groupedAnswers = [];
 
         foreach ($fields as $field) {
+            foreach ($answers as $answer) {
+                if ($field['id_fields'] === $answer['id_fields']) {
+                    for($i = 1;$i <= $maxAnswer;$i++){
+                        $groupedAnswers[$answer['create_at']][$i] = 'fa fa-x XIcon';
+                    }
+                }
+            }
+        }
+       
+        foreach ($fields as $field) {
             foreach ($answers as $answer) {  
                 if ($field['id_fields'] === $answer['id_fields']) {
-                    $groupedAnswers[$answer['create_at']][$answer['id_fields']] = $answer['value'];
+
+                    if ($answer['value'] != '') {
+
+                        if ($field['id_fields_type'] === 1) {
+
+                            $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
+
+                        } else {
+
+                            if (preg_match("/.+\n.+/",$answer['value'])) {
+
+                                $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check-double VIcon';
+                            
+                            } else {
+                                $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
+                            }
+
+                        }
+                    }
                 }
             }
         }

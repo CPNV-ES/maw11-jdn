@@ -38,9 +38,7 @@
                     <!-- Afficher les réponses pour chaque champ de l'exercice -->
                     <?php foreach ($fields as $field) : ?>
                         <td>
-                            <?= isset($fieldValues[$field['id_fields']])
-                                ? htmlspecialchars($fieldValues[$field['id_fields']])
-                                : 'caca'; ?>
+                            <i class="<?= $fieldValues[$field['id_fields']] ?>"></i>
                         </td>
                     <?php endforeach; ?>
                 </tr>
