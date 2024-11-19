@@ -3,7 +3,8 @@
     border-color: #e0a458;
 }
 
-input, select {
+input,
+select {
     font-family: inherit;
     font-size: 100%;
     box-sizing: border-box;
@@ -21,7 +22,8 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
-input[type="text"], select {
+input[type="text"],
+select {
     border: 0.1rem solid #d1d1d1;
     border-radius: 0.4rem;
     padding: 0.6rem 1rem;
@@ -48,29 +50,30 @@ a {
 table.records td:last-child {
     text-align: right;
 }
-table{
+table {
     width: 100%;
     padding-bottom: 30px;
 }
-.button{
+.button {
     background-color: #9b4dca;
 }
 
-.ListField{
+.field-list {
     width: 50%;
     padding: 30px;
 }
-.row{
+.row {
     width: 100%;
     display: flex;
 }
 
-table, th, td{
+table,
+th,
+td {
     text-align: left;
-
 }
-th,td{
-   
+th,
+td {
     padding-left: 30px;
 }
 td,
