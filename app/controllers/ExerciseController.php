@@ -222,7 +222,7 @@ class ExerciseController extends Controller
             foreach ($answers as $answer) {
                 if ($field['id_fields'] === $answer['id_fields']) {
                     for($i = 1;$i <= $maxAnswer;$i++){
-                        $groupedAnswers[$answer['create_at']][$i] = 'fa fa-x XIcon';
+                        $groupedAnswers[$answer['created_at']][$i] = 'fa fa-x XIcon';
                     }
                 }
             }
@@ -237,14 +237,14 @@ class ExerciseController extends Controller
 
                          if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
 
-                            $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
+                            $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
                         } else {
                             //Differentiate simple or double line answer.
                             if (preg_match("/.+\n.+/",$answer['value'])) {
 
-                                $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check-double VIcon';
+                                $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check-double VIcon';
                             } else {
-                                $groupedAnswers[$answer['create_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
+                                $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
                             }
                         }
                     }
