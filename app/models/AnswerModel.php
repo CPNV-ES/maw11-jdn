@@ -6,13 +6,14 @@ require_once APP_DIR . '/core/Model.php';
  */
 class AnswerModel extends Model
 {
-    public function create($value, $idfield)
+    public function create($value, $idfield, $idexerciseAnswer)
     {
-        $query = "INSERT INTO answers (value, id_fields) VALUES (:value,:id_fields)";
+        $query = "INSERT INTO answers (value, id_fields, id_exercise_answer) VALUES (:value,:id_fields, :id_exercise_answer)";
 
         $binds = [
             'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
-            'id_fields' => ['value' => $idfield, 'type' => PDO::PARAM_INT]
+            'id_fields' => ['value' => $idfield, 'type' => PDO::PARAM_INT],
+            'id_exercise_answer' => ['value' => $idexerciseAnswer, 'type' => PDO::PARAM_INT],
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);

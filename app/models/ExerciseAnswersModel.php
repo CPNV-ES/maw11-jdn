@@ -43,4 +43,13 @@ class ExerciseAnswersModel extends Model
 
         return;
     }
+
+    public function getLast()
+    {
+        $query = "SELECT id_exercise_answer FROM exercise_answer ORDER BY id_exercise_answer DESC LIMIT 1";
+
+        $req = $this->db->querySimpleExecute($query);
+
+        return $this->db->fetchAll($req);
+    }
 }

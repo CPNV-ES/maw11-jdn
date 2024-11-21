@@ -4,7 +4,7 @@ require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
-require_once MODEL_DIR . '/ExerciseAnswerModel.php';
+require_once MODEL_DIR . '/ExerciseAnswersModel.php';
 
 class ExerciseController extends Controller
 {
@@ -18,15 +18,21 @@ class ExerciseController extends Controller
                     $this->create();
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
-                    //update answers+ExercieAnswers
+                    $this->updateExerciseAnswer($matches[2]);
+                    $exerciseAnswer = $this->getLastExerciseAnswer();
                     foreach ($_POST as $answer) {
-                        $this->updateAnswer($answer['0'], $answer['1']);
+                        if ($answer != $_POST['created_at']) {
+                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['0']['id_exercise_answer']);
+                        }
                     }
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
                     $this->createExerciseAnswer($matches[1]);
+                    $exerciseAnswer = $this->getLastExerciseAnswer();
                     foreach ($_POST as $answer) {
-                        $this->createAnswer($answer['0'], $answer['1']);
+                        if ($answer != $_POST['created_at']) {
+                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['0']['id_exercise_answer']);
+                        }
                     }
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
@@ -199,10 +205,10 @@ class ExerciseController extends Controller
         return $field;
     }
 
-    public static function createAnswer($idfield, $value)
+    public static function createAnswer($idfield, $value, $idexerciseAnswer)
     {
         $answer = new AnswerModel();
-        $answer->create($value, $idfield);
+        $answer->create($value, $idfield, $idexerciseAnswer);
 
         return $answer;
     }
@@ -228,7 +234,7 @@ class ExerciseController extends Controller
     {
         $exerciseAnswers = new ExerciseAnswersModel();
         $date = date("Y-m-d H:i:s e");
-        $exerciseAnswers->create($date, $$idexercise);
+        $exerciseAnswers->create($date, $idexercise);
 
         return $exerciseAnswers;
     }
@@ -240,5 +246,13 @@ class ExerciseController extends Controller
         $exerciseAnswers->update($date, $idExerciseAnswers);
 
         return $exerciseAnswers;
+    }
+
+    public function getLastExerciseAnswer()
+    {
+        $exerciseAnswerModel = new ExerciseAnswersModel();
+        $exerciseAnswer = $exerciseAnswerModel->getLast();
+
+        return $exerciseAnswer;
     }
 }
