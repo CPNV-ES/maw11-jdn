@@ -34,6 +34,7 @@ CREATE TABLE fields (
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
-    id_fields NOT NULL,
+    id_fields INTEGER NOT NULL,
+    create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_fields) REFERENCES fields(id_fields)
 );
