@@ -68,43 +68,44 @@ foreach ($recordsExercise as $exercise) {
 }
 
 ?>
-
-<table class="container">
-    <thead>
-        <tr>
-            <th>Take
-            </th>
-            <?php foreach ($recordsQuestions as $recordsQuestion) { ?>
-                <th>
-                    <?= $recordsQuestion['label'] ?>
-                </th>
-            <?php } ?>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($recordsExerciseAnswers as $recordsExerciseAnswer) { ?>
+<div class="container">
+    <table class="table-style">
+        <thead>
             <tr>
-                <td>
-                    <?= $recordsExerciseAnswer['date'] ?>
-                </td>
-                <?php foreach ($recordsQuestionAnswers as $recordsQuestionAnswer) { ?>
-                    <td>
-                        <?php if ($recordsQuestionAnswer['value'] == null) { ?>
-                            <i class="fa fa-x XIcon"></i>
-                            <?php } else {
-                            if ($recordsQuestionAnswer['id_field_type'] == 1) { ?>
-                                <i class="fa-solid fa-check VIcon"></i>
-                            <?php } else { ?>
-                                <i class="fa-solid fa-check-double VIcon"></i>
-                            <?php } ?>
-                        <?php } ?>
-                    </td>
+                <th>Take
+                </th>
+                <?php foreach ($recordsQuestions as $recordsQuestion) { ?>
+                    <th>
+                        <?= $recordsQuestion['label'] ?>
+                    </th>
                 <?php } ?>
             </tr>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach ($recordsExerciseAnswers as $recordsExerciseAnswer) { ?>
+                <tr>
+                    <td>
+                        <?= $recordsExerciseAnswer['date'] ?>
+                    </td>
+                    <?php foreach ($recordsQuestionAnswers as $recordsQuestionAnswer) { ?>
+                        <td>
+                            <?php if ($recordsQuestionAnswer['value'] == null) { ?>
+                                <i class="fa fa-x XIcon"></i>
+                                <?php } else {
+                                if ($recordsQuestionAnswer['id_field_type'] == 1) { ?>
+                                    <i class="fa-solid fa-check VIcon"></i>
+                                <?php } else { ?>
+                                    <i class="fa-solid fa-check-double VIcon"></i>
+                                <?php } ?>
+                            <?php } ?>
+                        </td>
+                    <?php } ?>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 
+</div>
 <?php
 
 $slot = ob_get_clean();
