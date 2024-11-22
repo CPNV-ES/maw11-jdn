@@ -92,8 +92,6 @@ class ExerciseController extends Controller
 
                     $filterAnswers = $this->getIconAnswerByFields($fields);
 
-                    var_dump($filterAnswers);
-
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
