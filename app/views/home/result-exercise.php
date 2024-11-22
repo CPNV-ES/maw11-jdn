@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTf-8" />
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/result-exercise.css" />
-</head>
 <?php
+ob_start();
+
+$backgroundClass = 'managing';
+$cssPath = '/css/result-exercise.css';
+$headTitle = "Exercise: {$exercise['title']}";
+
+require_once VIEW_DIR . '/layouts/header.php';
+
 $recordsQuestions = [
     [
         'id' => 1,
@@ -70,50 +69,43 @@ foreach ($recordsExercise as $exercise) {
 
 ?>
 
-<body>
-    <header class="heading managing">
-        <section class="container">
-            <a href="/">
-                <img class="header-img" src="/images/logo.png" />
-            </a>
-            <span class="exercise-title">Exercise: <b><?php echo $nom_exercise ?> </b></span>
-        </section>
-    </header>
-    <table class="container">
-        <thead>
-            <tr>
-                <th>Take
+<table class="container">
+    <thead>
+        <tr>
+            <th>Take
+            </th>
+            <?php foreach ($recordsQuestions as $recordsQuestion) { ?>
+                <th>
+                    <?= $recordsQuestion['label'] ?>
                 </th>
-                <?php foreach ($recordsQuestions as $recordsQuestion) { ?>
-                    <th>
-                        <?= $recordsQuestion['label'] ?>
-                    </th>
+            <?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($recordsExerciseAnswers as $recordsExerciseAnswer) { ?>
+            <tr>
+                <td>
+                    <?= $recordsExerciseAnswer['date'] ?>
+                </td>
+                <?php foreach ($recordsQuestionAnswers as $recordsQuestionAnswer) { ?>
+                    <td>
+                        <?php if ($recordsQuestionAnswer['value'] == null) { ?>
+                            <i class="fa fa-x XIcon"></i>
+                            <?php } else {
+                            if ($recordsQuestionAnswer['id_field_type'] == 1) { ?>
+                                <i class="fa-solid fa-check VIcon"></i>
+                            <?php } else { ?>
+                                <i class="fa-solid fa-check-double VIcon"></i>
+                            <?php } ?>
+                        <?php } ?>
+                    </td>
                 <?php } ?>
             </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($recordsExerciseAnswers as $recordsExerciseAnswer) { ?>
-                <tr>
-                    <td>
-                        <?= $recordsExerciseAnswer['date'] ?>
-                    </td>
-                    <?php foreach ($recordsQuestionAnswers as $recordsQuestionAnswer) { ?>
-                        <td>
-                            <?php if ($recordsQuestionAnswer['value'] == null) { ?>
-                                <i class="fa fa-x XIcon"></i>
-                                <?php } else {
-                                if ($recordsQuestionAnswer['id_field_type'] == 1) { ?>
-                                    <i class="fa-solid fa-check VIcon"></i>
-                                <?php } else { ?>
-                                    <i class="fa-solid fa-check-double VIcon"></i>
-                                <?php } ?>
-                            <?php } ?>
-                        </td>
-                    <?php } ?>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-</body>
+        <?php } ?>
+    </tbody>
+</table>
 
-</html>
+<?php
+
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';
