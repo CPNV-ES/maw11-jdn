@@ -14,4 +14,16 @@ class AnswerModel extends Model
 
         return $this->db->fetchAll($req);
     }
+    public function getAnswersById($idFields) {
+        
+        $query = "SELECT * FROM answers WHERE id_fields = :id_fields";
+
+        $binds = [
+            'id_fields' => ['value' => $idFields, 'type' => PDO::PARAM_INT]
+        ];
+
+        $req = $this->db->queryPrepareExecute($query, $binds);
+
+        return $this->db->fetch($req);
+    }
 }

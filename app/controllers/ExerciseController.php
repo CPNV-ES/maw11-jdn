@@ -90,7 +90,9 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
 
-                    $filterAnswers = $this->getSymboleAnswerByFields($fields);
+                    $filterAnswers = $this->getIconAnswerByFields($fields);
+
+                    var_dump($filterAnswers);
 
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
@@ -185,6 +187,14 @@ class ExerciseController extends Controller
         return $field;
     }
 
+    public function getAnswersById($idField)
+    {
+        $answerModel = new AnswerModel();
+        $answers = $answerModel->getAnswersById($idField);
+
+        return $answers;
+    }
+
     public function getAllAnswers()
     {
         $answerModel = new AnswerModel();
@@ -193,28 +203,18 @@ class ExerciseController extends Controller
         return $answers;
     }
 
+
+
     /**
      * Method to get table of symbole by answer.
      * @param mixed $fields
      * @return array
      */
-    public function getSymboleAnswerByFields ($fields) {
+    public function getIconAnswerByFields ($fields) {
+
         $answers = $this->getAllAnswers();
-
-        //Count max fields column and max answer row.
-        foreach ($fields as $field) {
-            $i = 0;
-            $maxAnswer = 0;
-
-            foreach ($answers as $answer) {
-                $i++;
-            }
-            if ($i > $maxAnswer) {
-                $maxAnswer = $i;
-            }
-        }
-
-        $maxField = count($fields);
+        
+        $maxAnswer = count($answers);
 
         $groupedAnswers = [];
         //Init table with maxField and maxAnswer with cross icon
@@ -232,7 +232,7 @@ class ExerciseController extends Controller
         foreach ($fields as $field) {
             foreach ($answers as $answer) {  
                 if ($field['id_fields'] === $answer['id_fields']) {
-                    
+
                     if ($answer['value'] != '') {
 
                          if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
