@@ -4,7 +4,7 @@ require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
-require_once MODEL_DIR . '/ExerciseAnswersModel.php';
+require_once MODEL_DIR . '/FulfillmentModel.php';
 
 class ExerciseController extends Controller
 {
@@ -232,7 +232,7 @@ class ExerciseController extends Controller
 
     public static function createExerciseAnswer($idexercise)
     {
-        $exerciseAnswers = new ExerciseAnswersModel();
+        $exerciseAnswers = new FulfillmentModel();
         $date = date("Y-m-d H:i:s e");
         $exerciseAnswers->create($date, $idexercise);
 
@@ -241,7 +241,7 @@ class ExerciseController extends Controller
 
     public static function updateExerciseAnswer($idExerciseAnswers)
     {
-        $exerciseAnswers = new ExerciseAnswersModel();
+        $exerciseAnswers = new FulfillmentModel();
         $date = date("Y-m-d H:i:s e");
         $exerciseAnswers->update($date, $idExerciseAnswers);
 
@@ -250,7 +250,7 @@ class ExerciseController extends Controller
 
     public function getLastExerciseAnswer()
     {
-        $exerciseAnswerModel = new ExerciseAnswersModel();
+        $exerciseAnswerModel = new FulfillmentModel();
         $exerciseAnswer = $exerciseAnswerModel->getLast();
 
         return $exerciseAnswer;
