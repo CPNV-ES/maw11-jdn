@@ -17,6 +17,14 @@ header {
     padding: 0 1rem;
 }
 
+.column:first-child {
+    padding-left: 0;
+}
+
+.column:last-child {
+    padding-right: 0;
+}
+
 table {
     border-spacing: 0;
     width: 100%;
