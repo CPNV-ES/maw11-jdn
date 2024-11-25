@@ -25,7 +25,7 @@ class FieldModel extends Model
 
         return $fields;
     }
-
+  
     public function getOne($fieldId)
     {
         $query = "SELECT * FROM fields WHERE id_fields = :id_fields";

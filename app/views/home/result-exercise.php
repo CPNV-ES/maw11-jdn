@@ -68,6 +68,7 @@ foreach ($recordsExercise as $exercise) {
 }
 
 ?>
+
 <div class="container">
     <table class="table-style">
         <thead>
@@ -104,8 +105,8 @@ foreach ($recordsExercise as $exercise) {
             <?php } ?>
         </tbody>
     </table>
-
 </div>
+
 <?php
 
 $slot = ob_get_clean();
