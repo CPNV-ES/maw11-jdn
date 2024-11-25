@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTf-8" />
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/result-exercise.css" />
-</head>
 <?php
+ob_start();
+
+$backgroundClass = 'managing';
+$cssPath = '/css/result-exercise.css';
+$headTitle = "Exercise: {$exercise['title']}";
+
+require_once VIEW_DIR . '/layouts/header.php';
+
 $recordsQuestions = [
     [
         'id' => 1,
@@ -69,17 +68,8 @@ foreach ($recordsExercise as $exercise) {
 }
 
 ?>
-
-<body>
-    <header class="heading managing">
-        <section class="container">
-            <a href="/">
-                <img class="header-img" src="/images/logo.png" />
-            </a>
-            <span class="exercise-title">Exercise: <b><?php echo $nom_exercise ?> </b></span>
-        </section>
-    </header>
-    <table class="container">
+<div class="container">
+    <table class="table-style">
         <thead>
             <tr>
                 <th>Take
@@ -114,6 +104,9 @@ foreach ($recordsExercise as $exercise) {
             <?php } ?>
         </tbody>
     </table>
-</body>
 
-</html>
+</div>
+<?php
+
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';

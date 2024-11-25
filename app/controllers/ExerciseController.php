@@ -83,7 +83,8 @@ class ExerciseController extends Controller
                     $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri, $matches) ? true : false):
+                    $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
