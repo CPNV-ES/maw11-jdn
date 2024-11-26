@@ -1,33 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+ob_start();
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/take-exercise.css">
-</head>
+$cssPath = '/css/take-exercise.css';
 
-<body>
-    <header>
-        <section class="container">
-            <a href="/">
-                <img src="/images/logo.png">
-            </a>
-        </section>
-    </header>
-    <main class="container">
-        <ul class="answering-list">
-            <?php foreach ($exercises as $exercise) : if ($exercise['id_status'] != 2) continue; ?>
-                <li class="row">
-                    <div class="column card">
-                        <div class="title"><?= $exercise['title'] ?></div>
-                        <a class="button" href="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/new">Take it</a>
-                    </div>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </main>
-</body>
+require_once VIEW_DIR . '/layouts/header.php';
+?>
 
-</html>
+<main class="container">
+    <ul class="answering-list">
+        <?php foreach ($exercises as $exercise) : if ($exercise['id_status'] != 2) continue; ?>
+            <li class="row">
+                <div class="column card">
+                    <div class="title"><?= $exercise['title'] ?></div>
+                    <a class="button" href="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/new">Take it</a>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</main>
+
+<?php
+
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';
