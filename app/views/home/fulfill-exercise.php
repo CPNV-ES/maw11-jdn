@@ -28,10 +28,11 @@
 
         <label><?= $message ?></label>
 
-        <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8">
-            <?php if ($_SESSION['state'] == "new"): ?>
+        <?php if ($_SESSION['state'] == "new"): ?>
+            <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8">
                 <input type="hidden" name="created_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php else: ?>
+                <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8"></form>
                 <input type="hidden" name="updated_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php endif; ?>
             <?php foreach ($fields as $field): ?>
@@ -48,7 +49,7 @@
 
             <?php endforeach; ?>
             <input type="submit" class="action" data-disable-with="Save">
-        </form>
+            </form>
     </main>
 </body>
 

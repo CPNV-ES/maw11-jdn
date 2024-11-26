@@ -37,7 +37,10 @@ class ExerciseController extends Controller
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
-                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    $answers =
+
+
+                        require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
                     $this->createfield($matches[1]);
@@ -115,7 +118,6 @@ class ExerciseController extends Controller
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
-
 
                     //get exercise_answer + answers
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
@@ -255,4 +257,6 @@ class ExerciseController extends Controller
 
         return $exerciseAnswer;
     }
+
+    public function getAnswers() {}
 }
