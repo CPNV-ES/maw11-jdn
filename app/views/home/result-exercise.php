@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTf-8" />
+<?php
+ob_start();
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/result-exercise.css" />
-</head>
+$backgroundClass = 'managing';
+$cssPath = '/css/result-exercise.css';
+$headTitle = "Exercise: {$exercise['title']}";
 
-<body>
-    <header class="heading managing">
-        <section class="container">
-            <a href="/">
-                <img class="header-img" src="/images/logo.png" />
-            </a>
-            <span class="exercise-title">Exercise: <b><?= $exercise['title'] ?></b></span>
-        </section>
-    </header>
-    <table class="container">
+require_once VIEW_DIR . '/layouts/header.php';
+
+
+?>
+
+<div class="container">
+    <table class="table-style">
         <thead>
             <tr>
                 <th>Take
@@ -45,6 +39,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</body>
+</div>
 
-</html>
+<?php
+
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';

@@ -14,7 +14,15 @@ header {
     margin-left: 0;
     max-width: 100%;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+}
+
+.column:first-child {
+    padding-left: 0;
+}
+
+.column:last-child {
+    padding-right: 0;
 }
 
 table {

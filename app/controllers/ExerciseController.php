@@ -35,7 +35,6 @@ class ExerciseController extends Controller
                     exit();
             }
         } else {
-
             if (preg_match('/^\/exercises\/(\d+)\/fields/', $request_uri, $matches)) {
                 // TODO : find a way to avoid the resetting the first $matches 
                 if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)/', $request_uri)) {
@@ -86,7 +85,8 @@ class ExerciseController extends Controller
                     $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri,$matches) ? true : false):
+
+                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
 
@@ -105,6 +105,46 @@ class ExerciseController extends Controller
                     exit();
             }
         }
+
+        header('Location: /exercises');
+    }
+
+    public function update($id, $newStatus)
+    {
+        $exercise = new ExerciseModel();
+        $response = $exercise->update($id, 'id_status', $newStatus);
+
+        if (!$response) {
+            header('Location: /');
+            return;
+        }
+
+        header('Location: /exercises');
+    }
+
+    public function getOne($id)
+    {
+        $exerciseModel = new ExerciseModel();
+        $exercise = $exerciseModel->getOne($id);
+
+        return $exercise;
+    }
+
+
+    public function getAll()
+    {
+        $exerciseModel = new ExerciseModel();
+        $exercise = $exerciseModel->getAll();
+
+        return $exercise;
+    }
+
+    public static function getFields($exerciseId)
+    {
+        $fieldModel = new FieldModel();
+        $field = $fieldModel->getFieldsFromExercise($exerciseId);
+
+        return $field;
     }
 
     public function createfield($exerciseId)
@@ -147,43 +187,6 @@ class ExerciseController extends Controller
         return false;
     }
 
-    public function update($id, $newStatus)
-    {
-        $exercise = new ExerciseModel();
-        $response = $exercise->update($id, 'id_status', $newStatus);
-
-        if (!$response) {
-            header('Location: /');
-            return;
-        }
-
-        header('Location: /exercises');
-    }
-
-    public function getOne($id)
-    {
-        $exerciseModel = new ExerciseModel();
-        $exercise = $exerciseModel->getOne($id);
-
-        return $exercise;
-    }
-
-
-    public function getAll()
-    {
-        $exerciseModel = new ExerciseModel();
-        $exercise = $exerciseModel->getAll();
-
-        return $exercise;
-    }
-
-    public static function getFields($exerciseId)
-    {
-        $fieldModel = new FieldModel();
-        $field = $fieldModel->getFieldsFromExercise($exerciseId);
-
-        return $field;
-    }
 
     public function getAnswersById($idField)
     {

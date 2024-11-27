@@ -1,37 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+ob_start();
+$cssPath = '/css/home-page.css';
+?>
 
-<!-- TODO : Create a header layout and include it in all view -->
+<header>
+    <section class="container">
+        <img src="images/logo.png" alt="logo" />
+        <h1>Exercise<br>Looper</h1>
+    </section>
+</header>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/home-page.css" />
-</head>
+<main class="container">
+    <section class="row">
+        <div class="column">
+            <a class="button answering" href="/exercises/answering">Take an exercise</a>
+        </div>
 
-<body>
-    <header>
-        <section class="container">
-            <img src="images/logo.png" alt="logo" />
-            <h1>Exercise<br>Looper</h1>
-        </section>
-    </header>
+        <div class="column">
+            <a class="button managing" href="/exercises/new">Create an exercise</a>
+        </div>
 
-    <main class="container">
-        <section class="row">
-            <div class="column">
-                <a class="button answering" href="/exercises/answering">Take an exercise</a>
-            </div>
+        <div class="column">
+            <a class="button results" href="/exercises">Manage an exercise</a>
+        </div>
+    </section>
+</main>
 
-            <div class="column">
-                <a class="button managing" href="/exercises/new">Create an exercise</a>
-            </div>
+<?php
 
-            <div class="column">
-                <a class="button results" href="/exercises">Manage an exercise</a>
-            </div>
-        </section>
-    </main>
-</body>
-
-</html>
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';

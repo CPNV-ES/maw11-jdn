@@ -1,45 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTf-8" />
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/create-exercise.css" />
-</head>
+<?php
+ob_start();
 
-<body>
-    <header class="heading managing">
-        <section class="container">
-            <a href="/">
-                <img class="header-img" src="/images/logo.png" />
-            </a>
-            <span class="exercise-title">New exercise</span>
-        </section>
-    </header>
+$backgroundClass = 'managing';
+$cssPath = '/css/create-exercise.css';
+$headTitle = "New exercise";
 
-    <main class="container">
-        <title>ExerciseLooper</title>
+require_once VIEW_DIR . '/layouts/header.php'
+?>
 
-        <h1>New Exercise</h1>
-        <form action="/exercises" method="post" accept-charset="UTF-8">
-            <div class="field">
-                <label for="exercise_title">Title</label>
-                <input
-                    type="text"
-                    name="exercises_title"
-                    id="exercise_title" />
-            </div>
-            <div>
-                <input
-                    class="button"
-                    type="submit"
-                    name="commit"
-                    value="Create Exercise"
-                    data-disable-with="Create Exercise" />
-            </div>
-        </form>
-    </main>
-</body>
+<main class="container">
+    <title>ExerciseLooper</title>
 
-</html>
+    <h1>New Exercise</h1>
+    <form action="/exercises" method="post" accept-charset="UTF-8">
+        <div class="field">
+            <label for="exercise_title">Title</label>
+            <input
+                type="text"
+                name="exercises_title"
+                id="exercise_title" />
+        </div>
+        <div>
+            <input
+                class="button"
+                type="submit"
+                name="commit"
+                value="Create Exercise"
+                data-disable-with="Create Exercise" />
+        </div>
+    </form>
+</main>
+
+<?php
+
+$slot = ob_get_clean();
+require_once VIEW_DIR . '/layouts/app-layout.php';

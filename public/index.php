@@ -20,39 +20,23 @@ require CONTROLLER_DIR . '/ExerciseController.php';
 require CONTROLLER_DIR . '/HomeController.php';
 
 ?>
+<?php
+$request_uri = $_SERVER['REQUEST_URI'];
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>ExerciseLooper</title>
-</head>
-
-<body>
-    <?php
-    $request_uri = $_SERVER['REQUEST_URI'];
-
-    $exploded_uri = explode('/', $request_uri);
-    $base_uri = '/' . $exploded_uri[1];
+$exploded_uri = explode('/', $request_uri);
+$base_uri = '/' . $exploded_uri[1];
 
 
-    switch ($base_uri) {
-        case '/':
-            (new HomeController())->show();
-            exit();
-        case '/exercises':
-            (new ExerciseController())->renderer($request_uri);
-            exit();
-        default:
-            header("HTTP/1.0 404 Not Found");
-            echo "Page not found";
-            exit();
-    }
-    ?>
-</body>
-
-</html>
+switch ($base_uri) {
+    case '/':
+        (new HomeController())->show();
+        exit();
+    case '/exercises':
+        (new ExerciseController())->renderer($request_uri);
+        exit();
+    default:
+        header("HTTP/1.0 404 Not Found");
+        echo "Page not found";
+        exit();
+}
+?>
