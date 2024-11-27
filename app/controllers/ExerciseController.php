@@ -4,6 +4,7 @@ require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
+require_once MODEL_DIR . '/FulfillmentModel.php';
 
 define('SINGLE_LINE_TYPE', 1);
 
@@ -24,7 +25,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
-                    $this->createfield($matches[1]);
+                    $this->createField($matches[1]);
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/create-field.php';
@@ -88,11 +89,13 @@ class ExerciseController extends Controller
 
                 case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOne($matches[1]);
-                    $fields = $this->getFields($matches[1]);
+                   
+                    $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
 
-                    $filterAnswers = $this->getIconAnswerByFields($fields);
+                    $iconAnswerByFulfillments = $this->getIconAnswerByFulfillments(1);
+                    var_dump($iconAnswerByFulfillments);
 
-                    require_once VIEW_DIR . '/home/result-exercise.php';
+                    //require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
@@ -147,7 +150,7 @@ class ExerciseController extends Controller
         return $field;
     }
 
-    public function createfield($exerciseId)
+    public function createField($exerciseId)
     {
         $label = $_POST['field_label'];
         $type = $_POST['field_type'];
@@ -188,10 +191,10 @@ class ExerciseController extends Controller
     }
 
 
-    public function getAnswersById($idField)
+    public function getAnswersFromIdFulfillment($idFulfillment)
     {
         $answerModel = new AnswerModel();
-        $answers = $answerModel->getAnswersById($idField);
+        $answers = $answerModel->getAnswersFromIdFulfillment($idFulfillment);
 
         return $answers;
     }
@@ -263,5 +266,24 @@ class ExerciseController extends Controller
         $response = $fieldModel->delete($id);
         return true;
     }
+
+    public function getFulfillmentsByExerciseId ($exerciseId) {
+
+        $fulfillmentModel = new FulfillmentModel();
+        $fulfillments = $fulfillmentModel->getFulfillmentsByExerciseId($exerciseId);
+
+        return $fulfillments;
+
+    }
+
+    public function getIconAnswerByFulfillments ($idFulfillment) {
+
+        $answerModel = new AnswerModel();
+        $answers = $answerModel->getAnswersFromIdFulfillment($idFulfillment);
+
+        return $answers;
+
+
+    } 
 }    
 
