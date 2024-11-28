@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS fields;
 DROP TABLE IF EXISTS fields_type;
 DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS fulfillments;
 
 CREATE TABLE fields_type (
     id_fields_type INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +35,17 @@ CREATE TABLE fields (
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
-    id_fields INTEGER NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_fields) REFERENCES fields(id_fields)
+    id_fields NOT NULL,
+    id_fulfillments INTEGER,
+    FOREIGN KEY (id_fields) REFERENCES fields(id_fields),
+    FOREIGN KEY (id_fulfillments) REFERENCES fulfillments(id_fulfillments)
+);
+
+
+CREATE TABLE fulfillments (
+    id_fulfillments INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at DATE NOT NULL,
+    updated_at DATE,
+    id_exercises NOT NULL,
+    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises)
 );
