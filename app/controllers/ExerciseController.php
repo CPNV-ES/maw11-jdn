@@ -197,6 +197,8 @@ class ExerciseController extends Controller
     {
         $answerModel = new AnswerModel();
 
+        $data = [];
+
         $maxAnswers = count($fields);
 
         foreach ($fulfillments as $fulfillment) {
@@ -267,6 +269,8 @@ class ExerciseController extends Controller
 
     public function getCreatedAtWithIdFulfillments($fulfillments) {
 
+        $createdAtWithId = [];
+        
         foreach ($fulfillments as $fulfillment) {
 
             $createdAtWithId[$fulfillment['created_at']] = $fulfillment['id_fulfillments'];
