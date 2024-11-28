@@ -18,7 +18,7 @@ require_once VIEW_DIR . '/layouts/header.php';
                 </th>
                 <?php foreach ($fields as $field) { ?>
                     <th>
-                        <?= $field['label'] ?>
+                        <a href="<?=$field['id_fields'];?>"><?= $field['label'] ?></a>
                     </th>
                 <?php } ?>
             </tr>
@@ -27,7 +27,7 @@ require_once VIEW_DIR . '/layouts/header.php';
             <?php foreach ($answers as $createAt => $fieldValues) : ?>
                 <tr>
                     <!-- Affiche la date de création une seule fois -->
-                    <td><?= htmlspecialchars($createAt); ?></td>
+                    <td><a href="fulfillments/<?= $createdAtWhidId[$createAt];?>"><?= htmlspecialchars($createAt); ?></a></td>
                     
                     <!-- Afficher les réponses pour chaque champ de l'exercice -->
                     <?php foreach ($fields as $field) : ?>

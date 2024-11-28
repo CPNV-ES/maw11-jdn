@@ -94,6 +94,8 @@ class ExerciseController extends Controller
 
                     $answers = $this->getAnswersFromFulfillment($fulfillments,$fields);
 
+                    $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
 
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
@@ -202,7 +204,6 @@ class ExerciseController extends Controller
             foreach ($fields as $field) {
                 $data[$fulfillment['created_at']][$field['id_fields']] = "fa fa-x XIcon"; // Initialiser chaque clé à null
             }
-            //$data[$fulfillment['created_at']] = array_fill(1, $maxAnswers, "fa fa-x XIcon");
         }
 
         $answers = $this->getAllAnswers();
@@ -264,14 +265,13 @@ class ExerciseController extends Controller
 
     }
 
-    public function getIconAnswerByFulfillments ($idFulfillment) {
+    public function getCreatedAtWithIdFulfillments($fulfillments) {
 
-        $answerModel = new AnswerModel();
-        $answers = $answerModel->getAnswersFromIdFulfillment($idFulfillment);
+        foreach ($fulfillments as $fulfillment) {
 
-        return $answers;
-
-
-    } 
+            $createdAtWithId[$fulfillment['created_at']] = $fulfillment['id_fulfillments'];
+        }
+        return $createdAtWithId;
+    }
 }    
 
