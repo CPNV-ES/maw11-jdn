@@ -18,7 +18,7 @@ require_once VIEW_DIR . '/layouts/header.php';
                 </th>
                 <?php foreach ($fields as $field) { ?>
                     <th>
-                        <a href="<?=$field['id_fields'];?>"><?= $field['label'] ?></a>
+                        <a href="results/<?=$field['id_fields'];?>"><?= $field['label'] ?></a>
                     </th>
                 <?php } ?>
             </tr>
