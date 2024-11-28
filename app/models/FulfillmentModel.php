@@ -23,7 +23,7 @@ class FulfillmentModel extends Model
 
     public function update($update, $id)
     {
-        $query = "UPDATE fulfillments SET updated_at = :updated_at WHERE id_exercise_answer = :id;";
+        $query = "UPDATE fulfillments SET updated_at = :updated_at WHERE id_fulfillments = :id;";
 
         $binds = [
             'updated_at' => ['value' => $update, 'type' => PDO::PARAM_INT],

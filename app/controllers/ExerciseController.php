@@ -19,28 +19,29 @@ class ExerciseController extends Controller
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
                     $this->updateExerciseAnswer($matches[2]);
-                    $exerciseAnswer = $this->getLastExerciseAnswer();
+                    $exerciseAnswer = $this->getLastFulfillments();
                     foreach ($_POST as $answer) {
                         if ($answer != $_POST['created_at']) {
-                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['0']['id_exercise_answer']);
+                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['id_fulfillments']);
                         }
                     }
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
                     $this->createExerciseAnswer($matches[1]);
-                    $exerciseAnswer = $this->getLastExerciseAnswer();
+                    $exerciseAnswer = $this->getLastFulfillments();
                     foreach ($_POST as $answer) {
                         if ($answer != $_POST['created_at']) {
-                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['0']['id_exercise_answer']);
+                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['id_fulfillments']);
                         }
                     }
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
-                    $answers =
+                    $answers = $this->getAnswers($exerciseAnswer['id_fulfillments']);
 
 
-                        require_once VIEW_DIR . '/home/fulfill-exercise.php';
+
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
                     $this->createfield($matches[1]);
@@ -250,13 +251,19 @@ class ExerciseController extends Controller
         return $exerciseAnswers;
     }
 
-    public function getLastExerciseAnswer()
+    public function getLastFulfillments()
     {
-        $exerciseAnswerModel = new FulfillmentModel();
-        $exerciseAnswer = $exerciseAnswerModel->getLast();
+        $fulfillmentModel = new FulfillmentModel();
+        $fulffilment = $fulfillmentModel->getLast();
 
-        return $exerciseAnswer;
+        return $fulffilment['0'];
     }
 
-    public function getAnswers() {}
+    public function getAnswers($idfulfillments)
+    {
+        $answersModel = new AnswerModel();
+        $answers = $answersModel->getAnswerFrom($idfulfillments);
+
+        return $answers;
+    }
 }

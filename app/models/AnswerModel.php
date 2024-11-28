@@ -6,14 +6,14 @@ require_once APP_DIR . '/core/Model.php';
  */
 class AnswerModel extends Model
 {
-    public function create($value, $idfield, $idexerciseAnswer)
+    public function create($value, $idfield, $idfulfill)
     {
-        $query = "INSERT INTO answers (value, id_fields, id_exercise_answer) VALUES (:value,:id_fields, :id_exercise_answer)";
+        $query = "INSERT INTO answers (value, id_fields, id_fulfillments) VALUES (:value,:id_fields, :id_fulfillments)";
 
         $binds = [
             'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
             'id_fields' => ['value' => $idfield, 'type' => PDO::PARAM_INT],
-            'id_exercise_answer' => ['value' => $idexerciseAnswer, 'type' => PDO::PARAM_INT],
+            'id_fulfillments' => ['value' => $idfulfill, 'type' => PDO::PARAM_INT],
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
@@ -37,11 +37,17 @@ class AnswerModel extends Model
         return $fields;
     }
 
-    public function getAnswer()
+    public function getAnswerFrom($idfulfillments)
     {
+        $query = "SELECT * FROM answers WHERE id_fulfillments = :id_fulfillments";
 
+        $binds = [
+            'id_fulfillments' => ['value' => $idfulfillments, 'type' => PDO::PARAM_INT]
+        ];
 
+        $req = $this->db->queryPrepareExecute($query, $binds);
+        $answers = $this->db->fetchAll($req);
 
-        return;
+        return $answers;
     }
 }

@@ -29,25 +29,30 @@
         <label><?= $message ?></label>
 
         <?php if ($_SESSION['state'] == "new"): ?>
-            <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8">
+            <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/e" method="post" accept-charset="UTF-8">
                 <input type="hidden" name="created_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php else: ?>
-                <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments" method="post" accept-charset="UTF-8"></form>
+                <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $exerciseAnswer['id_fulfillments'] ?>/3" method="post" accept-charset="UTF-8"></form>
                 <input type="hidden" name="updated_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php endif; ?>
+            <?php $positionAnswer = 0 ?>
             <?php foreach ($fields as $field): ?>
+
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_fields_type'] == 1): ?>
                     <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
-                    <input type="text" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" id="<?= htmlspecialchars($field['id_fields']) ?>" value="<?= $field['value'] ?>" />
+                    <input type="text" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" id="<?= htmlspecialchars($field['id_fields']) ?>" value="<?= $answers[$positionAnswer]['value'] ?>" />
 
                 <?php else: ?>
-                    <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>" value="<?= $field['value'] ?>">
-                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"></textarea>
+                    <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
+                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"><?= $answers[$positionAnswer]['value'] ?></textarea>
 
                 <?php endif; ?>
-
+                <?php $positionAnswer = $positionAnswer + 1 ?>
             <?php endforeach; ?>
+
+
+
             <input type="submit" class="action" data-disable-with="Save">
             </form>
     </main>
