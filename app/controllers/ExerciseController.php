@@ -87,15 +87,15 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
 
-                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri, $matches) ? true : false):
-                    $exercise = $this->getOne($matches[1]);
-                   
+                case (preg_match('/\/exercises\/(\d+)\/results*/', $request_uri, $matches) ? true : false):
+                    $exercise = $this->getOne(id: $matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
 
-                    $iconAnswerByFulfillments = $this->getIconAnswerByFulfillments(1);
-                    var_dump($iconAnswerByFulfillments);
+                    $answers = $this->getAnswersFromFulfillment($fulfillments,$fields);
 
-                    //require_once VIEW_DIR . '/home/result-exercise.php';
+
+                    require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
@@ -191,12 +191,51 @@ class ExerciseController extends Controller
     }
 
 
-    public function getAnswersFromIdFulfillment($idFulfillment)
+    public function getAnswersFromFulfillment($fulfillments,$fields)
     {
         $answerModel = new AnswerModel();
-        $answers = $answerModel->getAnswersFromIdFulfillment($idFulfillment);
 
-        return $answers;
+        $maxAnswers = count($fields);
+
+        foreach ($fulfillments as $fulfillment) {
+
+            foreach ($fields as $field) {
+                $data[$fulfillment['created_at']][$field['id_fields']] = "fa fa-x XIcon"; // Initialiser chaque clé à null
+            }
+            //$data[$fulfillment['created_at']] = array_fill(1, $maxAnswers, "fa fa-x XIcon");
+        }
+
+        $answers = $this->getAllAnswers();
+
+        foreach ($fulfillments as $fulfillment) {
+            foreach ($fields as $field) {
+                foreach ($answers as $answer) {
+                    if ($field['id_fields'] == $answer['id_fields']) {
+                        if ($fulfillment['id_fulfillments'] == $answer['id_fulfillments']) {
+                            if ($answer['value'] != null) {
+
+                                if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
+
+                                    $data[$fulfillment['created_at']][$field['id_fields']] = "fa-solid fa-check VIcon";
+
+                                } else {
+                                    //Differentiate simple or double line answer.
+                                    if (preg_match("/.+\n.+/",$answer['value'])) {
+        
+                                        $data[$fulfillment['created_at']][$field['id_fields']] =  'fa-solid fa-check-double VIcon';
+
+                                    } else {
+                                        $data[$fulfillment['created_at']][$field['id_fields']] = 'fa-solid fa-check VIcon';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
     public function getAllAnswers()
@@ -205,57 +244,6 @@ class ExerciseController extends Controller
         $answers = $answerModel->getAllAnswers();
 
         return $answers;
-    }
-
-
-
-    /**
-     * Method to get table of symbole by answer.
-     * @param mixed $fields
-     * @return array
-     */
-    public function getIconAnswerByFields ($fields) {
-
-        $answers = $this->getAllAnswers();
-        
-        $maxAnswer = count($answers);
-
-        $groupedAnswers = [];
-        //Init table with maxField and maxAnswer with cross icon
-        foreach ($fields as $field) {
-            foreach ($answers as $answer) {
-                if ($field['id_fields'] === $answer['id_fields']) {
-                    for($i = 1;$i <= $maxAnswer;$i++){
-                        $groupedAnswers[$answer['created_at']][$i] = 'fa fa-x XIcon';
-                    }
-                }
-            }
-        }
-        //Add a simple, double check if answer contain content.
-        //Else cross stay on table.
-        foreach ($fields as $field) {
-            foreach ($answers as $answer) {  
-                if ($field['id_fields'] === $answer['id_fields']) {
-
-                    if ($answer['value'] != '') {
-
-                         if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
-
-                            $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
-                        } else {
-                            //Differentiate simple or double line answer.
-                            if (preg_match("/.+\n.+/",$answer['value'])) {
-
-                                $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check-double VIcon';
-                            } else {
-                                $groupedAnswers[$answer['created_at']][$answer['id_fields']] = 'fa-solid fa-check VIcon';
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $groupedAnswers;
     }
 
     public function deleteField($id)

@@ -24,7 +24,7 @@ require_once VIEW_DIR . '/layouts/header.php';
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($filterAnswers as $createAt => $fieldValues) : ?>
+            <?php foreach ($answers as $createAt => $fieldValues) : ?>
                 <tr>
                     <!-- Affiche la date de création une seule fois -->
                     <td><?= htmlspecialchars($createAt); ?></td>

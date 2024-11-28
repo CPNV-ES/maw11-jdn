@@ -8,11 +8,13 @@ class FulfillmentModel extends Model
 {
     public function getFulfillmentsByExerciseId($exerciseId) {
         
-        $query = "SELECT * FROM fulfillments WHERE id_exercises = :id_exercises";
+        $query = "SELECT * FROM fulfillments WHERE id_exercises = :id_exercises ORDER BY id_fulfillments";
 
         $binds = [
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]
         ];
+
+       
 
         $req = $this->db->queryPrepareExecute($query, $binds);
 
