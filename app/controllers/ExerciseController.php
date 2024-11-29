@@ -87,15 +87,27 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
 
+                case (preg_match('/\/exercises\/(\d+)\/results\/(\d+)/', $request_uri, $matches) ? true : false):
+
+                    $exercise = $this->getOne($matches[1]);
+                    
+                    $field = $this->getOneField($matches[2]);
+
+                    $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
+
+                    $answers = $this->getAnswersFromFulfillment($fulfillments,$field);
+
+                    require_once VIEW_DIR . '/home/result-field.php';
+                    exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/results*/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOne(id: $matches[1]);
                     $fields = $this->getFields($matches[1]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
 
-                    $answers = $this->getAnswersFromFulfillment($fulfillments,$fields);
+                    $answers = $this->getIconAnswersFromFulfillment($fulfillments,$fields);
 
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
-
 
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
@@ -192,14 +204,32 @@ class ExerciseController extends Controller
         return false;
     }
 
-
-    public function getAnswersFromFulfillment($fulfillments,$fields)
-    {
-        $answerModel = new AnswerModel();
-
+    public function getAnswersFromFulfillment ($fulfillments,$field) {
+        $answers = $this->getAllAnswers();
         $data = [];
 
-        $maxAnswers = count($fields);
+        $maxAnswers = count($fulfillments);
+
+        foreach ($fulfillments as $fulfillment) {
+            $data[$fulfillment['created_at']] = '';
+        }
+
+        foreach ($fulfillments as $fulfillment) {
+            foreach ($answers as $answer) {
+                if ($answer['id_fulfillments'] == $fulfillment['id_fulfillments']) {
+                    if ($field['id_fields'] == $answer['id_fields']) {
+                        $data[$fulfillment['created_at']] = $answer['value'];
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+
+
+    public function getIconAnswersFromFulfillment($fulfillments,$fields)
+    {
+        $data = [];
 
         foreach ($fulfillments as $fulfillment) {
 
@@ -247,6 +277,14 @@ class ExerciseController extends Controller
         $answers = $answerModel->getAllAnswers();
 
         return $answers;
+    }
+
+    public function getOneField($fieldId)
+    {
+        $fieldModel = new FieldModel();
+
+        $fieldModel->getOne($fieldId);
+        return $fieldModel->getOne($fieldId);;
     }
 
     public function deleteField($id)

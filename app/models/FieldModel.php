@@ -35,7 +35,7 @@ class FieldModel extends Model
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
-        $field = $this->db->fetchAll($req);
+        $field = $this->db->fetch($req);
 
         return $field;
     }
