@@ -36,14 +36,6 @@ class FulfillmentModel extends Model
         return $exerciseAnswered;
     }
 
-    public function getAnswer()
-    {
-
-
-
-        return;
-    }
-
     public function getLast()
     {
         $query = "SELECT * FROM fulfillments ORDER BY id_fulfillments DESC LIMIT 1";
@@ -51,5 +43,20 @@ class FulfillmentModel extends Model
         $req = $this->db->querySimpleExecute($query);
 
         return $this->db->fetchAll($req);
+    }
+
+    public function getOne($id)
+    {
+        $query = "SELECT * FROM fulfillments WHERE id_fulfillments = :id";
+
+
+        $binds = [
+            'id' => ['value' => $id, 'type' => PDO::PARAM_INT]
+        ];
+
+        $req = $this->db->queryPrepareExecute($query, $binds);
+        $fulfillment = $this->db->fetchAll($req);
+
+        return $fulfillment;
     }
 }
