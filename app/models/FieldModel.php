@@ -14,7 +14,7 @@ class FieldModel extends Model
 
     public function getFieldsFromExercise($exerciseId)
     {
-        $query = "SELECT * FROM fields WHERE id_exercises = :id_exercises";
+        $query = "SELECT * FROM fields WHERE id_exercises = :id_exercises ORDER BY id_fields";
 
         $binds = [
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]

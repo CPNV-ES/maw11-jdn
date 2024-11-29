@@ -3,6 +3,10 @@
 require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
+require_once MODEL_DIR . '/AnswerModel.php';
+require_once MODEL_DIR . '/FulfillmentModel.php';
+
+define('SINGLE_LINE_TYPE', 1);
 
 class ExerciseController extends Controller
 {
@@ -21,7 +25,7 @@ class ExerciseController extends Controller
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
-                    $this->createfield($matches[1]);
+                    $this->createField($matches[1]);
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/create-field.php';
@@ -82,8 +86,17 @@ class ExerciseController extends Controller
                     $exercises = $this->getAll();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/results.*/', $request_uri, $matches) ? true : false):
-                    $exercise = $this->getOne($matches[1]);
+
+                case (preg_match('/\/exercises\/(\d+)\/results*/', $request_uri, $matches) ? true : false):
+                    $exercise = $this->getOne(id: $matches[1]);
+                    $fields = $this->getFields($matches[1]);
+                    $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
+
+                    $answers = $this->getAnswersFromFulfillment($fulfillments,$fields);
+
+                    $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
+
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
@@ -139,7 +152,7 @@ class ExerciseController extends Controller
         return $field;
     }
 
-    public function createfield($exerciseId)
+    public function createField($exerciseId)
     {
         $label = $_POST['field_label'];
         $type = $_POST['field_type'];
@@ -179,42 +192,61 @@ class ExerciseController extends Controller
         return false;
     }
 
-    public function update($id, $newStatus)
-    {
-        $exercise = new ExerciseModel();
-        $response = $exercise->update($id, 'id_status', $newStatus);
 
-        if (!$response) {
-            header('Location: /');
-            return;
+    public function getAnswersFromFulfillment($fulfillments,$fields)
+    {
+        $answerModel = new AnswerModel();
+
+        $data = [];
+
+        $maxAnswers = count($fields);
+
+        foreach ($fulfillments as $fulfillment) {
+
+            foreach ($fields as $field) {
+                $data[$fulfillment['created_at']][$field['id_fields']] = "fa fa-x XIcon"; // Initialiser chaque clé à null
+            }
         }
 
-        header('Location: /exercises');
+        $answers = $this->getAllAnswers();
+
+        foreach ($fulfillments as $fulfillment) {
+            foreach ($fields as $field) {
+                foreach ($answers as $answer) {
+                    if ($field['id_fields'] == $answer['id_fields']) {
+                        if ($fulfillment['id_fulfillments'] == $answer['id_fulfillments']) {
+                            if ($answer['value'] != null) {
+
+                                if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
+
+                                    $data[$fulfillment['created_at']][$field['id_fields']] = "fa-solid fa-check VIcon";
+
+                                } else {
+                                    //Differentiate simple or double line answer.
+                                    if (preg_match("/.+\n.+/",$answer['value'])) {
+        
+                                        $data[$fulfillment['created_at']][$field['id_fields']] =  'fa-solid fa-check-double VIcon';
+
+                                    } else {
+                                        $data[$fulfillment['created_at']][$field['id_fields']] = 'fa-solid fa-check VIcon';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
-    public function getOne($id)
+    public function getAllAnswers()
     {
-        $exerciseModel = new ExerciseModel();
-        $exercise = $exerciseModel->getOne($id);
+        $answerModel = new AnswerModel();
+        $answers = $answerModel->getAllAnswers();
 
-        return $exercise;
-    }
-
-
-    public function getAll()
-    {
-        $exerciseModel = new ExerciseModel();
-        $exercise = $exerciseModel->getAll();
-
-        return $exercise;
-    }
-
-    public static function getFields($exerciseId)
-    {
-        $fieldModel = new FieldModel();
-        $field = $fieldModel->getFieldsFromExercise($exerciseId);
-
-        return $field;
+        return $answers;
     }
 
     public function deleteField($id)
@@ -225,4 +257,25 @@ class ExerciseController extends Controller
         $response = $fieldModel->delete($id);
         return true;
     }
-}
+
+    public function getFulfillmentsByExerciseId ($exerciseId) {
+
+        $fulfillmentModel = new FulfillmentModel();
+        $fulfillments = $fulfillmentModel->getFulfillmentsByExerciseId($exerciseId);
+
+        return $fulfillments;
+
+    }
+
+    public function getCreatedAtWithIdFulfillments($fulfillments) {
+
+        $createdAtWithId = [];
+        
+        foreach ($fulfillments as $fulfillment) {
+
+            $createdAtWithId[$fulfillment['created_at']] = $fulfillment['id_fulfillments'];
+        }
+        return $createdAtWithId;
+    }
+}    
+
