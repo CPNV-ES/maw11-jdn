@@ -27,12 +27,16 @@
         ?>
 
         <label><?= $message ?></label>
-
-        <?php if ($_SESSION['state'] == "new"): ?>
-            <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/e" method="post" accept-charset="UTF-8">
+        <form action="
+            <?php if ($_SESSION['state'] == "new"): ?>
+            /exercises/<?= $exercise['id_exercises'] ?>/fulfillments/
+             <?php else: ?>
+            /exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $exerciseAnswer['id_fulfillments'] ?>/edit
+             <?php endif; ?>
+            " method="post" accept-charset="UTF-8">
+            <?php if ($_SESSION['state'] == "new"): ?>
                 <input type="hidden" name="created_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php else: ?>
-                <form action="/exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $exerciseAnswer['id_fulfillments'] ?>/3" method="post" accept-charset="UTF-8"></form>
                 <input type="hidden" name="updated_at" value="<?= date("Y-m-d H:i:s e") ?>">
             <?php endif; ?>
             <?php $positionAnswer = 0 ?>
@@ -54,7 +58,7 @@
 
 
             <input type="submit" class="action" data-disable-with="Save">
-            </form>
+        </form>
     </main>
 </body>
 

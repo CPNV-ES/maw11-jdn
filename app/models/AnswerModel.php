@@ -22,13 +22,14 @@ class AnswerModel extends Model
         return $fields;
     }
 
-    public function update($value, $idfield)
+    public function update($value, $idfield, $idFulfillments)
     {
-        $query = "UPDATE answers SET value = :value WHERE id_fields = :id_fields;";
+        $query = "UPDATE answers SET value = :value WHERE id_fields = :id_fields AND id_fulfillments = :id_fulfillments ;";
 
         $binds = [
             'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
-            'id_fields' => ['value' => $idfield, 'type' => PDO::PARAM_INT]
+            'id_fields' => ['value' => $idfield, 'type' => PDO::PARAM_INT],
+            'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT]
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
