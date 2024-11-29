@@ -1,3 +1,9 @@
+header {
+    display: flex;
+    justify-content: center;
+    background-color: #419d78;
+}
+
 th {
     text-align: left;
 }
