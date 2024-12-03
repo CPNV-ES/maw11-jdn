@@ -27,3 +27,12 @@ th {
 .table-style {
     width: 100%;
 }
+
+.title-exercise {
+    color:white;
+    text-decoration: none;
+
+}
+.title-exercise:hover {
+    color: gray;
+}
