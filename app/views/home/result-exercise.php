@@ -2,8 +2,8 @@
 ob_start();
 
 $backgroundClass = 'managing';
-$cssPath = '/css/result-exercise.css';
-$headTitle = "Exercise: {$exercise['title']}";
+$cssPath = '/css/result-pages.css';
+$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/results'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php';
 

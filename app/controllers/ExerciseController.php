@@ -121,6 +121,13 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false) :
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
+                    $fulfillment = $this->getOnefulfillment($matches[2]);
+                    $answers = $this->getAnswersFromIdFulfillment($matches[2]);
+                    require_once VIEW_DIR . '/home/response-exercise.php';
+                    exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -130,6 +137,7 @@ class ExerciseController extends Controller
 
         header('Location: /exercises');
     }
+
     /**
      * Summary of update
      * @param mixed $id
@@ -148,6 +156,7 @@ class ExerciseController extends Controller
 
         header('Location: /exercises');
     }
+
     /**
      * Summary of getOne
      * @param mixed $id
@@ -172,6 +181,7 @@ class ExerciseController extends Controller
 
         return $exercise;
     }
+
     /**
      * Summary of getFields
      * @param mixed $exerciseId
@@ -184,6 +194,7 @@ class ExerciseController extends Controller
 
         return $field;
     }
+
     /**
      * Summary of createField
      * @param mixed $exerciseId
@@ -198,6 +209,7 @@ class ExerciseController extends Controller
 
         header("Location: /exercises/$exerciseId/fields");
     }
+
     /**
      * Summary of create
      * @return void
@@ -215,6 +227,7 @@ class ExerciseController extends Controller
 
         header("Location: /exercises/$exercise->id/fields");
     }
+
     /**
      * Summary of delete
      * @param mixed $id
@@ -235,6 +248,7 @@ class ExerciseController extends Controller
         }
         return false;
     }
+
     /**
      * Summary of getAnswersFromFulfillment
      * @param mixed $fulfillments
@@ -318,6 +332,7 @@ class ExerciseController extends Controller
 
         return $data;
     }
+
     /**
      * Summary of getAllAnswers
      * @return array
@@ -329,6 +344,7 @@ class ExerciseController extends Controller
 
         return $answers;
     }
+
     /**
      * Summary of getOneField
      * @param mixed $fieldId
@@ -341,6 +357,7 @@ class ExerciseController extends Controller
         $fieldModel->getOne($fieldId);
         return $fieldModel->getOne($fieldId);;
     }
+    
     /**
      * Summary of deleteField
      * @param mixed $id
@@ -368,6 +385,19 @@ class ExerciseController extends Controller
         return $fulfillments;
 
     }
+
+    /**
+     * Summary of getOnefulfillment
+     * @param mixed $id
+     * @return array
+     */
+    public function getOneFulfillment ($id) {
+        $fulfillmentModel = new FulfillmentModel();
+        $fulfillment = $fulfillmentModel->getOnefulfillment($id);
+
+        return $fulfillment;
+    }
+
     /**
      * Summary of getCreatedAtWithIdFulfillments
      * @param mixed $fulfillments
@@ -385,5 +415,19 @@ class ExerciseController extends Controller
         }
         return $createdAtWithId;
     }
+
+    /**
+     * Summary of getAnswersFromIdFulfillment
+     * @param mixed $idfulfillment
+     * @return array
+     */
+    public function getAnswersFromIdFulfillment ($idfulfillment) {
+        
+        $answerModel = new AnswerModel();
+        $answers = $answerModel->getAnswersFromIdFulfillment($idfulfillment);
+
+        return $answers;
+    }
+
 }    
 
