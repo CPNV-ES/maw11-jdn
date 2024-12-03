@@ -14,8 +14,6 @@ class FulfillmentModel extends Model
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]
         ];
 
-       
-
         $req = $this->db->queryPrepareExecute($query, $binds);
 
         return $this->db->fetchAll($req);
@@ -27,8 +25,6 @@ class FulfillmentModel extends Model
         $binds = [
             'id_fulfillments' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
-
-       
 
         $req = $this->db->queryPrepareExecute($query, $binds);
 
