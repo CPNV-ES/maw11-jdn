@@ -2,7 +2,7 @@
 ob_start();
 
 $backgroundClass = 'managing';
-$cssPath = '/css/result-exercise.css';
+$cssPath = '/css/result-pages.css';
 $headTitle = "Exercise: {$exercise['title']}";
 
 require_once VIEW_DIR . '/layouts/header.php';
@@ -19,7 +19,7 @@ require_once VIEW_DIR . '/layouts/header.php';
         <tbody>
             <?php foreach ($fulfillments as $fulfillment) {?>
             <tr>
-                <td><a href="fulfilment/<?= $fulfillment['id_fulfillments'];?>"><?= htmlspecialchars($fulfillment['created_at']); ?></a></td>
+                <td><a href="/exercises/<?= $fulfillment['id_exercises'];?>/fulfillments/<?= $fulfillment['id_fulfillments'];?>"><?= htmlspecialchars($fulfillment['created_at']); ?></a></td>
                 <td><?= htmlspecialchars($answers[$fulfillment['created_at']]) ?></td>
             </tr>
             <?php } ?>
