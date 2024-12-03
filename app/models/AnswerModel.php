@@ -27,7 +27,7 @@ class AnswerModel extends Model
         $query = "UPDATE answers SET value = :value WHERE id_fields = :id_fields AND id_fulfillments = :id_fulfillments ;";
 
         $binds = [
-            'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
+            'value' => ['value' => $value, 'type' => PDO::PARAM_STR],
             'id_fields' => ['value' => $idField, 'type' => PDO::PARAM_INT],
             'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT]
         ];

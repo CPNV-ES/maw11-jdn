@@ -45,11 +45,11 @@
                 <h3><?= htmlspecialchars($field['label']) ?></h3>
                 <?php if ($field['id_fields_type'] == 1): ?>
                     <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
-                    <input type="text" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" id="<?= htmlspecialchars($field['id_fields']) ?>" value="<?= $answers[$positionAnswer]['value'] ?>" />
+                    <input type="text" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" id="<?= htmlspecialchars($field['id_fields']) ?>" value="<?= $answers[$positionAnswer]['value'] ?? '' ?>" />
 
                 <?php else: ?>
                     <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
-                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"><?= $answers[$positionAnswer]['value'] ?></textarea>
+                    <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"><?= $answers[$positionAnswer]['value'] ?? ''  ?></textarea>
 
                 <?php endif; ?>
                 <?php $positionAnswer = $positionAnswer + 1 ?>
