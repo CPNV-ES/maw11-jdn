@@ -20,4 +20,18 @@ class FulfillmentModel extends Model
 
         return $this->db->fetchAll($req);
     }
+
+    public function getOnefulfillment ($id) {
+        $query = "SELECT * FROM fulfillments WHERE id_fulfillments = :id_fulfillments";
+
+        $binds = [
+            'id_fulfillments' => ['value' => $id, 'type' => PDO::PARAM_INT]
+        ];
+
+       
+
+        $req = $this->db->queryPrepareExecute($query, $binds);
+
+        return $this->db->fetch($req);
+    }
 }
