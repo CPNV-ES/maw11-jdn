@@ -1,4 +1,4 @@
-<header class="heading <?= isset($backgroundClass) ?>">
+<header class="heading <?php if(isset($backgroundClass)) echo($backgroundClass) ?>">
     <section class="container">
         <a href="/">
             <img class="header-img" src="/images/logo.png" alt="Logo" />

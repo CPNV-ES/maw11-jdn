@@ -21,7 +21,7 @@ class FulfillmentModel extends Model
         return $this->db->fetchAll($req);
     }
 
-    public function getOnefulfillment ($id) {
+    public function getOneFulfillment ($id) {
         $query = "SELECT * FROM fulfillments WHERE id_fulfillments = :id_fulfillments";
 
         $binds = [

@@ -2,7 +2,7 @@
 ob_start();
 
 $backgroundClass = 'managing';
-$cssPath = '/css/result-exercise.css';
+$cssPath = '/css/result-pages.css';
 $headTitle = "Exercise: {$exercise['title']}";
 
 require_once VIEW_DIR . '/layouts/header.php';
