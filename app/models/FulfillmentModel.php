@@ -6,19 +6,17 @@ require_once APP_DIR . '/core/Model.php';
  */
 class FulfillmentModel extends Model
 {
-    public function create($create, $idexercise)
+    public function create($create, $idExercise)
     {
         $query = "INSERT INTO fulfillments (created_at, id_exercises) VALUES (:created_at,:id_exercises)";
 
         $binds = [
-            'created_at' => ['value' => $create, 'type' => PDO::PARAM_INT],
-            'id_exercises' => ['value' => $idexercise, 'type' => PDO::PARAM_INT]
+            'created_at' => ['value' => $create, 'type' => PDO::PARAM_STR],
+            'id_exercises' => ['value' => $idExercise, 'type' => PDO::PARAM_INT]
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
-        $exerciseAnswered = $this->db->fetchAll($req);
-
-        return $exerciseAnswered;
+        $this->db->fetchAll($req);
     }
 
     public function update($update, $id)
@@ -26,14 +24,12 @@ class FulfillmentModel extends Model
         $query = "UPDATE fulfillments SET updated_at = :updated_at WHERE id_fulfillments = :id;";
 
         $binds = [
-            'updated_at' => ['value' => $update, 'type' => PDO::PARAM_INT],
+            'updated_at' => ['value' => $update, 'type' => PDO::PARAM_STR],
             'id' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
-        $exerciseAnswered = $this->db->fetchAll($req);
-
-        return $exerciseAnswered;
+        $this->db->fetchAll($req);
     }
 
     public function getLast()

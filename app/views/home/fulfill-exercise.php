@@ -35,9 +35,9 @@
              <?php endif; ?>
             " method="post" accept-charset="UTF-8">
             <?php if ($_SESSION['state'] == "new"): ?>
-                <input type="hidden" name="created_at" value="<?= date("Y-m-d H:i:s e") ?>">
+                <input type="hidden" type="date" name="created_at" value="<?= date("Y-m-d H:i:s") ?>">
             <?php else: ?>
-                <input type="hidden" name="updated_at" value="<?= date("Y-m-d H:i:s e") ?>">
+                <input type="hidden" type="date" name="updated_at" value="<?= date("Y-m-d H:i:s") ?>">
             <?php endif; ?>
             <?php $positionAnswer = 0 ?>
             <?php foreach ($fields as $field): ?>

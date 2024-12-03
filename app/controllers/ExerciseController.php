@@ -235,22 +235,18 @@ class ExerciseController extends Controller
         return true;
     }
 
-    public static function createFulfillments($idexercise)
+    public static function createFulfillments($idExercise)
     {
         $fulfillmentsModel = new FulfillmentModel();
-        $date = date("Y-m-d H:i:s e");
-        $fulfillmentsModel->create($date, $idexercise);
-
-        return $fulfillmentsModel;
+        $date = date("Y-m-d H:i:s");
+        $fulfillmentsModel->create($date, $idExercise);
     }
 
     public static function updateFulfillments($idFulfillments)
     {
         $fulfillmentsModel = new FulfillmentModel();
-        $date = date("Y-m-d H:i:s e");
+        $date = date("Y-m-d H:i:s");
         $fulfillmentsModel->update($date, $idFulfillments);
-
-        return $fulfillmentsModel;
     }
 
     public function getLastFulfillments()
