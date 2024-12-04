@@ -29,6 +29,19 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+                case (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/update/', $request_uri, $matches) ? true : false):
+                    $this->updateFields($matches[2],'label',$_POST['field_label']);
+                    $this->updateFields($matches[2],'id_fields_type',$_POST['field_type']);
+                    
+                    // AJOUTER LA VALEUR DU TYPE PRé-Défini
+                    var_dump($_POST['field_type']);
+
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
+
+                    require_once VIEW_DIR . '/home/create-field.php';
+                    exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fields/', $request_uri, $matches) ? true : false):
                     $this->createField($matches[1]);
                     $exercise = $this->getOne($matches[1]);
@@ -44,8 +57,11 @@ class ExerciseController extends Controller
             if (preg_match('/^\/exercises\/(\d+)\/fields/', $request_uri, $matches)) {
                 // TODO : find a way to avoid the resetting the first $matches 
                 if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)/', $request_uri)) {
-                    if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri)) {
-                        require_once VIEW_DIR . '/home/edit-field.php';
+                    if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri,$matches)) {
+
+                        $exercise = $this->getOne($matches[1]);
+                        $field = $this->getOneField($matches[2]);
+                        require_once VIEW_DIR . '/home/edit-field-page.php';
                         exit();
                     } elseif (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/destroy/', $request_uri, $matches)) {
                         $this->deleteField($matches[2]);
@@ -354,7 +370,6 @@ class ExerciseController extends Controller
     {
         $fieldModel = new FieldModel();
 
-        $fieldModel->getOne($fieldId);
         return $fieldModel->getOne($fieldId);;
     }
     
@@ -370,6 +385,22 @@ class ExerciseController extends Controller
         $fieldModel->getOne($id);
         $response = $fieldModel->delete($id);
         return true;
+    }
+
+    /**
+     * Summary of updateFiels
+     * @param mixed $idField
+     * @param mixed $newLabel
+     * @return void
+     */
+    public function updateFields ($idField,$field,$newData) {
+        $fieldModel = new FieldModel();
+
+        $response = $fieldModel->update($idField,$field,$newData);
+
+        var_dump($response);
+
+        return $response;
     }
 
     /**

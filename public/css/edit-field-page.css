@@ -1,0 +1,67 @@
+.managing {
+    background-color: #e0a458;
+}
+
+.title-exercise {
+    color:white;
+    text-decoration: none;
+
+}
+.title-exercise:hover {
+    color: gray;
+}
+
+input,
+select {
+    font-family: inherit;
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #9b4fca;
+    border: 0.1rem solid #9b4fca;
+    margin: 0rem;
+}
+
+input[type="submit"]:hover {
+    background-color: #606c76;
+    border: 0.1rem solid #606c76;
+    cursor: pointer;
+}
+
+input[type="text"],
+select {
+    border: 0.1rem solid #d1d1d1;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-weight: 300;
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+a {
+    color: #9b4dca;
+    text-decoration: none;
+}
+
+
+.button {
+    background-color: #9b4dca;
+}
+
+.field-list {
+    width: 50%;
+    padding: 30px 30px 0px 0px;
+}
