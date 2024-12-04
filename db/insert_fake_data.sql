@@ -1,3 +1,4 @@
+
 INSERT INTO fields_type (name) VALUES ('single_line');
 INSERT INTO fields_type (name) VALUES ('single_line_list');
 INSERT INTO fields_type (name) VALUES ('multi_line');

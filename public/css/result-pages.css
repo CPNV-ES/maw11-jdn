@@ -1,3 +1,7 @@
+.managing {
+    background-color: #419d78;
+}
+
 th {
     text-align: left;
 }
@@ -18,4 +22,17 @@ th {
 
 .VIcon {
     color: green;
+}
+
+.table-style {
+    width: 100%;
+}
+
+.title-exercise {
+    color:white;
+    text-decoration: none;
+
+}
+.title-exercise:hover {
+    color: gray;
 }
