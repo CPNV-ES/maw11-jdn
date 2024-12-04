@@ -32,7 +32,7 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
                     $answers = $this->getAnswers($matches[2]);
-                    $exerciseAnswer = $this->getFulfillment($matches[2]);
+                    $exerciseAnswer = $this->getFulfillmentById($matches[2]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
@@ -148,13 +148,13 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
                     $answers = $this->getAnswers($matches[2]);
-                    $exerciseAnswer = $this->getFulfillment($matches[2]);
+                    $exerciseAnswer = $this->getFulfillmentById($matches[2]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
-                    $fulfillment = $this->getOnefulfillment($matches[2]);
+                    $fulfillment = $this->getFulfillmentsByExerciseId($matches[2]);
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
@@ -374,7 +374,6 @@ class ExerciseController extends Controller
         return $answers;
     }
 
-
     /**
      * Summary of getOneField
      * @param mixed $fieldId
@@ -445,7 +444,7 @@ class ExerciseController extends Controller
     public function getAnswers($idFulfillments)
     {
         $answersModel = new AnswerModel();
-        $answers = $answersModel->getAnswerFromId($idFulfillments);
+        $answers = $answersModel->getAnswersFromIdFulfillment($idFulfillments);
 
         return $answers;
     }
@@ -462,19 +461,6 @@ class ExerciseController extends Controller
         $fulfillments = $fulfillmentModel->getFulfillmentsByExerciseId($exerciseId);
 
         return $fulfillments;
-    }
-
-    /**
-     * Summary of getOnefulfillment
-     * @param mixed $id
-     * @return array
-     */
-    public function getOneFulfillment($id)
-    {
-        $fulfillmentModel = new FulfillmentModel();
-        $fulfillment = $fulfillmentModel->getOnefulfillment($id);
-
-        return $fulfillment;
     }
 
     /**
@@ -511,7 +497,7 @@ class ExerciseController extends Controller
         return $answers;
     }
 
-    public function getFulfillment($idFulfillments)
+    public function getFulfillmentById($idFulfillments)
     {
 
         $fulfillmentModel = new FulfillmentModel();

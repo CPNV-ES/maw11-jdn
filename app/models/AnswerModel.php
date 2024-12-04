@@ -39,20 +39,6 @@ class AnswerModel extends Model
         return $fields;
     }
 
-    public function getAnswerFromId($idFulfillments)
-    {
-        $query = "SELECT * FROM answers WHERE id_fulfillments = :id_fulfillments";
-
-        $binds = [
-            'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT]
-        ];
-
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $answers = $this->db->fetchAll($req);
-
-        return $answers;
-    }
-
     public function getAllAnswers()
     {
 
