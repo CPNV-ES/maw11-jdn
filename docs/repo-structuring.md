@@ -3,32 +3,69 @@
 ```bash
 ./maw11-jdn
 ├── app
-│   ├── controllers             # Controller folder
-│   ├── core                    # Contains default model, controller, ...
-│   ├── models                  # Model folder
-│   └── views                   # View folder
-│       ├── home
-│       └── layouts
-├── config                      # Configuration folder (database link, ...)
+│   ├── controllers                     # Controllers folder
+│   │   ├── ExerciseController.php
+│   │   └── HomeController.php
+│   ├── core                            # Core folder (default model, controler, ...)
+│   │   ├── Controller.php
+│   │   ├── Database.php
+│   │   ├── Model.php
+│   │   └── Router.php
+│   ├── models                          # Models folder
+│   │   ├── AnswerModel.php
+│   │   ├── ExerciseModel.php
+│   │   ├── FieldModel.php
+│   │   └── FulfillmentModel.php
+│   └── views                           # Views folder
+│       ├── home                        # Main pages of the file
+│       │   ├── create-exercise.php
+│       │   ├── create-field.php
+│       │   ├── field-exercise.php
+│       │   ├── fulfill-exercise.php
+│       │   ├── home.php
+│       │   ├── manage-exercise.php
+│       │   ├── response-exercise.php
+│       │   ├── result-exercise.php
+│       │   ├── result-field.php
+│       │   └── take-exercise.php
+│       └── layouts                     # Layouts of the project
+│           ├── app-layout.php
+│           └── header.php
+├── composer.json
+├── composer.lock
+├── config                              # Configuration folder
 │   ├── config.example.php
 │   └── config.php
-├── db                          # Database folder (sql scripts, sqlite file)
+├── db                                  # Database folder
 │   ├── create_database.sql
 │   ├── database.example.sqlite
 │   └── insert_fake_data.sql
-├── docs                        # Documentation folder
+├── docs                                # Documentation of the project
 │   ├── looper-features.md
 │   ├── looper-specs.md
 │   └── repo-structuring.md
-├── logs                        # Logs folder
-├── public
-│   ├── css                     # Contains all css files
-│   ├── images                  # Images of the project
-│   └── index.php               # Entry point (public access)
+├── LICENSE
+├── logs
+├── public                              # Public file of the project
+│   ├── css                             # CSS folder of the project
+│   │   ├── create-exercise.css
+│   │   ├── create-field.css
+│   │   ├── fulfill-exercise.css
+│   │   ├── home-page.css
+│   │   ├── manage-exercise.css
+│   │   ├── result-pages.css
+│   │   ├── style.css
+│   │   └── take-exercise.css
+│   ├── images
+│   │   └── logo.png
+│   └── index.php
 ├── README.md
-└── tests                       # Tests folder for unit tests
+└── tests                               # Tests of the project
     ├── DatabaseTest.php
     └── db
+        ├── create_database_test.sql
+        ├── database_test.sqlite
+        └── insert_fake_data_test.sql
 ```
 
 ## Folder and file creation
