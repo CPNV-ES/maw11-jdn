@@ -163,7 +163,7 @@ php -S localhost:8000 -t public/
 
 ## License
 
-* [Choose the license adapted to your project](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
+* [MIT License](LICENSE).
 
 ## Contact
 
