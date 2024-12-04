@@ -5,16 +5,14 @@ $cssPath = '/css/fulfill-exercise.css';
 $headTitle = "Exercise: {$exercise['title']}";
 
 require_once VIEW_DIR . '/layouts/header.php';
+
+$message = ($_SESSION['state'] == 'edit')
+    ? "Bookmark this page, it's yours. You'll be able to come back later to finish."
+    : "If you'd like to come back, simply submit it with blanks.";
 ?>
+
 <main class="container">
     <h1>Your take</h1>
-
-    <?php
-    $message = ($_SESSION['state'] == 'edit')
-        ? "Bookmark this page, it's yours. You'll be able to come back later to finish."
-        : "If you'd like to come back, simply submit it with blanks.";
-    ?>
-
     <label><?= $message ?></label>
     <form action="
             <?php if ($_SESSION['state'] == "new"): ?>
@@ -27,9 +25,9 @@ require_once VIEW_DIR . '/layouts/header.php';
             <input type="hidden" type="date" name="created_at" value="<?= date("Y-m-d H:i:s") ?>">
         <?php else: ?>
             <input type="hidden" type="date" name="updated_at" value="<?= date("Y-m-d H:i:s") ?>">
-        <?php endif; ?>
-        <?php $positionAnswer = 0 ?>
-        <?php foreach ($fields as $field): ?>
+        <?php endif;
+        $positionAnswer = 0;
+        foreach ($fields as $field): ?>
 
             <h3><?= htmlspecialchars($field['label']) ?></h3>
             <?php if ($field['id_fields_type'] == 1): ?>
@@ -40,11 +38,9 @@ require_once VIEW_DIR . '/layouts/header.php';
                 <input type="hidden" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" value="<?= $field['id_fields'] ?>">
                 <textarea id="<?= htmlspecialchars($field['id_fields']) ?>" name="idfield<?= htmlspecialchars($field['id_fields']) ?>[]" rows="4" cols="50"><?= $answers[$positionAnswer]['value'] ?? ''  ?></textarea>
 
-            <?php endif; ?>
-            <?php $positionAnswer = $positionAnswer + 1 ?>
-        <?php endforeach; ?>
-
-
+        <?php endif;
+            $positionAnswer = $positionAnswer + 1;
+        endforeach; ?>
 
         <input type="submit" class="action" data-disable-with="Save">
     </form>
