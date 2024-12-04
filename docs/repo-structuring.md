@@ -1,35 +1,34 @@
 # Repository structuration
 
 ```bash
-/maw11-jdn
-├── /app
-│   ├── /controllers
-│   │    └── HomeController.php      # Controller example
-│   ├── /models
-│   │    └── User.php                # Model example
-│   ├── /views
-│   │   ├── /layouts
-│   │   │   └── main.php             # Main layout
-│   │   ├── /home
-│   │   │   └── index.php            # Main view, associated with HomeController
-│   └── /core
-│       ├── Controller.php          # Basic class for controllers
-│       ├── Model.php               # Basic class for models
-│       ├── Database.php            # Basic class for the database
-│       └── Router.php              # Route management file
-├── /config
-│   └── config.php                  # Configuration file (databse, etc.)
-├── /db
-│   └── database.sqlite             # Database file SQLite
-├── /public
-│   ├── /css
-│   │   └── style.css               # CSS file
-│   ├── /images
-│   │   └── logo.png                # Site images
-│   └── index.php                   # Site entry point (public access)
-├── /docs                           # Documentation folder
-└── /logs                           # Log folder
-    └── error.log                   # Error log file
+./maw11-jdn
+├── app
+│   ├── controllers             # Controller folder
+│   ├── core                    # Contains default model, controller, ...
+│   ├── models                  # Model folder
+│   └── views                   # View folder
+│       ├── home
+│       └── layouts
+├── config                      # Configuration folder (database link, ...)
+│   ├── config.example.php
+│   └── config.php
+├── db                          # Database folder (sql scripts, sqlite file)
+│   ├── create_database.sql
+│   ├── database.example.sqlite
+│   └── insert_fake_data.sql
+├── docs                        # Documentation folder
+│   ├── looper-features.md
+│   ├── looper-specs.md
+│   └── repo-structuring.md
+├── logs                        # Logs folder
+├── public
+│   ├── css                     # Contains all css files
+│   ├── images                  # Images of the project
+│   └── index.php               # Entry point (public access)
+├── README.md
+└── tests                       # Tests folder for unit tests
+    ├── DatabaseTest.php
+    └── db
 ```
 
 ## Folder and file creation
