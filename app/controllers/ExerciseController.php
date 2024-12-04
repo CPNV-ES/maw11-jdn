@@ -32,7 +32,7 @@ class ExerciseController extends Controller
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
                     $this->createFulfillments($matches[1]);
-                    $exerciseAnswer = $this->getLastFulfillments();
+                    $exerciseAnswer = $this->getLastFulfillment();
                     foreach ($_POST as $answer) {
                         if ($answer != $_POST['created_at']) {
                             $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['id_fulfillments']);
@@ -202,7 +202,7 @@ class ExerciseController extends Controller
         return $exercise;
     }
 
-    public static function getFields($exerciseId)
+    public function getFields($exerciseId)
     {
         $fieldModel = new FieldModel();
         $field = $fieldModel->getFieldsFromExercise($exerciseId);
@@ -210,7 +210,7 @@ class ExerciseController extends Controller
         return $field;
     }
 
-    public static function createAnswer($idfield, $value, $idexerciseAnswer)
+    public function createAnswer($idfield, $value, $idexerciseAnswer)
     {
         $answer = new AnswerModel();
         $answer->create($value, $idfield, $idexerciseAnswer);
@@ -218,7 +218,7 @@ class ExerciseController extends Controller
         return $answer;
     }
 
-    public static function updateAnswer($idfield, $value, $idFulfillments)
+    public function updateAnswer($idfield, $value, $idFulfillments)
     {
         $answer = new AnswerModel();
         $answer->update($value, $idfield, $idFulfillments);
@@ -235,21 +235,21 @@ class ExerciseController extends Controller
         return true;
     }
 
-    public static function createFulfillments($idExercise)
+    public function createFulfillments($idExercise)
     {
         $fulfillmentsModel = new FulfillmentModel();
         $date = date("Y-m-d H:i:s");
         $fulfillmentsModel->create($date, $idExercise);
     }
 
-    public static function updateFulfillments($idFulfillments)
+    public function updateFulfillments($idFulfillments)
     {
         $fulfillmentsModel = new FulfillmentModel();
         $date = date("Y-m-d H:i:s");
         $fulfillmentsModel->update($date, $idFulfillments);
     }
 
-    public function getLastFulfillments()
+    public function getLastFulfillment()
     {
         $fulfillmentModel = new FulfillmentModel();
         $fulffilment = $fulfillmentModel->getLast();
@@ -260,7 +260,7 @@ class ExerciseController extends Controller
     public function getAnswers($idFulfillments)
     {
         $answersModel = new AnswerModel();
-        $answers = $answersModel->getAnswerFrom($idFulfillments);
+        $answers = $answersModel->getAnswerFromId($idFulfillments);
 
         return $answers;
     }

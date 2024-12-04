@@ -2,7 +2,7 @@
 require_once APP_DIR . '/core/Model.php';
 
 /**
- * FieldModel class
+ * FulfillmentModel class
  */
 class FulfillmentModel extends Model
 {

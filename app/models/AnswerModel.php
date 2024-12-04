@@ -38,7 +38,7 @@ class AnswerModel extends Model
         return $fields;
     }
 
-    public function getAnswerFrom($idFulfillments)
+    public function getAnswerFromId($idFulfillments)
     {
         $query = "SELECT * FROM answers WHERE id_fulfillments = :id_fulfillments";
 
