@@ -49,3 +49,12 @@ CREATE TABLE fulfillments (
     id_exercises NOT NULL,
     FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises)
 );
+
+
+CREATE TABLE fulfillments (
+    id_fulfillments INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at DATE NOT NULL,
+    updated_at DATE,
+    id_exercises NOT NULL,
+    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises)
+);
