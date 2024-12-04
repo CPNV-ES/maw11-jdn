@@ -128,6 +128,7 @@ php -S localhost:8000 -t public/
 │   ├── looper-features.md
 │   ├── looper-specs.md
 │   └── repo-structuring.md
+├── LICENSE
 ├── logs
 ├── public
 │   ├── css
