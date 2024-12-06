@@ -33,11 +33,12 @@ require_once VIEW_DIR . '/layouts/header.php'
                             <td>
                                 <a href="exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
                             </td>
+
+                            <td>
+                                <a href="exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
+                            </td>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                    <td>
-                        <a href="***">Destroy</a>
-                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

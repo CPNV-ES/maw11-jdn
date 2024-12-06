@@ -143,7 +143,12 @@ class ExerciseController extends Controller
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/destroy/', $request_uri, $matches) ? true : false):
+                    $this->deleteFulfillment($matches[2]);
+                    $url = '/';
+                    header("Location: " . $url);
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
@@ -516,5 +521,11 @@ class ExerciseController extends Controller
         $fulffilment = $fulfillmentModel->getOne($idFulfillments);
 
         return $fulffilment['0'];
+    }
+
+    public function deleteFulfillment($idFulfillment)
+    {
+        $fulfillmentModel = new FulfillmentModel();
+        $fulfillmentModel->delete($idFulfillment);
     }
 }
