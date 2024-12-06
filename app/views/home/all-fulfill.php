@@ -1,7 +1,7 @@
 <?php
 ob_start();
 
-$backgroundClass = 'managing';
+
 $cssPath = '/css/all-fulfill.css';
 $headTitle = "Exercise : <strong>{$exercise['title']}</strong>";
 
@@ -14,11 +14,10 @@ require_once VIEW_DIR . '/layouts/header.php'
             <tr>
                 <th>Taken at
                 </th>
-                <?php foreach ($fields as $field) { ?>
+                <?php for ($i = 0; $i < 3; $i++) { ?>
                     <th>
-
                     </th>
-                <?php } ?>
+                <?php }; ?>
             </tr>
         </thead>
         <tbody>
