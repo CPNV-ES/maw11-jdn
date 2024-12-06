@@ -167,11 +167,12 @@ class ExerciseController extends Controller
                     $exercise = $this->getOne(id: $matches[1]);
                     $fields = $this->getFields($matches[1]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
-
                     $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
-
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
-
+                    if (!$exercise) {
+                        $url = '/failtofind';
+                        header("Location: " . $url);
+                    }
                     require_once VIEW_DIR . '/home/all-fulfill.php';
 
                     exit();
