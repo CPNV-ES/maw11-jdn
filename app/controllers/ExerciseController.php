@@ -5,9 +5,7 @@ require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
 require_once MODEL_DIR . '/FulfillmentModel.php';
-
 define('SINGLE_LINE_TYPE', 1);
-
 class ExerciseController extends Controller
 {
     /**
@@ -24,10 +22,33 @@ class ExerciseController extends Controller
                 case '/exercises':
                     $this->create();
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/edit.*/', $request_uri, $matches) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
+                    $this->updateFulfillments($matches[2]);
+                    foreach ($_POST as $answer) {
+                        if ($answer != $_POST['updated_at']) {
+                            $this->updateAnswer($answer['0'], $answer['1'], $matches[2]);
+                        }
+                    }
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($exercise['id_exercises']);
+                    $answers = $this->getAnswers($matches[2]);
+                    $exerciseAnswer = $this->getFulfillmentById($matches[2]);
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
+                    $this->createFulfillments($matches[1]);
+                    $exerciseAnswer = $this->getLastFulfillment();
+                    foreach ($_POST as $answer) {
+                        if ($answer != $_POST['created_at']) {
+                            $this->createAnswer($answer['0'], $answer['1'], $exerciseAnswer['id_fulfillments']);
+                        }
+                    }
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOne($matches[1]);
-                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    $fields = $this->getFields($exercise['id_exercises']);
+                    $answers = $this->getAnswers($exerciseAnswer['id_fulfillments']);
+                    $url = "/exercises/" . $matches[1] . "/fulfillments/" . $exerciseAnswer['id_fulfillments'] . "/edit";
+                    header("Location: " . $url);
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/update/', $request_uri, $matches) ? true : false):
                     $this->updateFields($matches[2],'label',$_POST['field_label']);
@@ -108,12 +129,12 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/results\/(\d+)/', $request_uri, $matches) ? true : false):
 
                     $exercise = $this->getOne($matches[1]);
-                    
+
                     $field = $this->getOneField($matches[2]);
 
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
 
-                    $answers = $this->getAnswersFromFulfillment($fulfillments,$field);
+                    $answers = $this->getAnswersFromFulfillment($fulfillments, $field);
 
                     require_once VIEW_DIR . '/home/result-field.php';
                     exit();
@@ -123,7 +144,7 @@ class ExerciseController extends Controller
                     $fields = $this->getFields($matches[1]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
 
-                    $answers = $this->getIconAnswersFromFulfillment($fulfillments,$fields);
+                    $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
 
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
 
@@ -132,12 +153,21 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
                     $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false) :
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
+                    $_SESSION['state'] = 'edit';
+                    $exercise = $this->getOne($matches[1]);
+                    $fields = $this->getFields($exercise['id_exercises']);
+                    $answers = $this->getAnswers($matches[2]);
+                    $exerciseAnswer = $this->getFulfillmentById($matches[2]);
+                    require_once VIEW_DIR . '/home/fulfill-exercise.php';
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
-                    $fulfillment = $this->getOnefulfillment($matches[2]);
+                    $fulfillment = $this->getFulfillmentsByExerciseId($matches[2]);
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
@@ -270,7 +300,8 @@ class ExerciseController extends Controller
      * Description :
      *  Recovery of response linked to created_at
      */
-    public function getAnswersFromFulfillment ($fulfillments,$field) {
+    public function getAnswersFromFulfillment($fulfillments, $field)
+    {
         $answers = $this->getAllAnswers();
         $data = [];
 
@@ -301,7 +332,7 @@ class ExerciseController extends Controller
      *  Retrieve a table of symbols, crosses, checks and double checks 
      *  depending on the response and the field
      */
-    public function getIconAnswersFromFulfillment($fulfillments,$fields)
+    public function getIconAnswersFromFulfillment($fulfillments, $fields)
     {
         $data = [];
 
@@ -325,13 +356,11 @@ class ExerciseController extends Controller
                                 if ($field['id_fields_type'] === 'SINGLE_LINE_TYPE') {
 
                                     $data[$fulfillment['created_at']][$field['id_fields']] = "fa-solid fa-check VIcon";
-
                                 } else {
                                     //Differentiate simple or double line answer.
-                                    if (preg_match("/.+\n.+/",$answer['value'])) {
-        
-                                        $data[$fulfillment['created_at']][$field['id_fields']] =  'fa-solid fa-check-double VIcon';
+                                    if (preg_match("/.+\n.+/", $answer['value'])) {
 
+                                        $data[$fulfillment['created_at']][$field['id_fields']] =  'fa-solid fa-check-double VIcon';
                                     } else {
                                         $data[$fulfillment['created_at']][$field['id_fields']] = 'fa-solid fa-check VIcon';
                                     }
@@ -364,17 +393,35 @@ class ExerciseController extends Controller
      * @return mixed
      */
     public function getOneField($fieldId)
+
     {
         $fieldModel = new FieldModel();
 
         return $fieldModel->getOne($fieldId);;
     }
-    
+
+    public function createAnswer($idfield, $value, $idexerciseAnswer)
+    {
+        $answer = new AnswerModel();
+        $answer->create($value, $idfield, $idexerciseAnswer);
+
+        return $answer;
+    }
+
+    public function updateAnswer($idfield, $value, $idFulfillments)
+    {
+        $answer = new AnswerModel();
+        $answer->update($value, $idfield, $idFulfillments);
+
+        return $answer;
+    }
+
     /**
      * Summary of deleteField
      * @param mixed $id
      * @return bool
      */
+
     public function deleteField($id)
     {
         $fieldModel = new FieldModel();
@@ -382,6 +429,36 @@ class ExerciseController extends Controller
         $fieldModel->getOne($id);
         $response = $fieldModel->delete($id);
         return true;
+    }
+
+    public function createFulfillments($idExercise)
+    {
+        $fulfillmentsModel = new FulfillmentModel();
+        $date = date("Y-m-d H:i:s");
+        $fulfillmentsModel->create($date, $idExercise);
+    }
+
+    public function updateFulfillments($idFulfillments)
+    {
+        $fulfillmentsModel = new FulfillmentModel();
+        $date = date("Y-m-d H:i:s");
+        $fulfillmentsModel->update($date, $idFulfillments);
+    }
+
+    public function getLastFulfillment()
+    {
+        $fulfillmentModel = new FulfillmentModel();
+        $fulffilment = $fulfillmentModel->getLast();
+
+        return $fulffilment['0'];
+    }
+
+    public function getAnswers($idFulfillments)
+    {
+        $answersModel = new AnswerModel();
+        $answers = $answersModel->getAnswersFromIdFulfillment($idFulfillments);
+
+        return $answers;
     }
 
     /**
@@ -405,25 +482,13 @@ class ExerciseController extends Controller
      * @param mixed $exerciseId
      * @return array
      */
-    public function getFulfillmentsByExerciseId ($exerciseId) {
+    public function getFulfillmentsByExerciseId($exerciseId)
+    {
 
         $fulfillmentModel = new FulfillmentModel();
         $fulfillments = $fulfillmentModel->getFulfillmentsByExerciseId($exerciseId);
 
         return $fulfillments;
-
-    }
-
-    /**
-     * Summary of getOnefulfillment
-     * @param mixed $id
-     * @return array
-     */
-    public function getOneFulfillment ($id) {
-        $fulfillmentModel = new FulfillmentModel();
-        $fulfillment = $fulfillmentModel->getOnefulfillment($id);
-
-        return $fulfillment;
     }
 
     /**
@@ -433,10 +498,11 @@ class ExerciseController extends Controller
      * Description :
      *  Get id fulfilment and created_at on same table.
      */
-    public function getCreatedAtWithIdFulfillments($fulfillments) {
+    public function getCreatedAtWithIdFulfillments($fulfillments)
+    {
 
         $createdAtWithId = [];
-        
+
         foreach ($fulfillments as $fulfillment) {
 
             $createdAtWithId[$fulfillment['created_at']] = $fulfillment['id_fulfillments'];
@@ -449,13 +515,22 @@ class ExerciseController extends Controller
      * @param mixed $idfulfillment
      * @return array
      */
-    public function getAnswersFromIdFulfillment ($idfulfillment) {
-        
+    public function getAnswersFromIdFulfillment($idfulfillment)
+    {
+
         $answerModel = new AnswerModel();
         $answers = $answerModel->getAnswersFromIdFulfillment($idfulfillment);
+
 
         return $answers;
     }
 
-}    
+    public function getFulfillmentById($idFulfillments)
+    {
 
+        $fulfillmentModel = new FulfillmentModel();
+        $fulffilment = $fulfillmentModel->getOne($idFulfillments);
+
+        return $fulffilment['0'];
+    }
+}
