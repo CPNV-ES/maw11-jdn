@@ -3,7 +3,7 @@ ob_start();
 
 $backgroundClass = 'managing';
 $cssPath = '/css/edit-field-page.css';
-$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/results'><strong>{$exercise['title']}</strong></a>";
+$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/fields'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php';
 ?>
@@ -23,9 +23,9 @@ require_once VIEW_DIR . '/layouts/header.php';
         <div>
             <label for="field_type">Value kind</labe>
             <select name="field_type" id="field_type" required>
-                <option value="1">Single line text</option>
-                <option value="2">List of single lines</option>
-                <option value="3">Multi-line text</option>
+                <option value="1" <?= $field['id_fields_type'] == 1 ? 'selected' : '' ?>>Single line text</option>
+                <option value="2" <?= $field['id_fields_type'] == 2 ? 'selected' : '' ?>>List of single lines</option>
+                <option value="3" <?= $field['id_fields_type'] == 3 ? 'selected' : '' ?>>Multi-line text</option>
             </select>
         </div>
         <div>

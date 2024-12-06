@@ -3,7 +3,7 @@ ob_start();
 
 $backgroundClass = 'managing';
 $cssPath = '/css/create-field.css';
-$headTitle = "Exercise: {$exercise['title']}";
+$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/fields'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php'
 ?>
