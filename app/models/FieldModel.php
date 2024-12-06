@@ -78,4 +78,25 @@ class FieldModel extends Model
 
         return $this->id ?? false;
     }
+
+    public function update ($idField,$field,$newData) {
+
+        $query = "UPDATE fields SET $field = :newData WHERE id_fields = :id_field;";
+
+        $binds = [
+            'newData' => ['value' => $newData, 'type' => PDO::PARAM_STR],
+            'id_field' => ['value' => $idField, 'type' => PDO::PARAM_INT]
+        ];
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            $response = true;
+        } catch (PDOException $e) {
+            return "Connection failed: " . $e->getMessage();
+            $response = false;
+        }
+        
+        return $response;
+    }
+
 }

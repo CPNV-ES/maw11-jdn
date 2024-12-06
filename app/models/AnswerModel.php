@@ -12,7 +12,7 @@ class AnswerModel extends Model
         $query = "INSERT INTO answers (value, id_fields, id_fulfillments) VALUES (:value,:id_fields, :id_fulfillments)";
 
         $binds = [
-            'value' => ['value' => $value, 'type' => PDO::PARAM_INT],
+            'value' => ['value' => $value, 'type' => PDO::PARAM_STR],
             'id_fields' => ['value' => $idField, 'type' => PDO::PARAM_INT],
             'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT],
         ];

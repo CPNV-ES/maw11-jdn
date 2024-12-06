@@ -1,35 +1,71 @@
 # Repository structuration
 
 ```bash
-/maw11-jdn
-├── /app
-│   ├── /controllers
-│   │    └── HomeController.php      # Controller example
-│   ├── /models
-│   │    └── User.php                # Model example
-│   ├── /views
-│   │   ├── /layouts
-│   │   │   └── main.php             # Main layout
-│   │   ├── /home
-│   │   │   └── index.php            # Main view, associated with HomeController
-│   └── /core
-│       ├── Controller.php          # Basic class for controllers
-│       ├── Model.php               # Basic class for models
-│       ├── Database.php            # Basic class for the database
-│       └── Router.php              # Route management file
-├── /config
-│   └── config.php                  # Configuration file (databse, etc.)
-├── /db
-│   └── database.sqlite             # Database file SQLite
-├── /public
-│   ├── /css
-│   │   └── style.css               # CSS file
-│   ├── /images
-│   │   └── logo.png                # Site images
-│   └── index.php                   # Site entry point (public access)
-├── /docs                           # Documentation folder
-└── /logs                           # Log folder
-    └── error.log                   # Error log file
+./maw11-jdn
+├── app
+│   ├── controllers                     # Controllers folder
+│   │   ├── ExerciseController.php
+│   │   └── HomeController.php
+│   ├── core                            # Core folder (default model, controler, ...)
+│   │   ├── Controller.php
+│   │   ├── Database.php
+│   │   ├── Model.php
+│   │   └── Router.php
+│   ├── models                          # Models folder
+│   │   ├── AnswerModel.php
+│   │   ├── ExerciseModel.php
+│   │   ├── FieldModel.php
+│   │   └── FulfillmentModel.php
+│   └── views                           # Views folder
+│       ├── home                        # Main pages of the file
+│       │   ├── create-exercise.php
+│       │   ├── create-field.php
+│       │   ├── field-exercise.php
+│       │   ├── fulfill-exercise.php
+│       │   ├── home.php
+│       │   ├── manage-exercise.php
+│       │   ├── response-exercise.php
+│       │   ├── result-exercise.php
+│       │   ├── result-field.php
+│       │   └── take-exercise.php
+│       └── layouts                     # Layouts of the project
+│           ├── app-layout.php
+│           └── header.php
+├── composer.json
+├── composer.lock
+├── config                              # Configuration folder
+│   ├── config.example.php
+│   └── config.php
+├── db                                  # Database folder
+│   ├── create_database.sql
+│   ├── database.example.sqlite
+│   └── insert_fake_data.sql
+├── docs                                # Documentation of the project
+│   ├── looper-features.md
+│   ├── looper-specs.md
+│   └── repo-structuring.md
+├── LICENSE
+├── logs
+├── public                              # Public file of the project
+│   ├── css                             # CSS folder of the project
+│   │   ├── create-exercise.css
+│   │   ├── create-field.css
+│   │   ├── fulfill-exercise.css
+│   │   ├── home-page.css
+│   │   ├── manage-exercise.css
+│   │   ├── result-pages.css
+│   │   ├── style.css
+│   │   └── take-exercise.css
+│   ├── images
+│   │   └── logo.png
+│   └── index.php
+├── README.md
+└── tests                               # Tests of the project
+    ├── DatabaseTest.php
+    └── db
+        ├── create_database_test.sql
+        ├── database_test.sqlite
+        └── insert_fake_data_test.sql
 ```
 
 ## Folder and file creation
