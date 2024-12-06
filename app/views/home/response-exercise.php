@@ -9,7 +9,7 @@ require_once VIEW_DIR . '/layouts/header.php';
 ?>
 
 <div class="container">
-    <h2><?= htmlspecialchars($fulfillment['created_at']) ?></h2>
+    <h2><?= htmlspecialchars($fulfillment[0]['created_at']) ?></h2>
     <?php foreach ($fields as $field) { ?>
         <h3><?= htmlspecialchars($field['label']) ?></h3>
         <?php foreach ($answers as $answer) {
