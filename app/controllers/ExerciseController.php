@@ -158,6 +158,18 @@ class ExerciseController extends Controller
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments/', $request_uri, $matches) ? true : false):
+                    $exercise = $this->getOne(id: $matches[1]);
+                    $fields = $this->getFields($matches[1]);
+                    $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
+
+                    $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
+
+                    $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
+                    require_once VIEW_DIR . '/home/all-fulfill.php';
+
+                    exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
