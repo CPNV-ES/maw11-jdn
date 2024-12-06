@@ -50,9 +50,9 @@ class ExerciseController extends Controller
                     header("Location: " . $url);
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/update/', $request_uri, $matches) ? true : false):
-                    $this->updateFields($matches[2],'label',$_POST['field_label']);
-                    $this->updateFields($matches[2],'id_fields_type',$_POST['field_type']);
-                    
+                    $this->updateFields($matches[2], 'label', $_POST['field_label']);
+                    $this->updateFields($matches[2], 'id_fields_type', $_POST['field_type']);
+
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
 
@@ -74,7 +74,7 @@ class ExerciseController extends Controller
             if (preg_match('/^\/exercises\/(\d+)\/fields/', $request_uri, $matches)) {
                 // TODO : find a way to avoid the resetting the first $matches 
                 if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)/', $request_uri)) {
-                    if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri,$matches)) {
+                    if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri, $matches)) {
 
                         $exercise = $this->getOneExercise($matches[1]);
                         $field = $this->getOneField($matches[2]);
@@ -101,7 +101,15 @@ class ExerciseController extends Controller
                         header("HTTP/1.0 404 Not Found");
                     }
                 } elseif ($matches[2] === 'update/answering') {
-                    $this->updateExercise($matches[1], 2);
+                    //check if field empty
+                    $fields = $this->getFields($matches[1]);
+                    if ($this->getFields($matches[1]) != null) {
+                        $this->updateExercise($matches[1], 2);
+                    } else {
+                        $url = "/exercises/" . $matches[1] . "/fields/";
+                        header("Location: " . $url);
+                        exit();
+                    }
                 } elseif ($matches[2] === 'update/closed') {
                     $this->updateExercise($matches[1], 3);
                 }
@@ -197,9 +205,9 @@ class ExerciseController extends Controller
         header('Location: /exercises');
     }
 
-/******************************************************************************
- * Function Exercises Zone
- *****************************************************************************/
+    /******************************************************************************
+     * Function Exercises Zone
+     *****************************************************************************/
 
     /**
      * Summary of createExercise
@@ -284,9 +292,9 @@ class ExerciseController extends Controller
         return $exercise;
     }
 
-/******************************************************************************
- * Function Fields Zone
- *****************************************************************************/
+    /******************************************************************************
+     * Function Fields Zone
+     *****************************************************************************/
 
     /**
      * Summary of createField
@@ -309,10 +317,10 @@ class ExerciseController extends Controller
      * @param mixed $newLabel
      * @return void
      */
-    public function updateFields ($idField,$field,$newData)
+    public function updateFields($idField, $field, $newData)
     {
         $fieldModel = new FieldModel();
-        $response = $fieldModel->update($idField,$field,$newData);
+        $response = $fieldModel->update($idField, $field, $newData);
 
         if (!$response) {
             header('Location: /');
@@ -326,14 +334,14 @@ class ExerciseController extends Controller
      * @return bool
      */
 
-     public function deleteField($id)
-     {
-         $fieldModel = new FieldModel();
- 
-         $fieldModel->getOne($id);
-         $response = $fieldModel->delete($id);
-         return true;
-     }
+    public function deleteField($id)
+    {
+        $fieldModel = new FieldModel();
+
+        $fieldModel->getOne($id);
+        $response = $fieldModel->delete($id);
+        return true;
+    }
 
     /**
      * Summary of getFields
@@ -360,9 +368,9 @@ class ExerciseController extends Controller
         return $fieldModel->getOne($fieldId);;
     }
 
-/******************************************************************************
- * Function Answers Zone
- *****************************************************************************/
+    /******************************************************************************
+     * Function Answers Zone
+     *****************************************************************************/
 
     /**
      * Summary of createAnswer
@@ -514,9 +522,9 @@ class ExerciseController extends Controller
         return $data;
     }
 
-/******************************************************************************
- * Function Fulfillments Zone
- *****************************************************************************/
+    /******************************************************************************
+     * Function Fulfillments Zone
+     *****************************************************************************/
 
     /**
      * Summary of createFulfillments
@@ -553,7 +561,7 @@ class ExerciseController extends Controller
 
         return $fulffilment['0'];
     }
-    
+
     /**
      * Summary of getFulfillmentsByExerciseId
      * @param mixed $exerciseId
