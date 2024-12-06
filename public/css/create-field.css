@@ -31,6 +31,15 @@ select {
     margin-bottom: 1.5rem;
 }
 
+.title-exercise {
+    color:white;
+    text-decoration: none;
+
+}
+.title-exercise:hover {
+    color: gray;
+}
+
 h1 {
     font-weight: 300;
     margin-top: 0;

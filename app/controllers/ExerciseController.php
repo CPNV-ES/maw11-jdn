@@ -33,9 +33,6 @@ class ExerciseController extends Controller
                     $this->updateFields($matches[2],'label',$_POST['field_label']);
                     $this->updateFields($matches[2],'id_fields_type',$_POST['field_type']);
                     
-                    // AJOUTER LA VALEUR DU TYPE PRé-Défini
-                    var_dump($_POST['field_type']);
-
                     $exercise = $this->getOne($matches[1]);
                     $fields = $this->getFields($matches[1]);
 
