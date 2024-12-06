@@ -30,11 +30,11 @@ require_once VIEW_DIR . '/layouts/header.php'
                     <?php foreach ($fulfillments as $fulfillment): ?>
                         <?php if ($fulfillment['id_exercises'] == $exercise['id_exercises'] && $fulfillment['created_at'] == $createAt):  ?>
                             <td>
-                                <a href="exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
+                                <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
                             </td>
 
                             <td>
-                                <a href="exercises/<?= $exercise['id_exercises'] ?>/fulfillments/<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
+                                <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
                             </td>
                         <?php endif; ?>
                     <?php endforeach; ?>
