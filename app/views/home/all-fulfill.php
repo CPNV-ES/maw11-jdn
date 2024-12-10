@@ -1,12 +1,12 @@
 <?php
 ob_start();
 
-
 $cssPath = '/css/all-fulfill.css';
 $headTitle = "Exercise : <strong>{$exercise['title']}</strong>";
 
 require_once VIEW_DIR . '/layouts/header.php'
 ?>
+
 <div class="container">
     <h1>Fulfillment for <?= $exercise['title'] ?> </h1>
     <table class="table-style">
@@ -27,8 +27,8 @@ require_once VIEW_DIR . '/layouts/header.php'
                     <td>
                         <a href="fulfillments/<?= $createdAtWhidId[$createAt]; ?>">Show</a>
                     </td>
-                    <?php foreach ($fulfillments as $fulfillment): ?>
-                        <?php if ($fulfillment['id_exercises'] == $exercise['id_exercises'] && $fulfillment['created_at'] == $createAt):  ?>
+                    <?php foreach ($fulfillments as $fulfillment):
+                        if ($fulfillment['id_exercises'] == $exercise['id_exercises'] && $fulfillment['created_at'] == $createAt):  ?>
                             <td>
                                 <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
                             </td>
@@ -36,8 +36,8 @@ require_once VIEW_DIR . '/layouts/header.php'
                             <td>
                                 <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
                             </td>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                        <?php endif;
+                    endforeach; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
