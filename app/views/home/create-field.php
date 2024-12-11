@@ -3,7 +3,7 @@ ob_start();
 
 $backgroundClass = 'managing';
 $cssPath = '/css/create-field.css';
-$headTitle = "Exercise: {$exercise['title']}";
+$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/fields'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php'
 ?>
@@ -22,9 +22,9 @@ require_once VIEW_DIR . '/layouts/header.php'
                 <?php foreach ($fields as $field): ?>
                     <tr>
                         <td><?= $field['label'] ?></td>
-                        <td><?php if ($field['id_fields_type'] == 0): ?>
+                        <td><?php if ($field['id_fields_type'] == 1): ?>
                                 <p>Single line text</p>
-                            <?php elseif ($field['id_fields_type'] == 1): ?>
+                            <?php elseif ($field['id_fields_type'] == 2): ?>
                                 <p>List of single lines</p>
                             <?php else: ?>
                                 <p>Multi-line text</p>

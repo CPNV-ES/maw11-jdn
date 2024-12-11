@@ -2,71 +2,10 @@
 ob_start();
 
 $backgroundClass = 'managing';
-$cssPath = '/css/result-exercise.css';
-$headTitle = "Exercise: {$exercise['title']}";
+$cssPath = '/css/result-pages.css';
+$headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/results'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php';
-
-$recordsQuestions = [
-    [
-        'id' => 1,
-        'label' => 'Question1',
-        'id_exercise' => 1,
-
-    ],
-    [
-        'id' => 2,
-        'label' => 'Question2',
-        'id_exercise' => 1,
-
-    ],
-];
-
-$recordsExerciseAnswers = [
-    [
-
-        'id' => 1,
-        'date' => '09/10/24 8:30',
-        'id_exercise' => 1,
-    ],
-    [
-
-        'id' => 2,
-        'date' => '09/10/24 8:40',
-        'id_exercise' => 1,
-    ]
-];
-$recordsQuestionAnswers = [
-    [
-
-        'id' => 1,
-        'id_answers' => 1,
-        'id_question' => 1,
-        'value' => '234',
-        'id_field_type' => 2,
-    ],
-    [
-
-        'id' => 1,
-        'id_answers' => 1,
-        'id_question' => 2,
-        'value' => '',
-        'id_field_type' => 1,
-    ]
-];
-
-$recordsExercise = [
-    [
-        'id' => 1,
-        'title' => 'Record 1 Title',
-
-    ],
-];
-
-foreach ($recordsExercise as $exercise) {
-    $nom_exercise = $exercise['title'];
-}
-
 ?>
 
 <div class="container">
@@ -75,34 +14,27 @@ foreach ($recordsExercise as $exercise) {
             <tr>
                 <th>Take
                 </th>
-                <?php foreach ($recordsQuestions as $recordsQuestion) { ?>
+                <?php foreach ($fields as $field) { ?>
                     <th>
-                        <?= $recordsQuestion['label'] ?>
+                        <a href="results/<?= $field['id_fields']; ?>"><?= $field['label'] ?></a>
                     </th>
                 <?php } ?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($recordsExerciseAnswers as $recordsExerciseAnswer) { ?>
+            <?php foreach ($answers as $createAt => $fieldValues) : ?>
                 <tr>
-                    <td>
-                        <?= $recordsExerciseAnswer['date'] ?>
-                    </td>
-                    <?php foreach ($recordsQuestionAnswers as $recordsQuestionAnswer) { ?>
+                    <!-- Affiche la date de création une seule fois -->
+                    <td><a href="fulfillments/<?= $createdAtWhidId[$createAt]; ?>"><?= htmlspecialchars($createAt); ?></a></td>
+
+                    <!-- Afficher les réponses pour chaque champ de l'exercice -->
+                    <?php foreach ($fields as $field) : ?>
                         <td>
-                            <?php if ($recordsQuestionAnswer['value'] == null) { ?>
-                                <i class="fa fa-x XIcon"></i>
-                                <?php } else {
-                                if ($recordsQuestionAnswer['id_field_type'] == 1) { ?>
-                                    <i class="fa-solid fa-check VIcon"></i>
-                                <?php } else { ?>
-                                    <i class="fa-solid fa-check-double VIcon"></i>
-                                <?php } ?>
-                            <?php } ?>
+                            <i class="<?= $fieldValues[$field['id_fields']] ?>"></i>
                         </td>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </tr>
-            <?php } ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>

@@ -14,7 +14,7 @@ class FieldModel extends Model
 
     public function getFieldsFromExercise($exerciseId)
     {
-        $query = "SELECT * FROM fields WHERE id_exercises = :id_exercises";
+        $query = "SELECT * FROM fields WHERE id_exercises = :id_exercises ORDER BY id_fields";
 
         $binds = [
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]
@@ -25,7 +25,7 @@ class FieldModel extends Model
 
         return $fields;
     }
-  
+
     public function getOne($fieldId)
     {
         $query = "SELECT * FROM fields WHERE id_fields = :id_fields";
@@ -35,14 +35,13 @@ class FieldModel extends Model
         ];
 
         $req = $this->db->queryPrepareExecute($query, $binds);
-        $field = $this->db->fetchAll($req);
+        $field = $this->db->fetch($req);
 
         return $field;
     }
 
     public function delete($fieldId)
     {
-
         $query = "DELETE FROM fields WHERE id_fields = :id_fields;";
 
         $binds = ['id_fields' => ['value' => $fieldId, 'type' => PDO::PARAM_INT]];
@@ -77,5 +76,25 @@ class FieldModel extends Model
         $this->id = is_string($response) ? $response : null;
 
         return $this->id ?? false;
+    }
+
+    public function update($idField, $field, $newData)
+    {
+        $query = "UPDATE fields SET $field = :newData WHERE id_fields = :id_field;";
+
+        $binds = [
+            'newData' => ['value' => $newData, 'type' => PDO::PARAM_STR],
+            'id_field' => ['value' => $idField, 'type' => PDO::PARAM_INT]
+        ];
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            $response = true;
+        } catch (PDOException $e) {
+            $response = false;
+            return "Connection failed: " . $e->getMessage();
+        }
+
+        return $response;
     }
 }
