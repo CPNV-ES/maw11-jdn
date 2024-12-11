@@ -22,6 +22,7 @@ class ExerciseController extends Controller
                 case '/exercises':
                     $this->createExercise();
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
                     $this->updateFulfillments($matches[2]);
                     foreach ($_POST as $answer) {
@@ -33,8 +34,10 @@ class ExerciseController extends Controller
                     $fields = $this->getFields($exercise['id_exercises']);
                     $answers = $this->getAnswers($matches[2]);
                     $exerciseAnswer = $this->getFulfillmentById($matches[2]);
+
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments.*/', $request_uri, $matches) ? true : false):
                     $this->createFulfillments($matches[1]);
                     $exerciseAnswer = $this->getLastFulfillment();
@@ -48,8 +51,10 @@ class ExerciseController extends Controller
                     $fields = $this->getFields($exercise['id_exercises']);
                     $answers = $this->getAnswers($exerciseAnswer['id_fulfillments']);
                     $url = "/exercises/" . $matches[1] . "/fulfillments/" . $exerciseAnswer['id_fulfillments'] . "/edit";
-                    header("Location: " . $url);
+
+                    header("Location: $url");
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/update/', $request_uri, $matches) ? true : false):
                     $this->updateFields($matches[2], 'label', $_POST['field_label']);
                     $this->updateFields($matches[2], 'id_fields_type', $_POST['field_type']);
@@ -64,8 +69,10 @@ class ExerciseController extends Controller
                     $this->createField($matches[1]);
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
+
                     require_once VIEW_DIR . '/home/create-field.php';
                     exit();
+
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -76,7 +83,6 @@ class ExerciseController extends Controller
                 // TODO : find a way to avoid the resetting the first $matches 
                 if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)/', $request_uri)) {
                     if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri, $matches)) {
-
                         $exercise = $this->getOneExercise($matches[1]);
                         $field = $this->getOneField($matches[2]);
                         require_once VIEW_DIR . '/home/edit-field-page.php';
@@ -93,12 +99,7 @@ class ExerciseController extends Controller
             } elseif (
                 preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
             ) {
-            } elseif (
-                preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
-            ) {
                 $request_uri = '/exercises';
-
-                // TODO : retrieve dynamically status from database for setting new status
 
                 if ($matches[2] === 'delete') {
                     if (!$this->deleteExercise($matches[1])) {
@@ -110,8 +111,8 @@ class ExerciseController extends Controller
                     if ($this->getFields($matches[1]) != null) {
                         $this->updateExercise($matches[1], 2);
                     } else {
-                        $url = "/exercises/" . $matches[1] . "/fields/";
-                        header("Location: " . $url);
+                        $url = "/exercises/{$matches[1]}/fields/";
+                        header("Location: $url");
                         exit();
                     }
                 } elseif ($matches[2] === 'update/closed') {
@@ -124,29 +125,27 @@ class ExerciseController extends Controller
                     $exercises = $this->getAllExercises();
                     require_once VIEW_DIR . '/home/manage-exercise.php';
                     exit();
+
                 case '/exercises/new':
                     require_once VIEW_DIR . '/home/create-exercise.php';
                     exit();
+
                 case '/exercises/fields':
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/create-field.php';
                     exit();
+
                 case '/exercises/answering':
                     $exercises = $this->getAllExercises();
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
 
                 case (preg_match('/\/exercises\/(\d+)\/results\/(\d+)/', $request_uri, $matches) ? true : false):
-
                     $exercise = $this->getOneExercise($matches[1]);
-
                     $field = $this->getOneField($matches[2]);
-
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
-
                     $answers = $this->getAnswersFromFulfillment($fulfillments, $field);
-
                     require_once VIEW_DIR . '/home/result-field.php';
                     exit();
 
@@ -154,19 +153,18 @@ class ExerciseController extends Controller
                     $exercise = $this->getOneExercise(id: $matches[1]);
                     $fields = $this->getFields($matches[1]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
-
                     $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
-
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
-
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/new*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'new';
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOneExercise($matches[1]);
@@ -175,6 +173,7 @@ class ExerciseController extends Controller
                     $exerciseAnswer = $this->getFulfillmentById($matches[2]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
@@ -182,6 +181,7 @@ class ExerciseController extends Controller
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
+
                 default:
                     header("HTTP/1.0 404 Not Found");
                     echo "Page not found";
@@ -191,7 +191,7 @@ class ExerciseController extends Controller
     }
 
     /******************************************************************************
-     * Function Exercises Zone
+     * Function Exercise Zone
      *****************************************************************************/
 
     /**
