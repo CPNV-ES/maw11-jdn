@@ -5,7 +5,8 @@ require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
 require_once MODEL_DIR . '/AnswerModel.php';
 require_once MODEL_DIR . '/FulfillmentModel.php';
-define('SINGLE_LINE_TYPE', 1);
+const SINGLE_LINE_TYPE = 1;
+
 class ExerciseController extends Controller
 {
     /**
@@ -89,6 +90,9 @@ class ExerciseController extends Controller
                     }
                 }
                 $request_uri = '/exercises/fields';
+            } elseif (
+                preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
+            ) {
             } elseif (
                 preg_match("/^\/exercises\/(\d+)\/(delete|update\/answering|update\/closed)$/", $request_uri, $matches)
             ) {
@@ -184,7 +188,6 @@ class ExerciseController extends Controller
                     exit();
             }
         }
-        header('Location: /exercises');
     }
 
     /******************************************************************************
@@ -459,8 +462,7 @@ class ExerciseController extends Controller
      * @param mixed $fields
      * @return string[][]
      * Descritpion :
-     *  Retrieve a table of symbols, crosses, checks and double checks 
-     *  depending on the response and the field
+     * Retrieve a table of symbols, crosses, checks and double checks depending on the response and the field
      */
     public function getIconAnswersFromFulfillment($fulfillments, $fields)
     {
