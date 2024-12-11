@@ -1,0 +1,41 @@
+.managing {
+    background-color: #9b4fca;
+}
+
+th {
+    text-align: left;
+}
+
+table {
+    border-spacing: 0;
+}
+a{
+    color:#9b4fca ;
+}
+
+td,
+th {
+    border-bottom: 0.1rem solid #e1e1e1;
+    padding: 1rem 1rem;
+}
+
+.XIcon {
+    color: red;
+}
+
+.VIcon {
+    color: green;
+}
+
+.table-style {
+    width: 100%;
+}
+
+.title-exercise {
+    color:white;
+    text-decoration: none;
+
+}
+.title-exercise:hover {
+    color: gray;
+}

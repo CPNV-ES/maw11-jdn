@@ -69,4 +69,20 @@ class FulfillmentModel extends Model
 
         return $fulfillment;
     }
+
+    public function delete($idFulfillment)
+    {
+        $query = "DELETE FROM fulfillments WHERE id_fulfillments = :id";
+
+        $binds = [
+            'id' => ['value' => $idFulfillment, 'type' => PDO::PARAM_INT]
+        ];
+
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            return "Connection failed: " . $e->getMessage();
+        }
+    }
 }

@@ -163,7 +163,11 @@ class ExerciseController extends Controller
                     $fields = $this->getFields($matches[1]);
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
-                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit*/', $request_uri, $matches) ? true : false):
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/destroy/', $request_uri, $matches) ? true : false):
+                    $this->deleteFulfillment($matches[2]);
+                    header("Location: /");
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($exercise['id_exercises']);
@@ -174,9 +178,22 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
-                    $fulfillment = $this->getFulfillmentsByExerciseId($matches[2]);
+                    $fulfillment = array("0" => $this->getFulfillmentById($matches[2]));
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
+                    exit();
+                case (preg_match('/\/exercises\/(\d+)\/fulfillments/', $request_uri, $matches) ? true : false):
+                    $exercise = $this->getOneExercise(id: $matches[1]);
+                    $fields = $this->getFields($matches[1]);
+                    $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
+                    $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
+                    $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
+                    if (!$exercise) {
+                        header("Location: /failtofind");
+                    }
+
+                    require_once VIEW_DIR . '/home/all-fulfill.php';
                     exit();
                 default:
                     header("HTTP/1.0 404 Not Found");
@@ -586,5 +603,11 @@ class ExerciseController extends Controller
         $fulffilment = $fulfillmentModel->getOne($idFulfillments);
 
         return $fulffilment['0'];
+    }
+
+    public function deleteFulfillment($idFulfillment)
+    {
+        $fulfillmentModel = new FulfillmentModel();
+        $fulfillmentModel->delete($idFulfillment);
     }
 }
