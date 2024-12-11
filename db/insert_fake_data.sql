@@ -1,3 +1,4 @@
+PRAGMA foreign_keys = OFF;
 
 INSERT INTO fields_type (name) VALUES ('single_line');
 INSERT INTO fields_type (name) VALUES ('single_line_list');
@@ -37,3 +38,5 @@ INSERT INTO fulfillments (id_exercises, created_at) VALUES (2,"2024-11-22 07:35:
 INSERT INTO fulfillments (id_exercises, created_at) VALUES (2,"2024-09-22 07:35:02");
 INSERT INTO fulfillments (id_exercises, created_at) VALUES (3,"2024-11-22 06:35:02");
 INSERT INTO fulfillments (id_exercises, created_at) VALUES (3,"2024-08-22 07:35:02");
+
+PRAGMA foreign_keys = ON;
