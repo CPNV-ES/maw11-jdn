@@ -1,4 +1,4 @@
-<header class="heading <?php if(isset($backgroundClass)) echo($backgroundClass) ?>">
+<header class="heading <?php if (isset($backgroundClass)) echo $backgroundClass ?>">
     <section class="container">
         <a href="/">
             <img class="header-img" src="/images/logo.png" alt="Logo" />
@@ -7,6 +7,6 @@
             <div class="exercise-title">
                 <?= $headTitle ?>
             </div>
-        <?php endif; ?> </b></span>
+        <?php endif; ?>
     </section>
 </header>

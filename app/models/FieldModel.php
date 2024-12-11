@@ -25,7 +25,7 @@ class FieldModel extends Model
 
         return $fields;
     }
-  
+
     public function getOne($fieldId)
     {
         $query = "SELECT * FROM fields WHERE id_fields = :id_fields";
@@ -42,7 +42,6 @@ class FieldModel extends Model
 
     public function delete($fieldId)
     {
-
         $query = "DELETE FROM fields WHERE id_fields = :id_fields;";
 
         $binds = ['id_fields' => ['value' => $fieldId, 'type' => PDO::PARAM_INT]];
@@ -79,8 +78,8 @@ class FieldModel extends Model
         return $this->id ?? false;
     }
 
-    public function update ($idField,$field,$newData) {
-
+    public function update($idField, $field, $newData)
+    {
         $query = "UPDATE fields SET $field = :newData WHERE id_fields = :id_field;";
 
         $binds = [
@@ -92,11 +91,10 @@ class FieldModel extends Model
             $this->db->queryPrepareExecute($query, $binds);
             $response = true;
         } catch (PDOException $e) {
-            return "Connection failed: " . $e->getMessage();
             $response = false;
+            return "Connection failed: " . $e->getMessage();
         }
-        
+
         return $response;
     }
-
 }
