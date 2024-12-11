@@ -179,7 +179,6 @@ class ExerciseController extends Controller
                     $exercise = $this->getOneExercise($matches[1]);
                     $fields = $this->getFields($matches[1]);
                     $fulfillment = array("0" => $this->getFulfillmentById($matches[2]));
-
                     $answers = $this->getAnswersFromIdFulfillment($matches[2]);
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
