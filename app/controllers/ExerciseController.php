@@ -165,8 +165,7 @@ class ExerciseController extends Controller
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/destroy/', $request_uri, $matches) ? true : false):
                     $this->deleteFulfillment($matches[2]);
-                    $url = '/';
-                    header("Location: " . $url);
+                    header("Location: /");
                     exit();
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
@@ -189,10 +188,11 @@ class ExerciseController extends Controller
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[1]);
                     $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
                     if (!$exercise) {
-                        $url = '/failtofind';
-                        header("Location: " . $url);
+                        header("Location: /failtofind");
                     }
+
                     require_once VIEW_DIR . '/home/all-fulfill.php';
 
                     exit();
