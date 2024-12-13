@@ -19,7 +19,7 @@ class Model
     public function __construct()
     {
         // Load the database configuration
-        $config = require __DIR__ . '../../../config/config.php';
+        $config = require CONFIG_DIR . '/config.php';
 
         // Intialize the database connection
         $this->db = Database::getInstance($config);

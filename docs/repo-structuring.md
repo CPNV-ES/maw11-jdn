@@ -17,9 +17,11 @@
 │   │   ├── FieldModel.php
 │   │   └── FulfillmentModel.php
 │   └── views                           # Views folder
-│       ├── home                        # Main pages of the file
+│       ├── home                        # Main pages of project
+│       │   ├── all-fulfill.php
 │       │   ├── create-exercise.php
 │       │   ├── create-field.php
+│       │   ├── edit-field-page.php
 │       │   ├── field-exercise.php
 │       │   ├── fulfill-exercise.php
 │       │   ├── home.php
@@ -36,20 +38,19 @@
 ├── config                              # Configuration folder
 │   ├── config.example.php
 │   └── config.php
-├── db                                  # Database folder
-│   ├── create_database.sql
-│   ├── database.example.sqlite
-│   └── insert_fake_data.sql
+├── database                            # Database folder
+│   └── maw11_jdn.sql
 ├── docs                                # Documentation of the project
 │   ├── looper-features.md
 │   ├── looper-specs.md
 │   └── repo-structuring.md
 ├── LICENSE
-├── logs
 ├── public                              # Public file of the project
 │   ├── css                             # CSS folder of the project
+│   │   ├── all-fulfill.css
 │   │   ├── create-exercise.css
 │   │   ├── create-field.css
+│   │   ├── edit-field-page.css
 │   │   ├── fulfill-exercise.css
 │   │   ├── home-page.css
 │   │   ├── manage-exercise.css
@@ -60,12 +61,11 @@
 │   │   └── logo.png
 │   └── index.php
 ├── README.md
+├── run
 └── tests                               # Tests of the project
     ├── DatabaseTest.php
-    └── db
-        ├── create_database_test.sql
-        ├── database_test.sqlite
-        └── insert_fake_data_test.sql
+    └── database
+        └── maw11_jdn_test.sql
 ```
 
 ## Folder and file creation
