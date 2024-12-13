@@ -1,6 +1,7 @@
 <?php
 define('BASE_DIR', dirname(__FILE__) . '/..');
 define('APP_DIR', BASE_DIR . '/app');
+define('CONFIG_DIR', BASE_DIR . '/config');
 
 require_once APP_DIR . '/core/Database.php';
 
@@ -14,14 +15,10 @@ class DatabaseTest extends TestCase
 
     protected function setUp(): void
     {
-        // Set up the configuration array
-        $this->config = [
-            'db' => [
-                'driver' => 'sqlite',
-                'database' => __DIR__ . '/db/database_test.sqlite',
-            ],
-        ];
+        // Load the configuration from the config file
+        $this->config = require CONFIG_DIR . '/config.php';
 
+        // Initialize the database instance
         $this->database = new Database($this->config);
     }
 
@@ -36,14 +33,18 @@ class DatabaseTest extends TestCase
 
     /**
      * Initializes the database and creates the necessary tables.
-     * Optionally inserts predefined data if $insertData is true.
-     * 
-     * @param bool $insertData If true, inserts predefined data into the exercises table.
+     * Inserts predefined data into the database.
      */
-    private function initializeDatabase(bool $insertData = false)
+    private function initializeDatabase()
     {
-        $sqlFilePath = __DIR__ . '/db/create_database_test.sql';
+        // Path to the SQL script file
+        $sqlFilePath = __DIR__ . '/database/maw11_jdn_test.sql';
+
+        // Read the entire SQL script
         $file = file_get_contents($sqlFilePath);
+        if ($file === false) {
+            throw new RuntimeException("Unable to read the SQL file: $sqlFilePath");
+        }
 
         // Split the SQL commands by semicolon
         $sqlCommands = explode(';', $file);
@@ -55,24 +56,6 @@ class DatabaseTest extends TestCase
                 $this->database->querySimpleExecute($command);
             }
         }
-
-        // Insert predefined data if $insertData is true.
-        if ($insertData) {
-            // Insert data into the 'status' table.
-            $this->database->querySimpleExecute("
-                INSERT INTO status (name) VALUES 
-                ('edit'),
-                ('answering'),
-                ('closed');
-            ");
-
-            // Insert data into the 'exercises' table, referencing the 'status' table.
-            $this->database->querySimpleExecute("
-                INSERT INTO exercises (title, id_status) VALUES 
-                ('Exercise with Status 1', 1),
-                ('Exercise with Status 2', 2);
-            ");
-        }
     }
 
     /**
@@ -80,8 +63,80 @@ class DatabaseTest extends TestCase
      */
     private function dropTables()
     {
+        // Disable foreign key checks temporarily to avoid constraint violations during drop
+        $this->database->querySimpleExecute("SET FOREIGN_KEY_CHECKS = 0;");
+
+        // Drop tables in the correct order, from the most dependent (answers) to the least dependent (fields_type)
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS answers;");
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS fulfillments;");
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS fields;");
         $this->database->querySimpleExecute("DROP TABLE IF EXISTS exercises;");
         $this->database->querySimpleExecute("DROP TABLE IF EXISTS status;");
+        $this->database->querySimpleExecute("DROP TABLE IF EXISTS fields_type;");
+
+        // Re-enable foreign key checks
+        $this->database->querySimpleExecute("SET FOREIGN_KEY_CHECKS = 1;");
+    }
+
+    /**
+     * Create the tables based on the schema.
+     */
+    private function createTables()
+    {
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `fields_type` (
+            `id_fields_type` INT AUTO_INCREMENT PRIMARY KEY,
+            `name` VARCHAR(255) NOT NULL
+        );
+    ");
+
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `status` (
+            `id_status` INT AUTO_INCREMENT PRIMARY KEY,
+            `name` VARCHAR(255) NOT NULL
+        );
+    ");
+
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `exercises` (
+            `id_exercises` INT AUTO_INCREMENT PRIMARY KEY,
+            `title` VARCHAR(255) NOT NULL,
+            `id_status` INT,
+            FOREIGN KEY (`id_status`) REFERENCES `status`(`id_status`)
+        );
+    ");
+
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `fields` (
+            `id_fields` INT AUTO_INCREMENT PRIMARY KEY,
+            `label` VARCHAR(255) NOT NULL,
+            `id_exercises` INT,
+            `id_fields_type` INT,
+            FOREIGN KEY (`id_exercises`) REFERENCES `exercises`(`id_exercises`) ON DELETE CASCADE,
+            FOREIGN KEY (`id_fields_type`) REFERENCES `fields_type`(`id_fields_type`)
+        );
+    ");
+
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `fulfillments` (
+            `id_fulfillments` INT AUTO_INCREMENT PRIMARY KEY,
+            `created_at` DATETIME NOT NULL,
+            `updated_at` DATETIME,
+            `id_exercises` INT NOT NULL,
+            FOREIGN KEY (`id_exercises`) REFERENCES `exercises`(`id_exercises`) ON DELETE CASCADE
+        );
+    ");
+
+        $this->database->querySimpleExecute("
+        CREATE TABLE IF NOT EXISTS `answers` (
+            `id_answers` INT AUTO_INCREMENT PRIMARY KEY,
+            `value` TEXT,
+            `id_fields` INT NOT NULL,
+            `id_fulfillments` INT,
+            FOREIGN KEY (`id_fields`) REFERENCES `fields`(`id_fields`) ON DELETE CASCADE,
+            FOREIGN KEY (`id_fulfillments`) REFERENCES `fulfillments`(`id_fulfillments`) ON DELETE CASCADE
+        );
+    ");
     }
 
     // ===========================
@@ -105,9 +160,14 @@ class DatabaseTest extends TestCase
         // Given: An invalid configuration that should trigger a connection failure
         $invalidConfig = [
             'db' => [
-                'driver' => 'sqlite3', // Assuming 'sqlite3' is an invalid driver for this test
-                'database' => 'invalid_database', // Invalid database path
-            ]
+                'driver' => 'sqlite3',
+                'host' => 'localhost',
+                'database' => 'bad-name',
+                'username' => 'root',
+                'password' => '',
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+            ],
         ];
 
         // When: Trying to create a new Database instance with the invalid configuration
@@ -163,7 +223,7 @@ class DatabaseTest extends TestCase
         $this->dropTables();
 
         // Given: The 'exercises' table is empty
-        $this->initializeDatabase(false);
+        $this->createTables();
 
         // When: The querySimpleExecute method is called with a SELECT query.
         $query = 'SELECT * FROM exercises;';
@@ -176,10 +236,8 @@ class DatabaseTest extends TestCase
 
     public function testQuerySimpleExecuteReturnsDataWhenTableIsNotEmpty()
     {
-        $this->dropTables();
-
         // Given: The 'exercises' table is populated with data
-        $this->initializeDatabase(true);
+        $this->initializeDatabase();
 
         // When: The querySimpleExecute method is called with a SELECT query.
         $query = 'SELECT * FROM exercises;';
@@ -189,7 +247,8 @@ class DatabaseTest extends TestCase
         // Then: The result should match the predefined data.
         $expected = [
             ['id_exercises' => '1', 'title' => 'Exercise with Status 1', 'id_status' => '1'],
-            ['id_exercises' => '2', 'title' => 'Exercise with Status 2', 'id_status' => '2']
+            ['id_exercises' => '2', 'title' => 'Exercise with Status 2', 'id_status' => '2'],
+            ['id_exercises' => '3', 'title' => 'Exercise with Status 3', 'id_status' => '3'],
         ];
 
         $this->assertEquals($expected, $results, "The query should return all the data from the exercises table.");
@@ -202,7 +261,7 @@ class DatabaseTest extends TestCase
     public function testQueryPrepareExecuteReturnsSingleRecord()
     {
         // Given: The database is already initialized with data
-        $this->initializeDatabase(true);
+        $this->initializeDatabase();
 
         // When: The queryPrepareExecute method is called with a parameterized query
         $query = "SELECT * FROM exercises WHERE id_exercises = :id";
@@ -229,7 +288,7 @@ class DatabaseTest extends TestCase
     public function testQueryPrepareExecuteReturnsSingleRecordWithStatusName()
     {
         // Given: The database is already initialized with data
-        $this->initializeDatabase(true);
+        $this->initializeDatabase();
 
         // When: The queryPrepareExecute method is called with a parameterized query
         $query = "SELECT status.name AS status_name
