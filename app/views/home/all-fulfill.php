@@ -25,18 +25,18 @@ require_once VIEW_DIR . '/layouts/header.php'
                 <tr>
                     <td><?= htmlspecialchars($createAt); ?></td>
                     <td>
-                        <a href="fulfillments/<?= $createdAtWhidId[$createAt]; ?>">Show</a>
+                        <a href="<?= $createdAtWhidId[$createAt]; ?>">Show</a>
                     </td>
                     <?php foreach ($fulfillments as $fulfillment):
                         if ($fulfillment['id_exercises'] == $exercise['id_exercises'] && $fulfillment['created_at'] == $createAt):  ?>
                             <td>
-                                <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
+                                <a href="<?= $fulfillment['id_fulfillments'] ?>/edit">Edit</a>
                             </td>
 
                             <td>
-                                <a href="fulfillments/<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
+                                <a href="<?= $fulfillment['id_fulfillments'] ?>/destroy">Destroy</a>
                             </td>
-                        <?php endif;
+                    <?php endif;
                     endforeach; ?>
                 </tr>
             <?php endforeach; ?>
