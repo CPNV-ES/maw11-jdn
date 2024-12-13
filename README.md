@@ -65,26 +65,22 @@ git switch main
 git flow init
 ```
 
-3. Setup the database and the configuration file
+3. Create configuration file
 
-> Create the configuration file and edit the database file name     
+> Create the configuration file and edit parameters   
 
 ```bash
 cp config/config.example.php config/config.php
 ```
 
-> Create the sqlite file
+4. Setup the database
+
+> To create the database you need to run the `maw11_jdn.sql` script located in the **database** folder.
+
+5. Run PHP dev server
 
 ```bash
-cp db/database.example.sqlite db/database.sqlite
-```
-
-Once you've created the database, you'll need to run the SQL scripts located in the **db** directory. The `create_database.sql` script to create the database and the `insert_fake_data.sql` script to insert fake data into the database.
-
-4. Run PHP dev server
-
-```bash
-php -S localhost:8000 -t public/
+./run
 ```
 
 #### How to run the tests?
@@ -99,58 +95,32 @@ php -S localhost:8000 -t public/
 ./maw11-jdn
 ├── app
 │   ├── controllers
-│   │   ├── ExerciseController.php
-│   │   └── HomeController.php
 │   ├── core
-│   │   ├── Controller.php
-│   │   ├── Database.php
-│   │   ├── Model.php
-│   │   └── Router.php
 │   ├── models
-│   │   ├── AnswerModel.php
-│   │   ├── ExerciseModel.php
-│   │   ├── FieldModel.php
-│   │   └── FulfillmentModel.php
 │   └── views
-│       ├── home
-│       └── layouts
 ├── composer.json
 ├── composer.lock
 ├── config
-│   ├── config.example.php
-│   └── config.php
-├── db
-│   ├── create_database.sql
-│   ├── database.example.sqlite
-│   ├── database.sqlite
-│   └── insert_fake_data.sql
+│   └── config.example.php
+├── database
+│   └── maw11_jdn.sql
 ├── docs
 │   ├── looper-features.md
 │   ├── looper-specs.md
 │   └── repo-structuring.md
 ├── LICENSE
-├── logs
 ├── public
 │   ├── css
-│   │   ├── create-exercise.css
-│   │   ├── create-field.css
-│   │   ├── fulfill-exercise.css
-│   │   ├── home-page.css
-│   │   ├── manage-exercise.css
-│   │   ├── result-pages.css
-│   │   ├── style.css
-│   │   └── take-exercise.css
 │   ├── images
-│   │   └── logo.png
 │   └── index.php
 ├── README.md
+├── run
 └── tests
     ├── DatabaseTest.php
-    └── db
-        ├── create_database_test.sql
-        ├── database_test.sqlite
-        └── insert_fake_data_test.sql
+    └── database
 ```
+
+> Note : if you want the complete structure check this file [repo-structuring.md](docs/repo-structuring.md)
 
 ## Collaborate
 
