@@ -27,25 +27,23 @@ CREATE TABLE fields (
     label TEXT NOT NULL,
     id_exercises INTEGER,
     id_fields_type INTEGER,
-    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises),
+    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises) ON DELETE CASCADE,
     FOREIGN KEY (id_fields_type) REFERENCES fields_type(id_fields_type)
 );
-
 
 CREATE TABLE answers (
     id_answers INTEGER PRIMARY KEY AUTOINCREMENT,
     value TEXT,
     id_fields NOT NULL,
     id_fulfillments INTEGER,
-    FOREIGN KEY (id_fields) REFERENCES fields(id_fields),
-    FOREIGN KEY (id_fulfillments) REFERENCES fulfillments(id_fulfillments)
+    FOREIGN KEY (id_fields) REFERENCES fields(id_fields) ON DELETE CASCADE,
+    FOREIGN KEY (id_fulfillments) REFERENCES fulfillments(id_fulfillments) ON DELETE CASCADE
 );
-
 
 CREATE TABLE fulfillments (
     id_fulfillments INTEGER PRIMARY KEY AUTOINCREMENT,
     created_at DATE NOT NULL,
     updated_at DATE,
     id_exercises NOT NULL,
-    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises)
+    FOREIGN KEY (id_exercises) REFERENCES exercises(id_exercises) ON DELETE CASCADE
 );

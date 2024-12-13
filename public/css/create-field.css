@@ -32,9 +32,8 @@ select {
 }
 
 .title-exercise {
-    color:white;
+    color: white;
     text-decoration: none;
-
 }
 .title-exercise:hover {
     color: gray;

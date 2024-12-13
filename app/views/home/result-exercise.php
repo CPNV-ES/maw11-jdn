@@ -6,8 +6,6 @@ $cssPath = '/css/result-pages.css';
 $headTitle = "Exercise: <a class='title-exercise' href='/exercises/{$exercise['id_exercises']}/results'><strong>{$exercise['title']}</strong></a>";
 
 require_once VIEW_DIR . '/layouts/header.php';
-
-
 ?>
 
 <div class="container">
@@ -18,7 +16,7 @@ require_once VIEW_DIR . '/layouts/header.php';
                 </th>
                 <?php foreach ($fields as $field) { ?>
                     <th>
-                        <a href="results/<?=$field['id_fields'];?>"><?= $field['label'] ?></a>
+                        <a href="results/<?= $field['id_fields']; ?>"><?= $field['label'] ?></a>
                     </th>
                 <?php } ?>
             </tr>
@@ -27,8 +25,8 @@ require_once VIEW_DIR . '/layouts/header.php';
             <?php foreach ($answers as $createAt => $fieldValues) : ?>
                 <tr>
                     <!-- Affiche la date de création une seule fois -->
-                    <td><a href="fulfillments/<?= $createdAtWhidId[$createAt];?>"><?= htmlspecialchars($createAt); ?></a></td>
-                    
+                    <td><a href="fulfillments/<?= $createdAtWhidId[$createAt]; ?>"><?= htmlspecialchars($createAt); ?></a></td>
+
                     <!-- Afficher les réponses pour chaque champ de l'exercice -->
                     <?php foreach ($fields as $field) : ?>
                         <td>
