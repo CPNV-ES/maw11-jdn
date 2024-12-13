@@ -23,12 +23,17 @@ class Database
      */
     public function __construct($config)
     {
-        $dsn = "{$config['db']['driver']}:{$config['db']['database']}";
+        $dbConfig = $config['db'];
+
+        $dsn = "{$dbConfig['driver']}:host={$dbConfig['host']};dbname={$dbConfig['database']};charset={$dbConfig['charset']}";
+        $username = $dbConfig['username'];
+        $password = $dbConfig['password'];
+
         try {
-            $this->pdo = new PDO($dsn);
+            $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            throw new PDOException("Connection error to the database : " . $e->getMessage());
+            throw new PDOException("Connection error to the database: " . $e->getMessage());
         }
     }
 
@@ -100,7 +105,8 @@ class Database
      * Method to return last id inserted in the database
      * @return bool|string
      */
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         return $this->pdo->lastInsertId();
     }
 }
