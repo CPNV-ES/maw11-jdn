@@ -99,15 +99,22 @@ INSERT INTO `answers` (`id_answers`, `value`, `id_fields`, `id_fulfillments`)
 VALUES
     (1, 'Answer for field 1', 1, 1),
     (2, 'Answer for field 2', 2, 1),
-    (3, 'Answer for field 3', 3, 2),
-    (4, 'Answer for field 4', 4, 4),
-    (5, 'Answer for field', 5, 4),
-    (6, 'Answer for field', 6, 4),
-    (7, 'Answer for field 5', 5, 3),
-    (8, 'Answer for field 6', 6, 3),
-    (9, 'Answer for field 7', 7, 5),
-    (10, 'Answer for field 8', 8, 5),
-    (11, 'Answer for field 9', 9, 5);
+    (3, '', 3, 1),
+    (4, '', 1, 2),
+    (5, '', 1, 2),
+    (6, 'Answer for field 3', 3, 2),
+    (7, '', 4, 3),
+    (8, 'Answer for field 6', 5, 3),
+    (9, 'Answer for field 6', 6, 3),
+    (10, 'Answer for field 4', 4, 4),
+    (11, '', 5, 4),
+    (12, '', 6, 4),
+    (13, 'Answer for field 7', 7, 5),
+    (14, 'Answer for field 8', 8, 5),
+    (15, 'Answer for field 9', 9, 5),
+    (16, '', 7, 6),
+    (17, '', 8, 6),
+    (18, '', 9, 6);
 
 -- Reactive foreign keys constraints
 SET FOREIGN_KEY_CHECKS = 1;
