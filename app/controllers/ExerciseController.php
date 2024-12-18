@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This file is for the exercise controller
+ */
+
 require_once APP_DIR . '/core/Controller.php';
 require_once MODEL_DIR . '/ExerciseModel.php';
 require_once MODEL_DIR . '/FieldModel.php';
@@ -11,6 +17,11 @@ const FIELD_ID = 2;
 const FULFILLMENT_ID = 2;
 const STATUS_EXERCISE = 2;
 
+/**
+ * Class ExerciseController
+ *
+ * Manages all the backend operation and redirect to the correct view. 
+ */
 
 class ExerciseController extends Controller
 {
@@ -62,7 +73,6 @@ class ExerciseController extends Controller
                 case (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/update/', $request_uri, $matches) ? true : false):
                     $this->updateFields($matches[FIELD_ID], 'label', $_POST['field_label']);
                     $this->updateFields($matches[FIELD_ID], 'id_fields_type', $_POST['field_type']);
-
                     $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                     $fields = $this->getFields($matches[EXERCISE_ID]);
 
@@ -88,12 +98,14 @@ class ExerciseController extends Controller
                     if (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/edit/', $request_uri, $matches)) {
                         $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                         $field = $this->getOneField($matches[FIELD_ID]);
+
                         require_once VIEW_DIR . '/home/edit-field-page.php';
                         exit();
                     } elseif (preg_match('/\/exercises\/(\d+)\/fields\/(\d+)\/destroy/', $request_uri, $matches)) {
                         $this->deleteField($matches[FIELD_ID]);
                         $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                         $fields = $this->getFields($matches[EXERCISE_ID]);
+
                         require_once VIEW_DIR . '/home/create-field.php';
                         exit();
                     }
@@ -109,7 +121,6 @@ class ExerciseController extends Controller
                         header("HTTP/1.0 404 Not Found");
                     }
                 } elseif ($matches[STATUS_EXERCISE] === 'update/answering') {
-                    //check if field empty
                     $fields = $this->getFields($matches[EXERCISE_ID]);
                     if ($this->getFields($matches[EXERCISE_ID]) != null) {
                         $this->updateExercise($matches[EXERCISE_ID], 2);
@@ -136,11 +147,13 @@ class ExerciseController extends Controller
                 case '/exercises/fields':
                     $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                     $fields = $this->getFields($matches[EXERCISE_ID]);
+
                     require_once VIEW_DIR . '/home/create-field.php';
                     exit();
 
                 case '/exercises/answering':
                     $exercises = $this->getAllExercises();
+
                     require_once VIEW_DIR . '/home/take-exercise.php';
                     exit();
 
@@ -149,6 +162,7 @@ class ExerciseController extends Controller
                     $field = $this->getOneField($matches[FIELD_ID]);
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[EXERCISE_ID]);
                     $answers = $this->getAnswersFromFulfillment($fulfillments, $field);
+
                     require_once VIEW_DIR . '/home/result-field.php';
                     exit();
 
@@ -159,6 +173,7 @@ class ExerciseController extends Controller
                     $fulfillments = $this->getFulfillmentsByExerciseId($matches[EXERCISE_ID]);
                     $answers = $this->getIconAnswersFromFulfillment($fulfillments, $fields);
                     $createdAtWhidId = $this->getCreatedAtWithIdFulfillments($fulfillments);
+
                     require_once VIEW_DIR . '/home/result-exercise.php';
                     exit();
 
@@ -166,25 +181,32 @@ class ExerciseController extends Controller
                     $_SESSION['state'] = 'new';
                     $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                     $fields = $this->getFields($matches[EXERCISE_ID]);
+
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/destroy/', $request_uri, $matches) ? true : false):
                     $this->deleteFulfillment($matches[FULFILLMENT_ID]);
+
                     header("Location: /");
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)\/edit/', $request_uri, $matches) ? true : false):
                     $_SESSION['state'] = 'edit';
                     $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                     $fields = $this->getFields($exercise['id_exercises']);
                     $answers = $this->getAnswers($matches[FULFILLMENT_ID]);
                     $exerciseAnswer = $this->getFulfillmentById($matches[FULFILLMENT_ID]);
+
                     require_once VIEW_DIR . '/home/fulfill-exercise.php';
                     exit();
+
                 case (preg_match('/\/exercises\/(\d+)\/fulfillments\/(\d+)/', $request_uri, $matches) ? true : false):
                     $exercise = $this->getOneExercise($matches[EXERCISE_ID]);
                     $fields = $this->getFields($matches[EXERCISE_ID]);
                     $fulfillment = array("0" => $this->getFulfillmentById($matches[FULFILLMENT_ID]));
                     $answers = $this->getAnswersFromIdFulfillment($matches[FULFILLMENT_ID]);
+
                     require_once VIEW_DIR . '/home/response-exercise.php';
                     exit();
 
@@ -341,9 +363,9 @@ class ExerciseController extends Controller
     public function deleteField($id)
     {
         $fieldModel = new FieldModel();
-
         $fieldModel->getOne($id);
         $response = $fieldModel->delete($id);
+
         return true;
     }
 
@@ -593,6 +615,7 @@ class ExerciseController extends Controller
 
             $createdAtWithId[$fulfillment['created_at']] = $fulfillment['id_fulfillments'];
         }
+
         return $createdAtWithId;
     }
 
@@ -609,6 +632,11 @@ class ExerciseController extends Controller
         return $fulffilment['0'];
     }
 
+    /**
+     * Summary of deleteFulfillment
+     * @param mixed $idFulfillment
+     * @return void
+     */
     public function deleteFulfillment($idFulfillment)
     {
         $fulfillmentModel = new FulfillmentModel();
