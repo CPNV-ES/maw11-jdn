@@ -1,9 +1,19 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This file is for the exercise model
+ */
+
 require_once APP_DIR . '/core/Model.php';
 
 /**
- * ExerciseModel class
+ * Class ExerciseModel
+ *
+ * Manages all the operation made on the DB which affect the exercises table
  */
+
 class ExerciseModel extends Model
 {
     /**
@@ -56,7 +66,7 @@ class ExerciseModel extends Model
 
         $binds = [
             'title' => ['value' => $title, 'type' => PDO::PARAM_STR],
-            'id_status' => ['value'=> 1, 'type'=> PDO::PARAM_INT]
+            'id_status' => ['value' => 1, 'type' => PDO::PARAM_INT]
         ];
 
         $response = null;
@@ -73,7 +83,8 @@ class ExerciseModel extends Model
         return $this->id ?? false;
     }
 
-    public function delete ($id) {
+    public function delete($id)
+    {
 
         $query = "DELETE FROM exercises WHERE id_exercises = :id;";
 
@@ -87,15 +98,16 @@ class ExerciseModel extends Model
         }
     }
 
-    public function update($id, $field, $newValue) {
-        
+    public function update($id, $field, $newValue)
+    {
+
         $query = "UPDATE exercises SET $field = :value WHERE id_exercises = :id;";
-    
+
         $binds = [
             'id' => ['value' => $id, 'type' => PDO::PARAM_INT],
             'value' => ['value' => $newValue, 'type' => PDO::PARAM_STR]
         ];
-    
+
         try {
             $this->db->queryPrepareExecute($query, $binds);
             return true;

@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This page is for the result-field view
+ */
+
 ob_start();
 
 $backgroundClass = 'managing';
@@ -17,11 +24,11 @@ require_once VIEW_DIR . '/layouts/header.php';
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($fulfillments as $fulfillment) {?>
-            <tr>
-                <td><a href="/exercises/<?= $fulfillment['id_exercises'];?>/fulfillments/<?= $fulfillment['id_fulfillments'];?>"><?= htmlspecialchars($fulfillment['created_at']); ?></a></td>
-                <td><?= htmlspecialchars($answers[$fulfillment['created_at']]) ?></td>
-            </tr>
+            <?php foreach ($fulfillments as $fulfillment) { ?>
+                <tr>
+                    <td><a href="/exercises/<?= $fulfillment['id_exercises']; ?>/fulfillments/<?= $fulfillment['id_fulfillments']; ?>"><?= htmlspecialchars($fulfillment['created_at']); ?></a></td>
+                    <td><?= htmlspecialchars($answers[$fulfillment['created_at']]) ?></td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>

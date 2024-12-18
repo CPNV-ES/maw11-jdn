@@ -1,9 +1,19 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This file is for the field model
+ */
+
 require_once APP_DIR . '/core/Model.php';
 
 /**
- * FieldModel class
+ * Class FieldModel
+ *
+ * Manages all the operation made on the DB which affect the fields table
  */
+
 class FieldModel extends Model
 {
     /**

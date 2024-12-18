@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This page is for the all-fulfill view
+ */
+
 ob_start();
 
 $cssPath = '/css/all-fulfill.css';

@@ -1,10 +1,19 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This file is for the answer model
+ */
+
 require_once APP_DIR . '/core/Model.php';
 
 /**
-
- * FieldModel class
+ * Class AnswerModel
+ *
+ * Manages all the operation made on the DB which affect the answers table
  */
+
 class AnswerModel extends Model
 {
     public function create($value, $idField, $idFulfillments)

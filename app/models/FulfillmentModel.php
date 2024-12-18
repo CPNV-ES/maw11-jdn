@@ -1,9 +1,19 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 18.12.2024
+ * @description This file is for the fulfillment model
+ */
+
 require_once APP_DIR . '/core/Model.php';
 
 /**
- * FulfillmentModel class
+ * Class FulfillmentModel
+ *
+ * Manages all the operation made on the DB which affect the fulfillments table
  */
+
 class FulfillmentModel extends Model
 {
     public function create($create, $idExercise)
