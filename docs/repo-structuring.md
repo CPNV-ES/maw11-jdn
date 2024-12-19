@@ -9,8 +9,7 @@
 │   ├── core                            # Core folder (default model, controler, ...)
 │   │   ├── Controller.php
 │   │   ├── Database.php
-│   │   ├── Model.php
-│   │   └── Router.php
+│   │   └── Model.php
 │   ├── models                          # Models folder
 │   │   ├── AnswerModel.php
 │   │   ├── ExerciseModel.php

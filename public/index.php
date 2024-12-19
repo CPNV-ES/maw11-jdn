@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 19.12.2024
+ * @description Entry point for routing requests and initializing models and controllers.
+ *
+ * This script:
+ * - Starts the session and defines constants for directory paths.
+ * - Includes necessary model and controller files.
+ * - Handles the routing based on the requested URI and directs to the corresponding controller.
+ * - If no route matches, a 404 error is shown.
+ */
+
 session_start();
 
 define('BASE_DIR', dirname(__FILE__) . '/..');
@@ -26,7 +38,6 @@ $request_uri = $_SERVER['REQUEST_URI'];
 
 $exploded_uri = explode('/', $request_uri);
 $base_uri = '/' . $exploded_uri[1];
-
 
 switch ($base_uri) {
     case '/':
