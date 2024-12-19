@@ -1,30 +1,28 @@
 <?php
 
 /**
+ * @file ExerciseModel.php
  * @author Nathan Chauveau, David Dieperink, Julien Schneider
- * @version 18.12.2024
- * @description This file is for the exercise model
+ * @version 19.12.2024
+ * @description Model class for managing operations related to the `exercises` table in the database.
+ *
+ * @details Provides methods for creating, retrieving, updating, and deleting exercises in the database.
  */
 
 require_once APP_DIR . '/core/Model.php';
 
-/**
- * Class ExerciseModel
- *
- * Manages all the operation made on the DB which affect the exercises table
- */
-
 class ExerciseModel extends Model
 {
     /**
-     * Id of the exercise
-     * @var 
+     * ID of the exercise
+     * @var int|null
      */
     public $id = null;
 
     /**
-     * Method to get all exercise
-     * @return array - array of exercises 
+     * Retrieves all exercises from the `exercises` table.
+     * 
+     * @return array An array of associative arrays representing all exercises in the table.
      */
     public function getAll()
     {
@@ -36,9 +34,11 @@ class ExerciseModel extends Model
     }
 
     /**
-     * Method to get one exercise
-     * @param mixed $id
-     * @return mixed
+     * Retrieves a single exercise by its ID.
+     * 
+     * @param int $id The ID of the exercise to retrieve.
+     * 
+     * @return array|null An associative array representing the exercise or null if not found.
      */
     public function getOne($id)
     {
@@ -55,10 +55,12 @@ class ExerciseModel extends Model
     }
 
     /**
-     * Method to create an exercise
-     * @param mixed $title
-     * Set id_status to 1 because the exercise is in editing
-     * @return bool|string
+     * Creates a new exercise in the `exercises` table.
+     * The exercise's status is set to 1, indicating that it is in editing.
+     * 
+     * @param string $title The title of the exercise.
+     * 
+     * @return int|string The ID of the newly created exercise or an error message if the operation fails.
      */
     public function create($title)
     {
@@ -83,6 +85,13 @@ class ExerciseModel extends Model
         return $this->id ?? false;
     }
 
+    /**
+     * Deletes an exercise from the `exercises` table by its ID.
+     * 
+     * @param int $id The ID of the exercise to delete.
+     * 
+     * @return bool|string True on success, or an error message if the operation fails.
+     */
     public function delete($id)
     {
 
@@ -98,6 +107,15 @@ class ExerciseModel extends Model
         }
     }
 
+    /**
+     * Updates a field of an existing exercise in the `exercises` table.
+     * 
+     * @param int $id The ID of the exercise to update.
+     * @param string $field The name of the field to update.
+     * @param mixed $newValue The new value to set for the specified field.
+     * 
+     * @return bool|string True on success, or an error message if the operation fails.
+     */
     public function update($id, $field, $newValue)
     {
 
