@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file ExerciseController.php
+ * @file MainController.php
  * @author Nathan Chauveau, David Dieperink, Julien Schneider
  * @version 19.12.2024
  * @description Controller logic for managing exercises, fields, fulfillments and answers in the application.
@@ -23,7 +23,7 @@ const FULFILLMENT_ID = 2;
 const STATUS_EXERCISE = 2;
 
 /**
- * Class ExerciseController
+ * Class MainController
  *
  * ---------------------------------------------------------------------------
  * This class handles all backend operations related to exercises, including
@@ -43,7 +43,7 @@ const STATUS_EXERCISE = 2;
  * answers, etc.) and the view, enabling dynamic page rendering based on the actions
  * performed by the user.
  */
-class ExerciseController extends Controller
+class MainController extends Controller
 {
     /******************************************************************************
      * Page Rendering Function (renderer)
@@ -401,8 +401,13 @@ class ExerciseController extends Controller
      */
     public function createField($exerciseId)
     {
+        if (!isset($_POST['field_label']) && !isset($_POST['field_type'])) {
+            exit;
+        }
+
         $label = $_POST['field_label'];
         $type = $_POST['field_type'];
+
         $field = new FieldModel();
         $field->create($label, $exerciseId, $type);
 
@@ -542,7 +547,7 @@ class ExerciseController extends Controller
     public function getAnswers()
     {
         $answerModel = new AnswerModel();
-        $answers = $answerModel->getAllAnswers();
+        $answers = $answerModel->getAll();
 
         return $answers;
     }
@@ -636,7 +641,6 @@ class ExerciseController extends Controller
                                 } else {
                                     //Differentiate simple or double line answer.
                                     if (preg_match("/.+\n.+/", $answer['value'])) {
-
                                         $data[$fulfillment['created_at']][$field['id_fields']] =  'fa-solid fa-check-double VIcon';
                                     } else {
                                         $data[$fulfillment['created_at']][$field['id_fields']] = 'fa-solid fa-check VIcon';
