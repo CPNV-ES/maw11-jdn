@@ -24,7 +24,7 @@ class FieldModel extends Model
      * 
      * @param int $exerciseId The ID of the exercise to retrieve fields for.
      * 
-     * @return array An array of associative arrays representing the fields related to the specified exercise.
+     * @return array|false An array of associative arrays representing the fields or false if the operation fails.
      */
     public function getFieldsFromExercise($exerciseId)
     {
@@ -34,10 +34,13 @@ class FieldModel extends Model
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $fields = $this->db->fetchAll($req);
-
-        return $fields;
+        try {
+            $req = $this->db->queryPrepareExecute($query, $binds);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log("Error fetching fields: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -45,7 +48,7 @@ class FieldModel extends Model
      * 
      * @param int $fieldId The ID of the field to retrieve.
      * 
-     * @return array|null An associative array representing the field or null if not found.
+     * @return array|false An associative array representing the field or false if not found.
      */
     public function getOne($fieldId)
     {
@@ -55,10 +58,13 @@ class FieldModel extends Model
             'id_fields' => ['value' => $fieldId, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $field = $this->db->fetch($req);
-
-        return $field;
+        try {
+            $req = $this->db->queryPrepareExecute($query, $binds);
+            return $this->db->fetch($req);
+        } catch (PDOException $e) {
+            error_log("Error fetching field: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -66,7 +72,7 @@ class FieldModel extends Model
      * 
      * @param int $fieldId The ID of the field to delete.
      * 
-     * @return bool|string True on success or an error message if the deletion fails.
+     * @return bool False if the deletion fails.
      */
     public function delete($fieldId)
     {
@@ -78,10 +84,10 @@ class FieldModel extends Model
             $this->db->queryPrepareExecute($query, $binds);
             return true;
         } catch (PDOException $e) {
-            return "Connection failed: " . $e->getMessage();
+            error_log("Error deleting field: " . $e->getMessage());
+            return false;
         }
     }
-
     /**
      * Creates a new field for a specific exercise.
      * 
@@ -89,7 +95,7 @@ class FieldModel extends Model
      * @param int $exerciseId The ID of the exercise to associate the field with.
      * @param int $typeFieldID The ID of the field's type.
      * 
-     * @return int|string The ID of the newly created field or an error message if the creation fails.
+     * @return int|false The ID of the newly created field or false if the creation fails.
      */
     public function create($label, $exerciseId, $typeFieldID)
     {
@@ -101,18 +107,14 @@ class FieldModel extends Model
             'id_fields_type' => ['value' => $typeFieldID, 'type' => PDO::PARAM_INT]
         ];
 
-        $response = null;
-
         try {
             $this->db->queryPrepareExecute($query, $binds);
-            $response = $this->db->lastInsertId();
+            $this->id = $this->db->lastInsertId();
+            return $this->id ?? false;
         } catch (PDOException $e) {
-            return "Connection failed: " . $e->getMessage();
+            error_log("Error creating field: " . $e->getMessage());
+            return false;
         }
-
-        $this->id = is_string($response) ? $response : null;
-
-        return $this->id ?? false;
     }
 
     /**
@@ -122,7 +124,7 @@ class FieldModel extends Model
      * @param string $field The name of the field to update.
      * @param mixed $newData The new value for the specified field.
      * 
-     * @return bool|string True on success, or an error message if the update fails.
+     * @return bool False if the update fails.
      */
     public function update($idField, $field, $newData)
     {
@@ -135,12 +137,10 @@ class FieldModel extends Model
 
         try {
             $this->db->queryPrepareExecute($query, $binds);
-            $response = true;
+            return true;
         } catch (PDOException $e) {
-            $response = false;
-            return "Connection failed: " . $e->getMessage();
+            error_log("Error updating field: " . $e->getMessage());
+            return false;
         }
-
-        return $response;
     }
 }

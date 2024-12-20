@@ -20,7 +20,7 @@ class AnswerModel extends Model
      * @param int $idField The ID of the associated field.
      * @param int $idFulfillments The ID of the associated fulfillment.
      * 
-     * @return array The result of the insertion query as an associative array.
+     * @return bool True on success, or false if creation fails.
      */
     public function create($value, $idField, $idFulfillments)
     {
@@ -32,10 +32,13 @@ class AnswerModel extends Model
             'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT],
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $fields = $this->db->fetchAll($req);
-
-        return $fields;
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            error_log('Create failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -45,7 +48,7 @@ class AnswerModel extends Model
      * @param int $idField The ID of the associated field.
      * @param int $idFulfillments The ID of the associated fulfillment.
      * 
-     * @return array The result of the update query as an associative array.
+     * @return bool True on success, or false if update fails.
      */
     public function update($value, $idField, $idFulfillments)
     {
@@ -57,25 +60,32 @@ class AnswerModel extends Model
             'id_fulfillments' => ['value' => $idFulfillments, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $fields = $this->db->fetchAll($req);
-
-        return $fields;
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            error_log('Update failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
      * Retrieves all records from the `answers` table.
      * 
-     * @return array An array of associative arrays representing all rows in the `answers` table.
+     * @return array|false An array of associative arrays representing all rows in the `answers`
+     *                     table, or false if getting answers fails.
      */
-    public function getAllAnswers()
+    public function getAll()
     {
-
         $query = "SELECT * FROM answers";
 
-        $req = $this->db->querySimpleExecute($query);
-
-        return $this->db->fetchAll($req);
+        try {
+            $req = $this->db->querySimpleExecute($query);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log('Get all answers failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -83,19 +93,22 @@ class AnswerModel extends Model
      * 
      * @param int $idFulfillment The ID of the fulfillment.
      * 
-     * @return array An array of associative arrays representing the filtered rows.
+     * @return array|false An array of associative arrays representing the filtered rows, or false if getting answers fails.
      */
     public function getAnswersFromIdFulfillment($idFulfillment)
     {
-
         $query = "SELECT * FROM answers WHERE id_fulfillments = :id_fulfillments ORDER BY id_fulfillments";
 
         $binds = [
             'id_fulfillments' => ['value' => $idFulfillment, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-
-        return $this->db->fetchAll($req);
+        try {
+            $req = $this->db->queryPrepareExecute($query, $binds);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log('Get answers from fulfillment id failed: ' . $e->getMessage());
+            return false;
+        }
     }
 }

@@ -19,7 +19,7 @@ class FulfillmentModel extends Model
      * @param string $create The creation date of the fulfillment.
      * @param int $idExercise The ID of the exercise associated with the fulfillment.
      * 
-     * @return void
+     * @return bool False on failure, true on success.
      */
     public function create($create, $idExercise)
     {
@@ -30,8 +30,13 @@ class FulfillmentModel extends Model
             'id_exercises' => ['value' => $idExercise, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $this->db->fetchAll($req);
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Create failed: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -40,7 +45,7 @@ class FulfillmentModel extends Model
      * @param string $update The new update date for the fulfillment.
      * @param int $id The ID of the fulfillment to update.
      * 
-     * @return void
+     * @return bool False on failure, true on success.
      */
     public function update($update, $id)
     {
@@ -51,21 +56,30 @@ class FulfillmentModel extends Model
             'id' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $this->db->fetchAll($req);
+        try {
+            $this->db->queryPrepareExecute($query, $binds);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Update failed: " . $e->getMessage());
+            return false;
+        }
     }
-
     /**
      * Retrieves the last fulfillment record in the database.
      * 
-     * @return array The last fulfillment record.
+     * @return array|false The last fulfillment record or false on failure.
      */
     public function getLast()
     {
         $query = "SELECT * FROM fulfillments ORDER BY id_fulfillments DESC LIMIT 1";
 
-        $req = $this->db->querySimpleExecute($query);
-        return $this->db->fetchAll($req);
+        try {
+            $req = $this->db->querySimpleExecute($query);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log("Get last fulfillment failed: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -73,43 +87,48 @@ class FulfillmentModel extends Model
      * 
      * @param int $exerciseId The ID of the exercise.
      * 
-     * @return array An array of fulfillments associated with the given exercise.
+     * @return array|false An array of fulfillments or false on failure.
      */
     public function getFulfillmentsByExerciseId($exerciseId)
     {
-
         $query = "SELECT * FROM fulfillments WHERE id_exercises = :id_exercises ORDER BY created_at";
 
         $binds = [
             'id_exercises' => ['value' => $exerciseId, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-
-
-        return $this->db->fetchAll($req);
+        try {
+            $req = $this->db->queryPrepareExecute($query, $binds);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log("Get fulfillments by exercise id failed: " . $e->getMessage());
+            return false;
+        }
     }
+
 
     /**
      * Retrieves a specific fulfillment by its ID.
      * 
      * @param int $id The ID of the fulfillment.
      * 
-     * @return array The fulfillment record with the specified ID.
+     * @return array|false The fulfillment record or false on failure.
      */
     public function getOne($id)
     {
         $query = "SELECT * FROM fulfillments WHERE id_fulfillments = :id";
 
-
         $binds = [
             'id' => ['value' => $id, 'type' => PDO::PARAM_INT]
         ];
 
-        $req = $this->db->queryPrepareExecute($query, $binds);
-        $fulfillment = $this->db->fetchAll($req);
-
-        return $fulfillment;
+        try {
+            $req = $this->db->queryPrepareExecute($query, $binds);
+            return $this->db->fetchAll($req);
+        } catch (PDOException $e) {
+            error_log("Fulfillment not found: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -117,7 +136,7 @@ class FulfillmentModel extends Model
      * 
      * @param int $idFulfillment The ID of the fulfillment to delete.
      * 
-     * @return bool|string True on success, or an error message if the deletion fails.
+     * @return bool False on failure, true on success.
      */
     public function delete($idFulfillment)
     {
@@ -131,7 +150,8 @@ class FulfillmentModel extends Model
             $this->db->queryPrepareExecute($query, $binds);
             return true;
         } catch (PDOException $e) {
-            return "Connection failed: " . $e->getMessage();
+            error_log("Delete failed: " . $e->getMessage());
+            return false;
         }
     }
 }
