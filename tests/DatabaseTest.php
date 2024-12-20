@@ -1,4 +1,17 @@
 <?php
+
+/**
+ * @author Nathan Chauveau, David Dieperink, Julien Schneider
+ * @version 19.12.2024
+ * @description Unit tests for the Database class using PHPUnit.
+ * 
+ * This class tests the following functionalities:
+ * - Database connection success and failure.
+ * - Singleton instance management (getInstance method).
+ * - Query execution methods: querySimpleExecute and queryPrepareExecute.
+ * - Table creation, data insertion, and cleanup for isolated tests.
+ */
+
 define('BASE_DIR', dirname(__FILE__) . '/..');
 define('APP_DIR', BASE_DIR . '/app');
 define('CONFIG_DIR', BASE_DIR . '/config');
@@ -13,6 +26,11 @@ class DatabaseTest extends TestCase
 
     protected $database;
 
+    /**
+     * Set up the test environment.
+     * 
+     * Initializes the database configuration and creates a new Database instance.
+     */
     protected function setUp(): void
     {
         // Load the configuration from the config file
@@ -22,6 +40,11 @@ class DatabaseTest extends TestCase
         $this->database = new Database($this->config);
     }
 
+    /**
+     * Cleans up the test environment.
+     * 
+     * Resets the Database instance after each test to ensure test isolation.
+     */
     protected function tearDown(): void
     {
         // Reset the instance after each test to ensure isolation between tests.
@@ -32,8 +55,9 @@ class DatabaseTest extends TestCase
     }
 
     /**
-     * Initializes the database and creates the necessary tables.
-     * Inserts predefined data into the database.
+     * Initializes the database with predefined data.
+     * 
+     * @throws RuntimeException If the SQL file cannot be read.
      */
     private function initializeDatabase()
     {
@@ -59,7 +83,9 @@ class DatabaseTest extends TestCase
     }
 
     /**
-     * Drops the tables from the database to ensure a clean state for each test.
+     * Drops all the tables from the database to ensure a clean state for testing.
+     * 
+     * Temporarily disables foreign key checks to prevent constraint violations during the drop process.
      */
     private function dropTables()
     {
@@ -79,7 +105,9 @@ class DatabaseTest extends TestCase
     }
 
     /**
-     * Create the tables based on the schema.
+     * Creates the necessary tables for testing.
+     * 
+     * Executes SQL queries to create tables used in the database tests.
      */
     private function createTables()
     {
@@ -143,6 +171,11 @@ class DatabaseTest extends TestCase
     // SECTION: Database Connection Tests
     // ===========================
 
+    /**
+     * Tests the successful database connection.
+     * 
+     * Verifies that a valid database configuration creates a valid database instance.
+     */
     public function testDatabaseConnectionSuccess()
     {
         // Given: A valid configuration for the database
@@ -155,6 +188,11 @@ class DatabaseTest extends TestCase
         $this->assertNotNull($database, "Database instance should not be null when valid configuration is provided.");
     }
 
+    /**
+     * Tests database connection failure with invalid configuration.
+     * 
+     * Verifies that a PDOException is thrown when an invalid database configuration is used.
+     */
     public function testDatabaseConnectionFailure()
     {
         // Given: An invalid configuration that should trigger a connection failure
@@ -187,6 +225,11 @@ class DatabaseTest extends TestCase
     // SECTION: getInstance Tests
     // ===========================
 
+    /**
+     * Tests the getInstance method to create a new database instance when none exists.
+     * 
+     * Verifies that getInstance returns a Database instance when no instance exists.
+     */
     public function testGetInstanceCreatesNewInstanceWhenNoneExists()
     {
         // Given: Load the database configuration.
@@ -199,6 +242,11 @@ class DatabaseTest extends TestCase
         $this->assertInstanceOf(Database::class, $instance, "getInstance should return a Database instance when none exists.");
     }
 
+    /**
+     * Tests the getInstance method to return the existing instance.
+     * 
+     * Verifies that getInstance returns the same instance when one already exists.
+     */
     public function testGetInstanceReturnsExistingInstance()
     {
         // Given: Load the database configuration.
@@ -218,6 +266,11 @@ class DatabaseTest extends TestCase
     // SECTION: querySimpleExecute Tests
     // ===========================
 
+    /**
+     * Tests the querySimpleExecute method to return an empty result when the table is empty.
+     * 
+     * Verifies that the querySimpleExecute method returns an empty result when the exercises table is empty.
+     */
     public function testQuerySimpleExecuteReturnsEmptyResultWhenTableIsEmpty()
     {
         $this->dropTables();
@@ -234,6 +287,11 @@ class DatabaseTest extends TestCase
         $this->assertEmpty($results, "The query should return an empty result set when the exercises table is empty.");
     }
 
+    /**
+     * Tests the querySimpleExecute method to return data when the table is populated.
+     * 
+     * Verifies that the querySimpleExecute method returns data when the exercises table is populated with predefined data.
+     */
     public function testQuerySimpleExecuteReturnsDataWhenTableIsNotEmpty()
     {
         // Given: The 'exercises' table is populated with data
@@ -258,6 +316,11 @@ class DatabaseTest extends TestCase
     // SECTION: queryPrepareExecute Tests
     // ===========================
 
+    /**
+     * Tests the queryPrepareExecute method to return a single record.
+     * 
+     * Verifies that queryPrepareExecute returns the correct record for a given exercise ID.
+     */
     public function testQueryPrepareExecuteReturnsSingleRecord()
     {
         // Given: The database is already initialized with data
@@ -285,6 +348,11 @@ class DatabaseTest extends TestCase
         $this->assertEquals($expected, $record, "The record corresponding to id_exercises = 1 should be returned.");
     }
 
+    /**
+     * Tests the queryPrepareExecute method to return the status name of an exercise.
+     * 
+     * Verifies that queryPrepareExecute returns the correct status name for a given exercise ID.
+     */
     public function testQueryPrepareExecuteReturnsSingleRecordWithStatusName()
     {
         // Given: The database is already initialized with data

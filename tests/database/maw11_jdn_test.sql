@@ -1,3 +1,32 @@
+/*
+ * Author: Nathan Chauveau, David Dieperink, Julien Schneider
+ * Version: 19.12.2024
+ * Description: SQL script to create and initialize the database for the ExerciseLooper application.
+ * 
+ * This script includes the creation of necessary tables for the ExerciseLooper app. 
+ * It also populates the tables with initial data for testing purposes.
+ *
+ * Steps:
+ * 1. Creates the `fields_type` table which defines the types of fields used in exercises (single-line, multi-line, etc.).
+ * 2. Creates the `status` table for tracking the status of exercises (edit, answering, closed).
+ * 3. Creates the `exercises` table to store exercise details, with a foreign key relation to the `status` table.
+ * 4. Creates the `fields` table that stores fields related to each exercise, with foreign keys linking them to `exercises` and `fields_type`.
+ * 5. Creates the `fulfillments` table to track fulfillment records associated with exercises, with a foreign key to `exercises`.
+ * 6. Creates the `answers` table to store answers to fields, linking them to `fields` and `fulfillments`.
+ *
+ * The script also handles the disabling and re-enabling of foreign key checks to avoid errors during table drops and creations.
+ *
+ * Tables:
+ * - `fields_type`: Stores field types (single_line, single_line_list, multi_line).
+ * - `status`: Stores exercise statuses (edit, answering, closed).
+ * - `exercises`: Stores exercises, with a reference to the `status` table.
+ * - `fields`: Stores fields linked to exercises, with references to both `exercises` and `fields_type`.
+ * - `fulfillments`: Stores fulfillment data related to exercises.
+ * - `answers`: Stores answers to fields, associated with fulfillments and fields.
+ *
+ * This script inserts sample data for each table to allow for immediate use and testing.
+ */
+
 CREATE DATABASE IF NOT EXISTS `maw11-jdn`;
 USE `maw11-jdn`;
 
