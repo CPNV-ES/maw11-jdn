@@ -16,7 +16,6 @@ require_once VIEW_DIR . '/layouts/header.php';
 ?>
 <div class="container">
     <h1>Editing Field</h1>
-
     <form action="/exercises/<?= $exercise['id_exercises'] ?>/fields/<?= $field['id_fields'] ?>/update" method="post" accept-charset="UTF-8">
         <div>
             <label for="field_label">Label</label>

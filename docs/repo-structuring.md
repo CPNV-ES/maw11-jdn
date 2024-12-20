@@ -100,9 +100,7 @@ touch config/config.php app/controllers/.gitkeep app/models/.gitkeep app/views/h
 
 3. **/docs** : Contains all the documentation of the project.
 
-4. **/logs** : Contains all the log files for recording errors and debug information.
-
-5. **/config** : Configuration files, such as database connection parameters.
+4. **/config** : Configuration files, such as database connection parameters.
 
 ### Example of organization
 

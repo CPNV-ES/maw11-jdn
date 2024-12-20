@@ -95,6 +95,8 @@ cp config/config.example.php config/config.php
 ./maw11-jdn
 ├── app
 │   ├── controllers
+│   │   ├── MainController.php
+│   │   └── HomeController.php
 │   ├── core
 │   ├── models
 │   └── views
@@ -112,6 +114,7 @@ cp config/config.example.php config/config.php
 ├── public
 │   ├── css
 │   ├── images
+│   │   └── logo.png
 │   └── index.php
 ├── README.md
 ├── run
