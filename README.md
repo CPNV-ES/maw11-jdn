@@ -95,7 +95,7 @@ cp config/config.example.php config/config.php
 ./maw11-jdn
 ├── app
 │   ├── controllers
-│   │   ├── ExerciseController.php
+│   │   ├── MainController.php
 │   │   └── HomeController.php
 │   ├── core
 │   ├── models
