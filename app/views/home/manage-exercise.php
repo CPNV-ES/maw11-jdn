@@ -42,7 +42,7 @@ require_once VIEW_DIR . '/layouts/header.php'
                                     </a>
                                     <?php
                                     //Check if the exercise contains one or more fields to enable the exercise to be passed in response mode.
-                                    if (count(ExerciseController::getFields($exercise['id_exercises'])) >= 1) { ?>
+                                    if (count(MainController::getFields($exercise['id_exercises'])) >= 1) { ?>
                                         <a href="/exercises/<?= $exercise['id_exercises'] ?>/update/answering">
                                             <i class="fa fa-comment"></i>
                                         </a>

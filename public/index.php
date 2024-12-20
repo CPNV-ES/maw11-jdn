@@ -29,7 +29,7 @@ try {
     echo "<p>Connection error : " . $e->getMessage() . "</p>";
 }
 
-require CONTROLLER_DIR . '/ExerciseController.php';
+require CONTROLLER_DIR . '/MainController.php';
 require CONTROLLER_DIR . '/HomeController.php';
 
 ?>
@@ -44,7 +44,7 @@ switch ($base_uri) {
         (new HomeController())->show();
         exit();
     case '/exercises':
-        (new ExerciseController())->renderer($request_uri);
+        (new MainController())->renderer($request_uri);
         exit();
     default:
         header("HTTP/1.0 404 Not Found");
