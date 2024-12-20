@@ -4,7 +4,7 @@
 ./maw11-jdn
 ├── app
 │   ├── controllers                     # Controllers folder
-│   │   ├── ExerciseController.php
+│   │   ├── MainController.php
 │   │   └── HomeController.php
 │   ├── core                            # Core folder (default model, controler, ...)
 │   │   ├── Controller.php
